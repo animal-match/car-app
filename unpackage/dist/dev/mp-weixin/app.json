@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/require/index",
+    "pages/merchants/index",
+    "pages/me/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "一条龙信息对接平台",
+    "navigationBarBackgroundColor": "#b50e03",
+    "backgroundColor": "#F8F8F8",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#1A1A1A",
+    "selectedColor": "#b50e03",
+    "backgroundColor": "#EBEBEB",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar-icons/home.png",
+        "selectedIconPath": "static/tabbar-icons/home_act.png"
+      },
+      {
+        "text": "供求",
+        "pagePath": "pages/require/index",
+        "iconPath": "static/tabbar-icons/news.png",
+        "selectedIconPath": "static/tabbar-icons/news_act.png"
+      },
+      {
+        "text": "商家",
+        "pagePath": "pages/merchants/index",
+        "iconPath": "static/tabbar-icons/merchant.png",
+        "selectedIconPath": "static/tabbar-icons/merchant_act.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/me/index",
+        "iconPath": "static/tabbar-icons/me.png",
+        "selectedIconPath": "static/tabbar-icons/me_act.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
