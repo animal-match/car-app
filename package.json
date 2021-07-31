@@ -1,0 +1,23 @@
+{
+  "name": "carapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/animal-match/car-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/animal-match/car-app/issues"
+  },
+  "homepage": "https://github.com/animal-match/car-app#readme",
+  "dependencies": {
+    "uview-ui": "^1.8.3"
+  }
+}
