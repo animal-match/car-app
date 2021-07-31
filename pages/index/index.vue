@@ -1,5 +1,6 @@
 <template>
 	<view class="home">
+		<!-- 首页 -->
 		<view class="container">
 			<u-gap height="20"></u-gap>
 			<!-- 轮播图 -->
@@ -240,7 +241,7 @@
 	}
 
 	.container {
-		margin: 0 20rpx 0 20rpx;
+		margin: 0 30rpx;
 
 		.nav-district {
 			display: flex;

@@ -70,7 +70,7 @@
   -webkit-box-orient: vertical;
 }
 .container.data-v-57280228 {
-  margin: 0 20rpx 0 20rpx;
+  margin: 0 30rpx;
 }
 .container .nav-district.data-v-57280228 {
   display: -webkit-box;
