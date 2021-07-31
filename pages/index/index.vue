@@ -50,7 +50,7 @@
 						</view>
 					</view>
 					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d">进店</u-button>
+						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick">进店</u-button>
 					</view>
 				</view>
 				<!-- 第二行 图片组 -->
@@ -213,7 +213,9 @@
 
 		},
 		methods: {
-
+			handleClick() {
+				console.log('1');
+			}
 		}
 	}
 </script>
@@ -335,7 +337,7 @@
 				.left-block-other {
 					display: flex;
 					.title-other {
-						width: 450rpx;
+						width: 350rpx;
 						font-weight: bolder;
 						color: $uni-text-color;
 						font-size: 30rpx;

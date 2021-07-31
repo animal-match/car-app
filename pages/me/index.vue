@@ -23,8 +23,8 @@
 					</view>
 				</view>
 			</view>
-			<!-- 会员中心 -->
-			<view class="module" v-for="item in modules" :key="item.id">
+			<!-- 模块中心 -->
+			<view @click="intoDetailsPage(item.id)" v-for="item in modules" :key="item.id" class="module">
 				<view class="icon-vip">
 					<u-image :src="item.url" width="35rpx" height="30rpx"></u-image>
 					<text class="vip-center font-28">{{item.moduleName}}</text>
@@ -75,6 +75,28 @@
 				console.log(start,end);
 		    return start + '****' + end;
 		  }
+		},
+		methods: {
+			intoDetailsPage(id) {
+				// console.log(id);
+				switch (id) {
+					case 1:
+					// 跳转到会员中心
+					  break;
+					case 2:
+					// 跳转到商家入驻
+						break;
+					case 3:
+					// 跳转到我的供求信息
+						uni.navigateTo({
+							url: '/pages/me/my-supply-info/index'
+						})
+					  break;
+					case 4:
+					// 跳转到分销商
+					  break;
+				}
+			}
 		}
 	}
 </script>

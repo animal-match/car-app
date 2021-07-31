@@ -362,7 +362,10 @@ var _default =
   onLoad: function onLoad() {
 
   },
-  methods: {} };exports.default = _default;
+  methods: {
+    handleClick: function handleClick() {
+      console.log('1');
+    } } };exports.default = _default;
 
 /***/ }),
 

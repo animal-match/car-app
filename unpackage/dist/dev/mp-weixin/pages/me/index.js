@@ -197,7 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -273,7 +273,30 @@ var _default =
       end = this.phoneNumCode.slice(7);
       console.log(start, end);
       return start + '****' + end;
+    } },
+
+  methods: {
+    intoDetailsPage: function intoDetailsPage(id) {
+      // console.log(id);
+      switch (id) {
+        case 1:
+          // 跳转到会员中心
+          break;
+        case 2:
+          // 跳转到商家入驻
+          break;
+        case 3:
+          // 跳转到我的供求信息
+          uni.navigateTo({
+            url: '/pages/me/my-supply-info/index' });
+
+          break;
+        case 4:
+          // 跳转到分销商
+          break;}
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

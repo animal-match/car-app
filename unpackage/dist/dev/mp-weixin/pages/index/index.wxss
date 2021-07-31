@@ -175,7 +175,7 @@
   display: flex;
 }
 .container .information-require .first-line-other .left-block-other .title-other.data-v-57280228 {
-  width: 450rpx;
+  width: 350rpx;
   font-weight: bolder;
   color: #333;
   font-size: 30rpx;
