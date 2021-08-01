@@ -3038,7 +3038,7 @@ text {
   color: #19be6b;
 }
 .u-type-error {
-  color: #fa3534;
+  color: #CA0303;
 }
 .u-type-info {
   color: #909399;
@@ -3053,7 +3053,7 @@ text {
   background-color: #19be6b;
 }
 .u-type-error-bg {
-  background-color: #fa3534;
+  background-color: #CA0303;
 }
 .u-type-info-bg {
   background-color: #909399;

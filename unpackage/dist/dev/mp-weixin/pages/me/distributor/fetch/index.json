@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "提现",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap"
+  }
 }

@@ -4,6 +4,7 @@
     "pages/require/index",
     "pages/merchants/index",
     "pages/me/index",
+    "pages/me/login",
     "pages/me/my-supply-info/index",
     "pages/me/distributor/index",
     "pages/me/distributor/fetch/index"

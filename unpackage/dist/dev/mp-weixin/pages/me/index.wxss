@@ -121,7 +121,8 @@
           flex-direction: column;
   margin-left: 27rpx;
 }
-.container .business-card .card-details .avatar .nickname-phone .nickname.data-v-373b9194, .container .business-card .card-details .avatar .nickname-phone .phone.data-v-373b9194 {
+.container .business-card .card-details .avatar .nickname-phone .nickname.data-v-373b9194,
+.container .business-card .card-details .avatar .nickname-phone .phone.data-v-373b9194 {
   color: #fff;
 }
 .container .business-card .card-details .avatar .nickname-phone .nickname.data-v-373b9194 {

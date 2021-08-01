@@ -55,7 +55,7 @@
 }
 .u-mode-light-error.data-v-1481d46d {
   background-color: #fef0f0;
-  color: #fa3534;
+  color: #CA0303;
   border: 1px solid #fab6b6;
 }
 .u-mode-light-warning.data-v-1481d46d {
@@ -77,7 +77,7 @@
   color: #FFFFFF;
 }
 .u-mode-dark-error.data-v-1481d46d {
-  background-color: #fa3534;
+  background-color: #CA0303;
   color: #FFFFFF;
 }
 .u-mode-dark-warning.data-v-1481d46d {
@@ -100,8 +100,8 @@
 }
 .u-mode-plain-error.data-v-1481d46d {
   background-color: #FFFFFF;
-  color: #fa3534;
-  border: 1px solid #fa3534;
+  color: #CA0303;
+  border: 1px solid #CA0303;
 }
 .u-mode-plain-warning.data-v-1481d46d {
   background-color: #FFFFFF;

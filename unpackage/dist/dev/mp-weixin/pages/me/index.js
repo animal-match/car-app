@@ -96,10 +96,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uGap: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 99))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 113))
   },
   uImage: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 113))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 127))
+  },
+  uButton: function() {
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 134))
   }
 }
 var render = function() {
@@ -179,13 +182,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
     return {
       phoneNumCode: '15828292076',
-      modules: [
-      {
+      modules: [{
         id: 1,
         moduleName: '会员中心',
         url: '/static/user-center-images/vip.png' },
@@ -218,6 +222,21 @@ var _default =
     } },
 
   methods: {
+    /** 
+              * @description 退出登录
+              * @param {}
+              **/
+    logout: function logout() {
+      console.log('退出');
+      uni.navigateTo({
+        url: '/pages/me/login' });
+
+    },
+
+    /**
+        * @description 跳转到对应的详情页
+        * @param {number}
+        **/
     intoDetailsPage: function intoDetailsPage(id) {
       // console.log(id);
       switch (id) {

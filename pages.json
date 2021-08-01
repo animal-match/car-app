@@ -28,6 +28,12 @@
 			}
 		},
 		{
+			"path": "pages/me/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
 			"path": "pages/me/my-supply-info/index",
 			"style": {
 				"navigationBarTitleText": "我的供应信息",
