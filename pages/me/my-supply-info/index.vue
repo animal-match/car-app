@@ -162,22 +162,6 @@
 	}
 </style>
 <style lang="scss" scoped>
-	.ellipsis {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	.multi-ellipsis {
-		display: -webkit-box;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		word-wrap: break-word;
-		white-space: normal !important;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-	}
-
 	.container {
 		margin: 0 30rpx;
 		.switch-tab {

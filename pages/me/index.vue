@@ -94,6 +94,9 @@
 					  break;
 					case 4:
 					// 跳转到分销商
+					uni.navigateTo({
+						url: '/pages/me/distributor/index'
+					})
 					  break;
 				}
 			}

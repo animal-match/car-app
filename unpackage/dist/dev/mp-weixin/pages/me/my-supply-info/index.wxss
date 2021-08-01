@@ -55,20 +55,6 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.ellipsis.data-v-a36fc5c8 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.multi-ellipsis.data-v-a36fc5c8 {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  white-space: normal !important;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
 .container.data-v-a36fc5c8 {
   margin: 0 30rpx;
 }

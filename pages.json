@@ -33,6 +33,12 @@
 				"navigationBarTitleText": "我的供应信息",
 				"enablePullDownRefresh": true
 			}
+		},
+		{
+			"path": "pages/me/distributor/index",
+			"style": {
+				"navigationBarTitleText": "分销商"
+			}
 		}
 	],
 	"globalStyle": {

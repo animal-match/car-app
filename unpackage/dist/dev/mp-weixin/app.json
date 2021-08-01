@@ -4,7 +4,8 @@
     "pages/require/index",
     "pages/merchants/index",
     "pages/me/index",
-    "pages/me/my-supply-info/index"
+    "pages/me/my-supply-info/index",
+    "pages/me/distributor/index"
   ],
   "subPackages": [],
   "window": {
