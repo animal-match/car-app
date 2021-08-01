@@ -39,12 +39,19 @@
 			"style": {
 				"navigationBarTitleText": "分销商"
 			}
+		},
+		{
+			"path": "pages/me/distributor/fetch/index",
+			"style": {
+				"navigationBarTitleText": "提现"
+			}
 		}
 	],
+
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "一条龙信息对接平台",
-		"navigationBarBackgroundColor": "#b50e03",
+		"navigationBarBackgroundColor": "#CA0303",
 		"backgroundColor": "#F8F8F8",
 		"backgroundTextStyle": "light"
 	},

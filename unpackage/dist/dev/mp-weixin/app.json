@@ -5,13 +5,14 @@
     "pages/merchants/index",
     "pages/me/index",
     "pages/me/my-supply-info/index",
-    "pages/me/distributor/index"
+    "pages/me/distributor/index",
+    "pages/me/distributor/fetch/index"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "一条龙信息对接平台",
-    "navigationBarBackgroundColor": "#b50e03",
+    "navigationBarBackgroundColor": "#CA0303",
     "backgroundColor": "#F8F8F8",
     "backgroundTextStyle": "light"
   },

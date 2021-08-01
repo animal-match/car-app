@@ -86,8 +86,11 @@
 			}
 		},
 		methods: {
-			goFetch() {
-				console.log('跳转');
+			goFetch() {				
+				console.log('009')
+				uni.navigateTo({
+					url: '/pages/me/distributor/fetch/index'
+				})
 			}
 		},
 	}
