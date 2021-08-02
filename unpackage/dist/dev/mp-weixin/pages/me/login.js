@@ -101,11 +101,8 @@ var components = {
   uButton: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 134))
   },
-  uRadioGroup: function() {
-    return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 148))
-  },
-  uRadio: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-radio/u-radio */ "node-modules/uview-ui/components/u-radio/u-radio").then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio/u-radio.vue */ 156))
+  uCheckbox: function() {
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-checkbox/u-checkbox */ "node-modules/uview-ui/components/u-checkbox/u-checkbox").then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox/u-checkbox.vue */ 202))
   },
   uModal: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 163))
@@ -184,32 +181,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      value: '',
       showModal: false, // 显示弹出框
       showToast: false, // 微信弹窗
       content: '请先同意以下条款！',
       loginToast: '登录失败', // 微信登录失败提示
-      radioList: [{
-        name: 'ok',
-        title: "selected" }] };
-
+      isChecked: false, // 是否勾选协议
+      name: 'ckeckBox' };
 
   },
   methods: {
     radioChange: function radioChange(e) {
-      if (e === 'ok') {
-        this.vaue = 'ok';
+      if (e.value === true) {
+        this.isChecked = true;
+      } else {
+        this.isChecked = false;
       }
+      console.log('EEE', this.isChecked);
     },
     // 登录微信
     login: function login() {var _this = this;
-      if (this.value === 'ok') {
+      if (this.isChecked === true) {
         console.log(this.value, '调用微信登录接口');
         // 获取供应商
         uni.getProvider({

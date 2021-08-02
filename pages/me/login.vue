@@ -25,7 +25,7 @@
 			<view class="ckeck">
 					<u-checkbox :label-disabled="true" v-model="isChecked" :name="name" active-color="#CA0303" shape="circle"
 					 @change="radioChange">
-						<text @click="serviceItem">同意一条龙信息对接平台的《服务条款》和《隐私协议》</text>
+						<text class="checkout-text" @click="serviceItem">同意一条龙信息对接平台的《服务条款》和《隐私协议》</text>
 					</u-checkbox>
 			</view>
 		</view>
@@ -143,8 +143,7 @@
 		.ckeck {
 			text-align: center;
 			margin-top: 50rpx;
-
-			::v-deep .u-radio__label {
+			::v-deep .u-checkbox__label {
 				color: $uni-text-color-grey;
 				font-size: 24rpx;
 			}

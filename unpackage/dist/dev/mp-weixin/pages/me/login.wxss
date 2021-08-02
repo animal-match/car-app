@@ -72,9 +72,11 @@
   height: 597rpx;
 }
 .container .ckeck.data-v-00e334ab {
-  padding-left: 20rpx;
   text-align: center;
   margin-top: 50rpx;
+}
+.container .ckeck .ckeckout-text.data-v-00e334ab {
+  font-size: 24rpx;
 }
 .container .ckeck.data-v-00e334ab  .u-radio__label {
   color: #999;

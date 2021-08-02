@@ -78,8 +78,8 @@
 }
 .u-btn--error.data-v-3bf2dba7 {
   color: #ffffff;
-  border-color: #CA0303;
-  background-color: #CA0303;
+  border-color: #fa3534;
+  background-color: #fa3534;
 }
 .u-btn--warning.data-v-3bf2dba7 {
   color: #ffffff;
@@ -122,7 +122,7 @@
   background-color: #dbf1e1 !important;
 }
 .u-btn--error--plain.data-v-3bf2dba7 {
-  color: #CA0303 !important;
+  color: #fa3534 !important;
   border-color: #fab6b6 !important;
   background-color: #fef0f0 !important;
 }

@@ -101,6 +101,9 @@
 						break;
 					case 2:
 						// 跳转到商家入驻
+						uni.navigateTo({
+							url: '/pages/me/merchant-enter/index'
+						})
 						break;
 					case 3:
 						// 跳转到我的供求信息
