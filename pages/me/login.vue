@@ -23,12 +23,10 @@
 					微信授权登录
 				</u-button>
 			<view class="ckeck">
-				<u-radio-group v-model="value">
-					<u-radio :label-disabled="true" v-for="(item,index) in radioList" :key="index" :name="item.name" active-color="red"
+					<u-checkbox :label-disabled="true" v-model="isChecked" :name="name" active-color="#CA0303" shape="circle"
 					 @change="radioChange">
 						<text @click="serviceItem">同意一条龙信息对接平台的《服务条款》和《隐私协议》</text>
-					</u-radio>
-				</u-radio-group>
+					</u-checkbox>
 			</view>
 		</view>
 		<u-modal v-model="showModal" :content="content" width="50%"></u-modal>
@@ -40,26 +38,26 @@
 	export default {
 		data() {
 			return {
-				value: '',
 				showModal: false, // 显示弹出框
 				showToast: false, // 微信弹窗
 				content: '请先同意以下条款！',
 				loginToast: '登录失败', // 微信登录失败提示
-				radioList: [{
-					name: 'ok',
-					title: "selected",
-				}],
+				isChecked: false, // 是否勾选协议
+				name: 'ckeckBox',
 			}
 		},
 		methods: {
 			radioChange(e) {
-				if (e === 'ok') {
-					this.vaue = 'ok';
+				if(e.value===true){
+					this.isChecked = true;
+				} else {
+					this.isChecked = false;
 				}
+				console.log('EEE',this.isChecked)
 			},
 			// 登录微信
 			login() {
-				if (this.value === 'ok') {
+				if (this.isChecked === true) {
 					console.log(this.value, '调用微信登录接口')
 					// 获取供应商
 					uni.getProvider({
@@ -143,7 +141,6 @@
 		}
 
 		.ckeck {
-			padding-left: 20rpx;
 			text-align: center;
 			margin-top: 50rpx;
 
