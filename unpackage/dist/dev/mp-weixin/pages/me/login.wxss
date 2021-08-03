@@ -75,10 +75,7 @@
   text-align: center;
   margin-top: 50rpx;
 }
-.container .ckeck .ckeckout-text.data-v-00e334ab {
-  font-size: 24rpx;
-}
-.container .ckeck.data-v-00e334ab  .u-radio__label {
+.container .ckeck.data-v-00e334ab  .u-checkbox__label {
   color: #999;
   font-size: 24rpx;
 }

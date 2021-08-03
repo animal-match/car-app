@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "我的供应信息",
-  "enablePullDownRefresh": true,
   "usingComponents": {
     "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
     "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",

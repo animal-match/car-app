@@ -55,7 +55,7 @@
 				</view>
 				<!-- 第二行 图片组 -->
 				<view class="second-line">
-					<u-image v-for="(item,index) in _item.imageList" :key="index" class="image-list" :src="item.img" width="160rpx"
+					<u-image v-for="($item,$index) in _item.imageList" :key="$item.img" class="image-list" :src="$item.img" width="160rpx"
 					 height="110rpx"></u-image>
 				</view>
 			</view>
@@ -253,7 +253,7 @@
 
 			.today-come-text {
 				text-align: center;
-				padding: 20rpx 0 20rpx 0;
+				padding: 20rpx 0;
 				color: $uni-text-color;
 			}
 

@@ -6,6 +6,7 @@
     "pages/me/index",
     "pages/me/login",
     "pages/me/my-supply-info/index",
+    "pages/me/merchant-enter/index",
     "pages/me/distributor/index",
     "pages/me/distributor/fetch/index"
   ],
@@ -49,5 +50,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap68.json"
+  "sitemapLocation": "sitemap.json"
 }
