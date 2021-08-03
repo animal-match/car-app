@@ -30,7 +30,7 @@
 		</view>
 
 		<view class="upLoad-container">
-			<view class="title">上传产品</view>
+			<view class="title" @click="jump">上传产品</view>
 			<u-upload ref="uUpload" :action="action" :auto-upload="false" :file-list="fileList" max-count="9"></u-upload>
 		</view>
 		<u-gap height="40"></u-gap>
@@ -135,6 +135,12 @@
 			}
 		},
 		methods: {
+			// 上传产品页面
+			jump() {
+				uni.navigateTo({
+					url: 'upload-file' 
+				})
+			},
 			/**
 			 * @desc 切换选项卡
 			 * @param {number}

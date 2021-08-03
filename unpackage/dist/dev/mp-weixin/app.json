@@ -7,6 +7,7 @@
     "pages/me/login",
     "pages/me/my-supply-info/index",
     "pages/me/merchant-enter/index",
+    "pages/me/merchant-enter/upload-file",
     "pages/me/distributor/index",
     "pages/me/distributor/fetch/index"
   ],
@@ -50,5 +51,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap48.json"
 }

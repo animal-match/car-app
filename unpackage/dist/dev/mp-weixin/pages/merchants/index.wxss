@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.merchant-enter {
+.merchant {
   background-color: #f8f8f8;
   min-height: 100vh;
 }
@@ -55,40 +55,15 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.switch-table.data-v-221edcf8 {
+.switch-table.data-v-bdd919f6 {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 999;
 }
-.container.data-v-221edcf8 {
-  margin: 30rpx;
+.search.data-v-bdd919f6 {
   background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
-  padding: 42rpx 30rpx 54rpx;
-}
-.container .district.data-v-221edcf8 {
-  position: relative;
-}
-.container .district .choose.data-v-221edcf8 {
-  position: absolute;
-  top: 32rpx;
-  right: -30rpx;
-  padding: 5rpx 40rpx;
-}
-.upLoad-container.data-v-221edcf8 {
-  margin: 30rpx;
-  background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
-  padding: 42rpx 10rpx 54rpx;
-}
-.upLoad-container .title.data-v-221edcf8 {
-  padding-left: 15rpx;
-  padding-bottom: 20rpx;
-}
-.submit-btn.data-v-221edcf8 {
-  margin: 0 30rpx;
+  height: 140rpx;
+  padding: 0 30rpx;
 }
 
