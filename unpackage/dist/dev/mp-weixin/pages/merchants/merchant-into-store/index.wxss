@@ -61,7 +61,8 @@
   color: #CA0303;
   background-color: #f4f4f5;
   margin-right: 10rpx;
-  border-radius: 7rpx;
+  -webkit-border-radius: 7rpx;
+          border-radius: 7rpx;
 }
 .merchant-into-store .top-container .informations.data-v-088d3d62 {
   padding: 23rpx 0;
@@ -110,8 +111,11 @@
   display: flex;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-  -webkit-justify-content: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.merchant-into-store .bottom-container .image-box .production-iamges.data-v-088d3d62 {
+  margin-bottom: 10rpx;
 }
 

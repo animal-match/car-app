@@ -3,7 +3,7 @@
 	<view class="merchant-into-store">
 		<!-- 上半部分 -->
 		<view class="top-container">
-			<u-image src="/static/fly.jpg" height="320rpx" shape="square" border-radius="20rpx"></u-image>
+			<u-image src="http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png" height="320rpx" shape="square" border-radius="20rpx"></u-image>
 			<view class="name-tags-button">
 				<!-- 左侧 厂家名称和标签 -->
 				<view class="name-and-tags">
@@ -29,21 +29,25 @@
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text class="address ellipsis">成都市金牛区二环路北二段199号</text>
-			<u-button type="error" size="mini">
+			<u-button type="error" size="mini" @click="showAddress">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
 			</u-button>
-			<u-image src="/static/user-center-images/call.png" width="21" height="25"></u-image>
+			<u-image src="/static/user-center-images/call.png" width="21" height="25" @click="showPhone"></u-image>
 		</view>
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 底部部分 产品图 -->
 		<view class="bottom-container">
 			<view class="production">产品</view>
 			<view class="image-box">
-				<u-image :src="item.url" width="210" height="210" v-for="(item,index) in imgList" :key="index" ></u-image>
+				<u-image class="production-iamges" :src="item.url" width="32%" height="190" v-for="(item,index) in imgList" :key="index" ></u-image>
 			</view>
 			<u-gap height="40"></u-gap>
 		</view>
+		<!-- 弹出框 查看电话去升级-->
+		<u-modal v-model="phoneNoShow" width="70%" :content="phoneTips" show-confirm-button show-cancel-button confirm-text="去升级" title="重要提示" confirm-color="#CA0303" @confirm="upDate"></u-modal>
+		<!-- 弹出框 查看地址去支付 -->
+		<u-modal v-model="addressShow" width="80%" :content="adressTips" show-confirm-button show-cancel-button confirm-text="去支付" title="重要提示" confirm-color="#CA0303" @confirm="payment"></u-modal>
 	</view>
 </template>
 
@@ -51,18 +55,54 @@
 	export default {
 		data() {
 			return {
+				addressShow: false, // 显示地址弹窗
+				phoneNoShow: false, // 显示电话号码弹窗
+				phoneTips: '商家查看经销商电话需成为会员',
+				adressTips: '非会员查看地址电话需支付120元费用',
 				imgList: [
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
-					{url: require("../../../static/gun.jpg")},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
+					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
 				]
 			}
+		},
+		methods: {
+			/**
+			 * @desc 展示经销商电话
+			 * @param 
+			 **/
+			showPhone() {
+				this.phoneNoShow = true;
+			},
+			/**
+			 * @desc 展示定位地址
+			 * @param 
+			 **/
+			showAddress() {
+				this.addressShow = true;
+			},
+			/**
+			 * @desc 点击 去升级按钮
+			 * @param 
+			 **/
+			upDate() {
+				console.log('跳转去升级页面')
+			},
+			/**
+			 * @desc 点击 去支付按钮
+			 * @param 
+			 **/
+			 payment() {
+				 uni.navigateTo({
+				 	url: "/pages/merchants/payment/index"
+				 })
+			 },
 		}
 	}
 </script>
@@ -142,7 +182,10 @@
 			.image-box {
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-evenly;
+				justify-content: space-between;
+				.production-iamges {
+					margin-bottom: 10rpx;
+				}
 			}
 		}
 	}

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "支付",
+  "usingComponents": {
+    "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-radio-group": "/node-modules/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/node-modules/uview-ui/components/u-radio/u-radio",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}

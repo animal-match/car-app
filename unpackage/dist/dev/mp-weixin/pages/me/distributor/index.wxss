@@ -118,7 +118,8 @@
   color: #FFAC36;
   border: 1rpx solid #FFAC36;
   padding: 0rpx 10rpx 5rpx 10rpx;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
 }
 .container .background-image .deposit .deposit-go.data-v-77df0a6c {
   margin-right: 5rpx;
@@ -144,7 +145,8 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
   margin-bottom: 20rpx;
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
 }
 .container .container-info .module .avatar.data-v-77df0a6c {
   -webkit-align-self: center;

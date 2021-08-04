@@ -88,7 +88,8 @@
   height: 82rpx;
   line-height: 82rpx;
   text-align: center;
-  border-bottom-right-radius: 20rpx;
+  -webkit-border-bottom-right-radius: 20rpx;
+          border-bottom-right-radius: 20rpx;
 }
 .nav-and-list .left-nav-bar ._ul .list.data-v-bdd919f6 {
   background-color: #CA0303;
@@ -104,7 +105,8 @@
   overflow-y: auto;
 }
 .nav-and-list .right-list-bar .information-block.data-v-bdd919f6 {
-  border-radius: 20rpx;
+  -webkit-border-radius: 20rpx;
+          border-radius: 20rpx;
   margin: 0 30rpx 20rpx 15rpx;
   padding: 28rpx 15rpx;
   background-color: #fff;

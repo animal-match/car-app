@@ -1,4 +1,5 @@
 <template>
+	<!-- 商家入驻页 -->
 	<view class="merchant-enter">
 		<view class="switch-table">
 			<u-tabs :list="tabList" :is-scroll="false" :current="currentTab" @change="change" active-color="#CA0303" bar-width="365"></u-tabs>

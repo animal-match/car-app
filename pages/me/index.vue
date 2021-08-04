@@ -12,7 +12,7 @@
 				<!-- 名片详情 -->
 				<view class="card-details">
 					<view class="avatar">
-						<u-image src="/static/user-center-images/default.jpg" shape="circle" width="140rpx" height="140rpx"></u-image>
+						<u-image src="http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png" shape="circle" width="140rpx" height="140rpx"></u-image>
 						<view class="nickname-phone">
 							<view class="nickname">邓超</view>
 							<view class="phone font-28">{{ phoneNum }}</view>

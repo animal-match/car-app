@@ -4,6 +4,8 @@
     "pages/require/index",
     "pages/merchants/index",
     "pages/merchants/merchant-into-store/index",
+    "pages/merchants/payment/index",
+    "pages/merchants/payment/pay-success",
     "pages/me/index",
     "pages/me/login",
     "pages/me/my-supply-info/index",
@@ -52,5 +54,5 @@
     ]
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap90.json"
 }
