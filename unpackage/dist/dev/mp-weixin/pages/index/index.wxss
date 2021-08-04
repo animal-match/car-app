@@ -76,8 +76,7 @@
 }
 .container .today-come.data-v-57280228 {
   height: 180rpx;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   background-color: #ffffff;
   margin-bottom: 55rpx;
 }
@@ -136,8 +135,7 @@
   font-size: 24rpx;
 }
 .container .information-require.data-v-57280228 {
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   height: 220rpx;
   background-color: #ffffff;
   padding: 27rpx 20rpx 44rpx 20rpx;
@@ -204,8 +202,7 @@
   color: #999;
 }
 .container .information-block.data-v-57280228 {
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   height: 280rpx;
   background-color: #ffffff;
   padding: 27rpx 20rpx 44rpx 20rpx;
