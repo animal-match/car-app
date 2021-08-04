@@ -173,7 +173,8 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
 //
 //
 //
@@ -410,15 +411,30 @@ var _default =
     change: function change(index) {
       this.currentTab = index;
     },
-
+    /**
+        * @desc 左侧导航切换
+        * @param {number}
+        **/
     switchTab: function switchTab(btnId) {
-      console.log(btnId);
       this.activeItem = btnId;
     },
-
+    /**
+        * @desc 右侧列表滚动条触底事件
+        * @param {Object}
+        **/
     scrolltolower: function scrolltolower(e) {
       console.log("滚动到底部了", e);
+    },
+    /**
+        * @desc 跳转到进店详情页
+        * @param
+        **/
+    goToStore: function goToStore() {
+      uni.navigateTo({
+        url: '/pages/merchants/merchant-into-store/index' });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

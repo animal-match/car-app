@@ -1,4 +1,5 @@
 <template>
+	<!-- 商家页 -->
 	<scroll-view class="merchant">
 		<view class="switch-table">
 			<u-tabs :list="tabList" :is-scroll="false" :current="currentTab" @change="change" active-color="#CA0303"
@@ -36,7 +37,7 @@
 						</view>
 						<view class="right-block">
 							<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true"
-								ripple-bg-color="#dd524d">进店</u-button>
+								ripple-bg-color="#dd524d" @click="goToStore">进店</u-button>
 						</view>
 					</view>
 					<!-- 第二行 图片组 -->
@@ -235,15 +236,29 @@
 			change(index) {
 				this.currentTab = index;
 			},
-
+			/**
+			 * @desc 左侧导航切换
+			 * @param {number}
+			 **/
 			switchTab(btnId) {
-				console.log(btnId);
 				this.activeItem = btnId;
 			},
-			
+			/**
+			 * @desc 右侧列表滚动条触底事件
+			 * @param {Object}
+			 **/
 			scrolltolower(e) {
 				console.log("滚动到底部了",e)
-			}
+			},
+			/**
+			 * @desc 跳转到进店详情页
+			 * @param
+			 **/
+			goToStore() {
+				uni.navigateTo({
+					url: '/pages/merchants/merchant-into-store/index'
+				});
+			},
 		}
 	}
 </script>

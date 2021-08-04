@@ -12163,6 +12163,17 @@ trim;exports.default = _default;
 
 /***/ }),
 
+/***/ 319:
+/*!*********************************************!*\
+  !*** D:/works/myApp/car-app/static/gun.jpg ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/static/gun.jpg";
+
+/***/ }),
+
 /***/ 32:
 /*!***************************************************************************!*\
   !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/toast.js ***!

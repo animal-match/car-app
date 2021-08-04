@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/require/index",
     "pages/merchants/index",
+    "pages/merchants/merchant-into-store/index",
     "pages/me/index",
     "pages/me/login",
     "pages/me/my-supply-info/index",
