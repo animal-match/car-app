@@ -64,6 +64,12 @@
 			}
 		},
 		{
+			"path": "pages/me/merchant-enter/map",
+			"style": {
+				"navigationBarTitleText": "选择地址"
+			}
+		},
+		{
 			"path":"pages/me/merchant-enter/upload-file",
 			"style": {
 				"navigationBarTitleText": "商家入驻-产品上传"

@@ -14,11 +14,9 @@
 				</u-form-item>
 				<!-- 地区选择按钮 -->
 				<view class="district">
-					<u-button @click="showRegion = true" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
-					<u-form-item label="请选择地址" :required="true" prop="selected">
-						<u-picker mode="region" v-model="showRegion" :params="regionParams" @confirm="confirm">
-						</u-picker>
-						<text>{{ selectedArea }}</text>
+					<u-button @click="chooseAddress" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
+					<u-form-item label="请选择地址" :required="true" prop="address">
+						<text>{{ address }}</text>
 					</u-form-item>
 				</view>
 				<u-form-item label="请填写标签" :required="true" prop="tag">
@@ -48,11 +46,6 @@
 				border: true, // 显示表单边框
 				currentTab: 0, // 当前tab的索引
 				showRegion: false, // 显示省市区选择器
-				regionParams: { // 省市区
-					province: true,
-					city: true,
-					area: true
-				},
 				tabList: [
 					{name: "厂商"},
 					{name: "经销商"}
@@ -62,10 +55,10 @@
 					merchantIntro: '', // 商家介绍
 					tag: '', // 标签
 					phoneNo: '', // 电话号码
+					address: '', // 详细地址
 					selected: {
-						province: '', // 省
-						city: '', // 市
-						area: '' // 区
+						longitude: '', // 经度
+						latitude: '' // 纬度
 					},
 				}, 
 				// 验证规则
@@ -110,11 +103,11 @@
 							trigger: ['change','blur'],
 						}
 					],
-					selected: [
+					address: [
 						{
 							validator: (rule, value, callback) => {
-								console.log(value.province)
-								return value.province.length > 0;
+								console.log(value,'选了什么')
+								return value.length > 0;
 							},
 							message: '请选择地址',
 							trigger: ['change','blur'],
@@ -126,16 +119,33 @@
 			}
 		},
 		computed: {
-			// 显示选中的省市区
-			selectedArea() {
-				if(this.form.selected.province && this.form.selected.city && this.form.selected.area) {
-					return `${this.form.selected.province}-${this.form.selected.city}-${this.form.selected.area}`;
-				} else {
+			address() {
+				if(this.form.address.length > 0) {
+					return this.form.address;
+				}else{
 					return '';
 				}
 			}
 		},
+		onLoad() {
+			uni.$on('addressInfo',this.addressInfos)
+		},
 		methods: {
+			addressInfos(e) {
+				console.log(e,'传来的地址对象')
+				this.form.address = e.address;
+				this.form.selected.longitude = e.longitude;
+				this.form.selected.latitude = e.latitude;
+			},
+			/**
+			 * @desc 选择地址
+			 * @param {number}
+			 **/
+			chooseAddress() {
+				uni.navigateTo({
+					url: './map'
+				})
+			},
 			// 上传产品页面
 			jump() {
 				uni.navigateTo({
@@ -147,19 +157,11 @@
 			 * @param {number}
 			 **/
 			change(index) {
+				console.log('6666')
 				this.currentTab = index;
 				this.$refs.ruleForm.resetFields();
 			},
-			/**
-			 * @desc 选中的省市区
-			 * @param {Object}
-			 **/
-			confirm(obj) {
-				this.form.selected.province = obj.province.label;
-				this.form.selected.city = obj.city.label;
-				this.form.selected.area = obj.area.label;
-				console.log('你选中了：'+this.form.selected.province+'/'+this.form.selected.city+'/'+this.form.selected.area)
-			},
+
 			/**
 			 * @desc 提交表单数据，提交图片
 			 * @param {Object}

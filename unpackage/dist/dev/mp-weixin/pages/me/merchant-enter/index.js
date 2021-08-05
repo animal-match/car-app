@@ -110,9 +110,6 @@ var components = {
   uButton: function() {
     return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 182))
   },
-  uPicker: function() {
-    return Promise.all(/*! import() | node-modules/uview-ui/components/u-picker/u-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-picker/u-picker")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-picker/u-picker.vue */ 272))
-  },
   uUpload: function() {
     return Promise.all(/*! import() | node-modules/uview-ui/components/u-upload/u-upload */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-upload/u-upload")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-upload/u-upload.vue */ 282))
   },
@@ -124,11 +121,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.showRegion = true
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -203,8 +195,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {var _this = this;
@@ -212,11 +202,6 @@ var _default =
       border: true, // 显示表单边框
       currentTab: 0, // 当前tab的索引
       showRegion: false, // 显示省市区选择器
-      regionParams: { // 省市区
-        province: true,
-        city: true,
-        area: true },
-
       tabList: [
       { name: "厂商" },
       { name: "经销商" }],
@@ -226,10 +211,10 @@ var _default =
         merchantIntro: '', // 商家介绍
         tag: '', // 标签
         phoneNo: '', // 电话号码
+        address: '', // 详细地址
         selected: {
-          province: '', // 省
-          city: '', // 市
-          area: '' // 区
+          longitude: '', // 经度
+          latitude: '' // 纬度
         } },
 
       // 验证规则
@@ -274,11 +259,11 @@ var _default =
           trigger: ['change', 'blur'] }],
 
 
-        selected: [
+        address: [
         {
           validator: function validator(rule, value, callback) {
-            console.log(value.province);
-            return value.province.length > 0;
+            console.log(value, '选了什么');
+            return value.length > 0;
           },
           message: '请选择地址',
           trigger: ['change', 'blur'] }] },
@@ -290,16 +275,33 @@ var _default =
     };
   },
   computed: {
-    // 显示选中的省市区
-    selectedArea: function selectedArea() {
-      if (this.form.selected.province && this.form.selected.city && this.form.selected.area) {
-        return "".concat(this.form.selected.province, "-").concat(this.form.selected.city, "-").concat(this.form.selected.area);
+    address: function address() {
+      if (this.form.address.length > 0) {
+        return this.form.address;
       } else {
         return '';
       }
     } },
 
+  onLoad: function onLoad() {
+    uni.$on('addressInfo', this.addressInfos);
+  },
   methods: {
+    addressInfos: function addressInfos(e) {
+      console.log(e, '传来的地址对象');
+      this.form.address = e.address;
+      this.form.selected.longitude = e.longitude;
+      this.form.selected.latitude = e.latitude;
+    },
+    /**
+        * @desc 选择地址
+        * @param {number}
+        **/
+    chooseAddress: function chooseAddress() {
+      uni.navigateTo({
+        url: './map' });
+
+    },
     // 上传产品页面
     jump: function jump() {
       uni.navigateTo({
@@ -311,19 +313,11 @@ var _default =
         * @param {number}
         **/
     change: function change(index) {
+      console.log('6666');
       this.currentTab = index;
       this.$refs.ruleForm.resetFields();
     },
-    /**
-        * @desc 选中的省市区
-        * @param {Object}
-        **/
-    confirm: function confirm(obj) {
-      this.form.selected.province = obj.province.label;
-      this.form.selected.city = obj.city.label;
-      this.form.selected.area = obj.area.label;
-      console.log('你选中了：' + this.form.selected.province + '/' + this.form.selected.city + '/' + this.form.selected.area);
-    },
+
     /**
         * @desc 提交表单数据，提交图片
         * @param {Object}
