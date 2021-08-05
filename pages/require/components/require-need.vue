@@ -37,13 +37,9 @@
 						<view class="nickname">
 							{{_item.nickname}}
 						</view>
-						<view class="publish-date">{{_item.date}}</view>
 					</view>
 					<!-- 右侧 时间 -->
-					<view class="operation-btn">
-						<u-button type="primary" size="mini" class="check">查看</u-button>
-						<u-button type="error" size="mini" class="delete">删除</u-button>
-					</view>
+					<view class="publish-date">{{_item.date}}</view>
 				</view>
 			</view>
 			<!-- 最外层大盒子End -->
@@ -217,22 +213,17 @@
 				.left-nickname {
 					display: flex;
 					align-items: center;
-					.nickname, .publish-date {
+					.nickname {
 						display: inline-block;
 						color: $uni-text-color-grey;
 						font-size: 20rpx;
 						margin-left: 20rpx;
 					}
-					.publish-date {
-						margin-left: 26rpx;
-					}
 				}
-				.operation-btn {
-					display: flex;
-					.check {
-						margin-right: 10rpx;
+				.publish-date {
+						color: $uni-text-color-grey !important;
+						font-size: 20rpx !important;
 					}
-				}
 			}
 			.right-block {
 				color: $uni-text-color-grey;

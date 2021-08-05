@@ -34,8 +34,8 @@
 			 * @param
 			 **/
 			turnHome() {
-				uni.navigateTo({
-					url: '/pages/merchants/merchant-into-store/index'
+				uni.switchTab({
+					url: '/pages/index/index'
 				})
 			}
 		}

@@ -16,7 +16,7 @@
 				</view>
 				<!-- 右侧 按钮 -->
 				<view>
-					<u-button type="error" shape="circle" size="default">我的供求信息</u-button>
+					<u-button type="error" shape="circle" size="default" @click="toMySupply">我的供求信息</u-button>
 				</view>
 			</view>
 			<view class="informations">
@@ -103,6 +103,15 @@
 				 	url: "/pages/merchants/payment/index"
 				 })
 			 },
+			 /**
+			  * @desc 跳转到我的供求信息
+			  * @param 
+			  **/
+			 toMySupply() {
+				 uni.navigateTo({
+				 	url: '/pages/me/my-supply-info/index'
+				 })
+			 },				 
 		}
 	}
 </script>

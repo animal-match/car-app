@@ -148,6 +148,7 @@
 			 **/
 			change(index) {
 				this.currentTab = index;
+				this.$refs.ruleForm.resetFields();
 			},
 			/**
 			 * @desc 选中的省市区

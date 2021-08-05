@@ -185,6 +185,10 @@
 			this.$refs.ruleForm.setRules(this.rules);
 			this.$refs.ruleFormMore.setRules(this.rulesMore);
 		},
+		
+		onLoad(options) {
+			console.log(options)
+		},
 	}
 </script>
 

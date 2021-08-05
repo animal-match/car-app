@@ -7,9 +7,9 @@
 			<u-swiper :list="list"></u-swiper>
 			<u-gap height="45"></u-gap>
 			<view class="nav-district">
-				<u-image src="/static/nav-images/supply_publish.png" width="120rpx" height="120rpx"></u-image>
-				<u-image src="/static/nav-images/buy.png" width="120rpx" height="120rpx"></u-image>
-				<u-image src="/static/nav-images/merchant_come.png" width="120rpx" height="120rpx"></u-image>
+				<u-image @click="goDetailsPage('supply')" src="/static/nav-images/supply_publish.png" width="120rpx" height="120rpx"></u-image>
+				<u-image @click="goDetailsPage('require')" src="/static/nav-images/buy.png" width="120rpx" height="120rpx"></u-image>
+				<u-image @click="goDetailsPage('merchant')" src="/static/nav-images/merchant_come.png" width="120rpx" height="120rpx"></u-image>
 			</view>
 			<!-- 导航区域 -->
 			<view class="nav-district">
@@ -34,7 +34,7 @@
 			<!-- 厂家。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">厂家</view>
-				<view class="manufacturers-title-more">更多 ></view>
+				<view class="manufacturers-title-more" @click="toMerchantPage('manufacturers')">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
@@ -64,7 +64,7 @@
 			<!-- 经销商。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">经销商</view>
-				<view class="manufacturers-title-more">更多 ></view>
+				<view class="manufacturers-title-more" @click="toMerchantPage('dealer')">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
@@ -80,7 +80,7 @@
 						</view>
 					</view>
 					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d">进店</u-button>
+						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick">进店</u-button>
 					</view>
 				</view>
 				<!-- 第二行 图片组 -->
@@ -95,7 +95,7 @@
 			<!-- 供求信息。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">供求信息</view>
-				<view class="manufacturers-title-more">更多 ></view>
+				<view class="manufacturers-title-more" @click="supplDemand">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
@@ -213,8 +213,55 @@
 
 		},
 		methods: {
+			/**
+			 * @desc 跳转商家进店页面
+			 * @param
+			 **/
 			handleClick() {
-				console.log('1');
+				uni.navigateTo({
+					url: '/pages/merchants/merchant-into-store/index'
+				})
+			},
+			/**
+			 * @desc 点击图片跳转对应页面
+			 * @param {string}
+			 **/
+			goDetailsPage(pageName) {
+				switch (pageName) {
+					case 'supply':
+						uni.switchTab({
+							url: '/pages/require/index',
+						})
+					break;
+					case 'require':
+					  uni.switchTab({
+					  	url: '/pages/require/index',
+					  })
+					break;
+					case 'merchant':
+						uni.navigateTo({
+							url: '/pages/me/merchant-enter/index',
+						})
+					break;
+				}
+			},
+			/**
+			 * @desc 点击更多跳转到商家页面
+			 * @param {string}
+			 **/
+			toMerchantPage(pageName) {
+				uni.switchTab({
+					url: 'pages/merchants/index'
+				})
+			},
+			/**
+			 * @desc 点击更多跳转到供求页
+			 * @param {string}
+			 **/
+			supplDemand() {
+				uni.switchTab({
+					url: '/pages/require/index',
+				})
 			}
 		}
 	}
@@ -297,7 +344,7 @@
 		.manufacturers-title {
 			display: flex;
 			justify-content: space-between;
-
+			align-items: center;
 			.manufacturers-title-merchant {
 				font-size: 32rpx;
 			}

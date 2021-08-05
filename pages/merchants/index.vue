@@ -304,6 +304,7 @@
 					line-height: 82rpx;
 					text-align: center;
 					border-bottom-right-radius: 20rpx;
+					border-top: 2rpx solid $uni-bg-color-grey;
 				}
 
 				.list {
