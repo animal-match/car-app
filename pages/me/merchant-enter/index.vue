@@ -16,7 +16,7 @@
 				<view class="district">
 					<u-button @click="chooseAddress" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
 					<u-form-item label="请选择地址" :required="true" prop="address">
-						<text>{{ address }}</text>
+						<text>{{ address }}</text>	
 					</u-form-item>
 				</view>
 				<u-form-item label="请填写标签" :required="true" prop="tag">
@@ -157,9 +157,9 @@
 			 * @param {number}
 			 **/
 			change(index) {
-				console.log('6666')
 				this.currentTab = index;
 				this.$refs.ruleForm.resetFields();
+				Object.keys(this.form).forEach(key=>{this.form[key] = ''}); // 清空对象的所有属性为''
 			},
 
 			/**

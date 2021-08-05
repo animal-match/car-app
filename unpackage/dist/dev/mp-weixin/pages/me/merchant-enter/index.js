@@ -312,10 +312,10 @@ var _default =
         * @desc 切换选项卡
         * @param {number}
         **/
-    change: function change(index) {
-      console.log('6666');
+    change: function change(index) {var _this2 = this;
       this.currentTab = index;
       this.$refs.ruleForm.resetFields();
+      Object.keys(this.form).forEach(function (key) {_this2.form[key] = '';}); // 清空对象的所有属性为''
     },
 
     /**
