@@ -6,25 +6,25 @@
 		</view>
 		<view class="container">
 			<u-form :model="form" ref="ruleForm" label-position="top">
-				<u-form-item label="请填写厂家名称" prop="merchantName">
+				<u-form-item label="请填写厂家名称" :required="true" prop="merchantName">
 					<u-input v-model="form.merchantName" />
 				</u-form-item>
-				<u-form-item label="商家介绍" prop="merchantIntro">
+				<u-form-item label="商家介绍" :required="true" prop="merchantIntro">
 					<u-input v-model="form.merchantIntro" type="textarea" height="300" :border="border"/>
 				</u-form-item>
 				<!-- 地区选择按钮 -->
 				<view class="district">
 					<u-button @click="showRegion = true" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
-					<u-form-item label="请选择地址" prop="selected">
+					<u-form-item label="请选择地址" :required="true" prop="selected">
 						<u-picker mode="region" v-model="showRegion" :params="regionParams" @confirm="confirm">
 						</u-picker>
 						<text>{{ selectedArea }}</text>
 					</u-form-item>
 				</view>
-				<u-form-item label="请填写标签" prop="tag">
+				<u-form-item label="请填写标签" :required="true" prop="tag">
 					<u-input v-model="form.tag" placeholder="如: 品牌三轮"/>
 				</u-form-item>
-				<u-form-item label="请填写联系电话" prop="phoneNo">
+				<u-form-item label="请填写联系电话" :required="true" prop="phoneNo">
 					<u-input v-model="form.phoneNo" placeholder="请填写电话号码"/>
 				</u-form-item>
 			</u-form>
@@ -185,8 +185,8 @@
 			},
 		},
 		onReady() {
-				this.$refs.ruleForm.setRules(this.rules);
-			}
+			this.$refs.ruleForm.setRules(this.rules);
+		}
 	}
 </script>
 <style lang="scss">
