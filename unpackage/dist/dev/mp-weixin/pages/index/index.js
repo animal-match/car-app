@@ -96,19 +96,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   uGap: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 160))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 161))
   },
   uSwiper: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 167))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 168))
   },
   uImage: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 174))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 175))
   },
   uButton: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 181))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 182))
   },
   uTag: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 188))
+    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 189))
   }
 }
 var render = function() {
@@ -148,7 +148,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -363,9 +363,58 @@ var _default =
 
   },
   methods: {
+    /**
+              * @desc 跳转商家进店页面
+              * @param
+              **/
     handleClick: function handleClick() {
-      console.log('1');
+      uni.navigateTo({
+        url: '/pages/merchants/merchant-into-store/index' });
+
+    },
+    /**
+        * @desc 点击图片跳转对应页面
+        * @param {string}
+        **/
+    goDetailsPage: function goDetailsPage(pageName) {
+      switch (pageName) {
+        case 'supply':
+          uni.switchTab({
+            url: '/pages/require/index' });
+
+          break;
+        case 'require':
+          uni.switchTab({
+            url: '/pages/require/index' });
+
+          break;
+        case 'merchant':
+          uni.navigateTo({
+            url: '/pages/me/merchant-enter/index' });
+
+          break;}
+
+    },
+    /**
+        * @desc 点击更多跳转到商家页面
+        * @param {string}
+        **/
+    toMerchantPage: function toMerchantPage(pageName) {
+      console.log(pageName);
+      uni.switchTab({
+        url: '../merchants/index' });
+
+    },
+    /**
+        * @desc 点击更多跳转到供求页
+        * @param {string}
+        **/
+    supplyDemand: function supplyDemand() {
+      uni.switchTab({
+        url: '/pages/require/index' });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

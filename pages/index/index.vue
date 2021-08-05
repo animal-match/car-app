@@ -95,7 +95,7 @@
 			<!-- 供求信息。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">供求信息</view>
-				<view class="manufacturers-title-more" @click="supplDemand">更多 ></view>
+				<view class="manufacturers-title-more" @click="supplyDemand">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
@@ -250,15 +250,16 @@
 			 * @param {string}
 			 **/
 			toMerchantPage(pageName) {
+				console.log(pageName)
 				uni.switchTab({
-					url: 'pages/merchants/index'
+					url: '../merchants/index'
 				})
 			},
 			/**
 			 * @desc 点击更多跳转到供求页
 			 * @param {string}
 			 **/
-			supplDemand() {
+			supplyDemand() {
 				uni.switchTab({
 					url: '/pages/require/index',
 				})

@@ -50,6 +50,7 @@
 			<view class="submit-btn">
 				<u-button @click="submitMore" class="submit-btn" type="error" shape="circle" :loading="requireloading">提交内容</u-button>
 			</view>
+			<u-gap height="40"></u-gap>
 		</view>
 	</view>
 </template>
@@ -223,7 +224,7 @@
 				background: $uni-bg-color;
 			}
 			.submit-btn {
-				margin: 0 30rpx 80rpx 30rpx;
+				margin: 0 30rpx 0 30rpx;
 			}
 		}
 	}
