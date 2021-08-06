@@ -29,8 +29,11 @@
 		</view>
 
 		<view class="upLoad-container">
-			<view class="title" @click="jump">上传产品</view>
-			<u-upload ref="uUpload" :action="action" :auto-upload="false" :file-list="fileList" max-count="9"></u-upload>
+			<view class="title">上传产品</view>
+			<!-- <u-upload ref="uUpload" :action="action" :auto-upload="false" :file-list="fileList" max-count="9"></u-upload> -->
+			<view class="add-btn" @click="jump">
+				<u-image src="/static/user-center-images/add.png" width="38" height="38"></u-image>
+			</view>
 		</view>
 		<u-gap height="40"></u-gap>
 		<view class="submit-btn">
@@ -168,15 +171,16 @@
 			 **/
 			submit() {
 				// 图片上传
-				this.$refs.uUpload.upload(); // 手动上传模式
-				let files = [];
+				//this.$refs.uUpload.upload(); // 手动上传模式
+				//let files = [];
 					// 通过filter，筛选出上传进度为100的文件(因为某些上传失败的文件，进度值不为100，这个是可选的操作)
-					files = this.$refs.uUpload.lists.filter(val => {
-						return val.progress == 100;
-					})
+					//files = this.$refs.uUpload.lists.filter(val => {
+					//	return val.progress == 100;
+					//})
 					// 如果您不需要进行太多的处理，直接如下即可
-					files = this.$refs.uUpload.lists;
-					console.log('上传的图片',files);
+					//files = this.$refs.uUpload.lists;
+					//console.log('上传的图片',files);
+					
 				// 验证是否通过校验
 				this.$refs.ruleForm.validate(valid => {
 					if(valid) {
@@ -225,9 +229,11 @@
 		background-color: $uni-text-color-inverse;
 		border-radius: 20rpx;
 		padding: 42rpx 10rpx 54rpx;
-		.title {
-			padding-left: 15rpx;
-			padding-bottom: 20rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.title, .add-btn {
+			padding: 0 15rpx 0;
 		}
 	}
 	.submit-btn {
