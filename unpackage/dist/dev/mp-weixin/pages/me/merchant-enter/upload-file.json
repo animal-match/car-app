@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "商家入驻-产品上传",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image"
+  }
 }

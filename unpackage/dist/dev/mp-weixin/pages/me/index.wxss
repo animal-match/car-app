@@ -131,8 +131,7 @@
 }
 .container .module.data-v-373b9194 {
   background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   height: 100rpx;
   display: -webkit-box;
   display: -webkit-flex;

@@ -63,8 +63,7 @@
   margin: 0rpx 30rpx 46rpx;
   height: 304rpx;
   background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   text-align: center;
   display: -webkit-box;
   display: flex;
@@ -92,8 +91,7 @@
 }
 .bankcard-box.data-v-43104f3c {
   height: 120rpx;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   margin: 0 30rpx;
   background-color: #fff;
   padding: 0 42rpx 0 27rpx;
@@ -114,8 +112,7 @@
 }
 .bankcard-box .left-card .card-box.data-v-43104f3c {
   background-color: #EEEEEE;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   margin-right: 16rpx;
   padding: 0 10rpx;
 }

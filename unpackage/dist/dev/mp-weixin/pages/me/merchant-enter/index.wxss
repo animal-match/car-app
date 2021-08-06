@@ -64,8 +64,7 @@
 .container.data-v-221edcf8 {
   margin: 30rpx;
   background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   padding: 42rpx 30rpx 54rpx;
 }
 .container .district.data-v-221edcf8 {
@@ -80,8 +79,7 @@
 .upLoad-container.data-v-221edcf8 {
   margin: 30rpx;
   background-color: #fff;
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   padding: 42rpx 10rpx 54rpx;
 }
 .upLoad-container .title.data-v-221edcf8 {

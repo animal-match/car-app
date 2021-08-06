@@ -79,8 +79,7 @@
   background-color: #fff;
 }
 .container .information-require.data-v-3457ebc4 {
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   height: 250rpx;
   background-color: #ffffff;
   padding: 27rpx 20rpx 44rpx 20rpx;

@@ -1,30 +1,26 @@
 <template>
-	<view>
-		<view style="display: flex; flex-wrap: wrap;">
-			<!--图片-->
-			<view  style="width:550rpx;height:auto;margin:20rpx auto 0;display:flex;justify-content: space-between;flex-wrap: wrap;">
-				<view v-for="(item,index) in imageList" :key="index">
-					<view style="position:relative;width:250rpx;height:200rpx;margin: 20upx 0 20upx 0;">
-						<image style="width:250upx;height:200upx;" :src="item" :data-src="image" @tap="previewImage"></image>
-							<view style="position:absolute; right: -10rpx; top: -10rpx; z-index:1000;" @tap="delect(index)">
-								<image src="/static/logo.png" style="width:30rpx;height:30rpx;" mode=""></image>
-							<!--这个图标是指，图片或者视频上传成功了，点击右上角叉号（也就是这个图标）可以删除 这里自己找一个合适的替换掉就好-->
-						</view>	
-					</view>
+	<view class="upload">
+		<!--图片-->
+		<view class="add-pictures">
+			<view v-if="VideoOfImagesShow" class="add-btn" @click="chooseVideoImage">
+				<view>
+					<u-image src="/static/user-center-images/up.png" width="44" height="44"></u-image>
 				</view>
-				<!--视频-->
-				<view v-for="(item1, index1) in srcVideo" :key="index1">
-					<view style="position:relative;width:250rpx;height:200rpx; margin: 20upx 0 20upx 0;">
-						<video style="width:250upx;height:200upx;" :src="item1"></video>
-						<view style="position:absolute; right: -10rpx; top: -10rpx; z-index:1000;" @tap="delectVideo(index1)">
-							<image style="width:30rpx;height:30rpx;" src="/static/logo.png" mode=""></image>
-						</view>
-					</view>
-				</view>
-					<view v-if="VideoOfImagesShow" @tap="chooseVideoImage" style="width: 250rpx;height:250rpx;background-color: #F1F1F1; margin: 20rpx auto 0;display:flex; justify-content: center; align-items: center; flex-direction: column;">
-					<image src="/static/logo.png" style="width:100rpx;height:100rpx;" mode=""></image>
-					<view  style="font-size:30rpx;">拍照/视频</view>
-				</view>
+				<view class="upload-text">选择</view>
+			</view>
+		</view>
+		<!-- 上传图片 -->
+		<view class="upload-image">
+			<view v-for="(item, index) in imageList" :key="index">
+				<u-image  :src="item" @click="previewImage(index)" width="200" height="150" class="pics"></u-image>
+				<u-image v-if="imageList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delect(index)"  class="close-btn"></u-image>
+			</view>
+		</view>
+		<!-- 上传视频 -->
+		<view class="upload-video">
+			<view v-for="(item_1,index_1) in VideoList" :key="index_1">
+				<video :src="item_1" class="video"></video>
+				<u-image v-if="VideoList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delectVideo(index_1)" class="delete-btn"></u-image>
 			</view>
 		</view>
 	</view>
@@ -37,7 +33,7 @@
 			return {
 				VideoOfImagesShow: true, // 页面图片或视频数量超出后，拍照按钮隐藏
 				imageList: [], //存放图片的地址
-				srcVideo: [],//视频存放的地址
+				VideoList: [],//视频存放的地址
 				sourceType: ['拍摄', '相册', '拍摄或相册'],
 				sourceTypeIndex: 2,
 				cameraList: [{ value: 'back', name: '后置摄像头', checked: 'true' }, { value: 'front', name: '前置摄像头' }],
@@ -82,25 +78,25 @@
 			//上传视频
 			chooseVideo(index){
 				uni.chooseVideo({	
-					maxDuration: 10,//拍摄视频最长拍摄时间，单位秒。最长支持 60 秒
+					maxDuration: 60,//拍摄视频最长拍摄时间，单位秒。最长支持 60 秒
 					count: 4,
 					camera: this.cameraList[this.cameraIndex].value,//'front'、'back'，默认'back'
-					sourceType: sourceType[this.sourceTypeIndex],
+					sourceType: ['camera', 'album'],//sourceType[this.sourceTypeIndex],
 					success:res =>{
-						this.srcVideo = this.srcVideo.concat(res.tempFilePath);
-						if (this.srcVideo.length == 4) {
+						this.VideoList = this.VideoList.concat(res.tempFilePath);
+						if (this.VideoList.length == 4) {
 							this.VideoOfImagesShow = false;
 						}
-						console.log(this.srcVideo);
+						console.log(this.VideoList,'结束');
 					}
 				})
 			},
 			//预览图片
 			previewImage: function(e){
-				var current = e.target.dataset.src;
+				console.log(e)
 				uni.previewImage({
-					current: current,
-					urls: this.imageList
+					current: this.imageList[e],
+					urls: this.imageList,
 				});
 			},
 			// 删除图片
@@ -127,9 +123,9 @@
 					content: '是否要删除此视频',
 					success: res => {
 						if (res.confirm) {
-							this.srcVideo.splice(index, 1);
+							this.VideoList.splice(index, 1);
 						}
-						if (this.srcVideo.length == 4) {
+						if (this.VideoList.length == 4) {
 							this.VideoOfImagesShow = false;
 						} else {
 							this.VideoOfImagesShow = true;
@@ -140,5 +136,54 @@
 		}
 	}
 </script>
+<style lang="scss">
+	.upload {
+		min-height: 100vh;
+		.add-pictures {
+			
+			.add-btn {
+				width: 220rpx;
+				height: 220rpx;
+				margin-left: 30rpx;
+				// background-color: $uni-text-color-inverse;
+				background-color: #F4F5F6;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				.upload-text {
+					margin-top:20rpx;
+					font-size: 28rpx;
+					font-weight: bold;
+					color: #606266;
+				}
+			}
+		}
+		.upload-image, .upload-video {
+			margin: 0 30rpx;
+			padding: 20rpx 0;
+			display: flex;
+			flex-wrap: wrap;
+			.pics,.video {
+				margin-bottom: 15rpx;
+				margin-right: 15rpx;
+			}
+			.close-btn {
+				position: relative;
+				bottom: 185rpx;
+				left: 175rpx;
+			}
+			.delete-btn {
+				position: relative;
+				bottom: 240rpx;
+				left: 280rpx;
+			}
+			.video {
+				width: 300rpx;
+				height: 200rpx;
+			}
+		}
+	}
+</style>
 
 

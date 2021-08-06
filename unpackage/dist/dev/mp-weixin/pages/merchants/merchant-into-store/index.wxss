@@ -61,8 +61,7 @@
   color: #CA0303;
   background-color: #f4f4f5;
   margin-right: 10rpx;
-  -webkit-border-radius: 7rpx;
-          border-radius: 7rpx;
+  border-radius: 7rpx;
 }
 .merchant-into-store .top-container .informations.data-v-088d3d62 {
   padding: 23rpx 0;
