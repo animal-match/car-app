@@ -29,7 +29,7 @@
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text class="address ellipsis">成都市金牛区二环路北二段199号</text>
-			<u-button type="error" size="mini" @click="showAddress">
+			<u-button type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
 			</u-button>
@@ -84,15 +84,61 @@
 			 * @desc 展示定位地址
 			 * @param 
 			 **/
-			showAddress() {
-				this.addressShow = true;
+			showAddress(longi,lati,address) {
+				// 非会员需要先打开弹窗成为会员
+				// this.addressShow = true;
+				let latitude = Number(lati);   
+				let longitude = Number(longi);
+				// 获取定位信息
+				uni.getLocation({
+					type: 'wgs84', //返回可以用于uni.openLocation的经纬度
+					// 用户允许获取定位的时候
+					success: function(res) {
+						console.log('用户当前位置的经纬度',res);
+						if(res.errMsg==='getLocation:ok') {
+							uni.openLocation({
+								latitude: latitude,
+								longitude: longitude,
+								address: address,
+								scale: 18,
+								success:function() {
+									console.log('定位成功')
+								}
+							})
+						}
+					},
+					// 用户拒绝获取定位后 再次点击触发
+					fail: function(res) {
+						if(res.errMsg==='getLocation:fail auth deny') {
+							uni.showModal({
+								content: '检测到您没打开获取信息功能权限，是否去设置打开？',
+								confirmText: '确认',
+								cancelText: '取消',
+								success: (res) => {
+									if(res.confirm) {
+										uni.openSetting({
+											success: res => {
+												
+											}
+										})
+									} else {
+										return false;
+									}
+								}
+							})
+						}
+					}
+				})
 			},
 			/**
 			 * @desc 点击 去升级按钮
 			 * @param 
 			 **/
 			upDate() {
-				console.log('跳转去升级页面')
+				console.log('跳转支付页面')
+				uni.navigateTo({
+					url: '../payment/index'
+				})
 			},
 			/**
 			 * @desc 点击 去支付按钮

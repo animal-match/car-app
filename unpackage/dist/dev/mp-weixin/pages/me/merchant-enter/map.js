@@ -136,18 +136,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      addressPosition: '' };
 
   },
   methods: {
-    position: function position() {
+    position: function position() {var _this = this;
       uni.chooseLocation({
         success: function success(res) {
           console.log('地点名：', res.name, '详细地址：', res.address, '经度：', res.longitude, '纬度', res.latitude);
+          _this.addressPosition = res.address;
           var addressObj = {
             address: res.address,
             longitude: res.longitude,

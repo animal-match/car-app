@@ -254,15 +254,61 @@ var _default =
         * @desc 展示定位地址
         * @param 
         **/
-    showAddress: function showAddress() {
-      this.addressShow = true;
+    showAddress: function showAddress(longi, lati, address) {
+      // 非会员需要先打开弹窗成为会员
+      // this.addressShow = true;
+      var latitude = Number(lati);
+      var longitude = Number(longi);
+      // 获取定位信息
+      uni.getLocation({
+        type: 'wgs84', //返回可以用于uni.openLocation的经纬度
+        // 用户允许获取定位的时候
+        success: function success(res) {
+          console.log('用户当前位置的经纬度', res);
+          if (res.errMsg === 'getLocation:ok') {
+            uni.openLocation({
+              latitude: latitude,
+              longitude: longitude,
+              address: address,
+              scale: 18,
+              success: function success() {
+                console.log('定位成功');
+              } });
+
+          }
+        },
+        // 用户拒绝获取定位后 再次点击触发
+        fail: function fail(res) {
+          if (res.errMsg === 'getLocation:fail auth deny') {
+            uni.showModal({
+              content: '检测到您没打开获取信息功能权限，是否去设置打开？',
+              confirmText: '确认',
+              cancelText: '取消',
+              success: function success(res) {
+                if (res.confirm) {
+                  uni.openSetting({
+                    success: function success(res) {
+
+                    } });
+
+                } else {
+                  return false;
+                }
+              } });
+
+          }
+        } });
+
     },
     /**
         * @desc 点击 去升级按钮
         * @param 
         **/
     upDate: function upDate() {
-      console.log('跳转去升级页面');
+      console.log('跳转支付页面');
+      uni.navigateTo({
+        url: '../payment/index' });
+
     },
     /**
         * @desc 点击 去支付按钮

@@ -97,7 +97,10 @@
 				// console.log(id);
 				switch (id) {
 					case 1:
-						// 跳转到会员中心
+						// 跳转到支付页面
+						uni.navigateTo({
+							url: '/pages/merchants/payment/index'
+						})
 						break;
 					case 2:
 						// 跳转到商家入驻
