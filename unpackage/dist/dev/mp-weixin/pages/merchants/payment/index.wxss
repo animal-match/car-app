@@ -94,7 +94,7 @@
   border-radius: 20rpx;
   margin: 0 30rpx;
   background-color: #fff;
-  padding: 0 42rpx 0 27rpx;
+  padding: 0 0 0 27rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -109,12 +109,18 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .bankcard-box .left-card .card-box.data-v-43104f3c {
   background-color: #EEEEEE;
   border-radius: 10rpx;
-  margin-right: 16rpx;
-  padding: 0 10rpx;
+  margin-right: 18rpx;
+  padding: 10rpx 20rpx;
 }
 .bankcard-box .left-card ._ul.data-v-43104f3c {
   display: inline-block;

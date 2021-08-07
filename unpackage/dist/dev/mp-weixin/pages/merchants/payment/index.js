@@ -167,7 +167,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -234,11 +234,56 @@ var _default =
         * @param
         **/
     payNow: function payNow() {
-      uni.navigateTo({
-        url: '/pages/merchants/payment/pay-success' });
-
+      /*
+                               uni.getProvider({
+                               	service: 'payment',
+                               	fail: res => {
+                               		uni.hideLoading();
+                               		uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
+                               	},
+                               	success: res => {
+                               		// 从后端接口获取相关数据配置到orderInfo里，这个接口由后端配置好了
+                               		url: `${this.$baseUrl}/api-order/amstc/userRechargeAccountByWx`,
+                               		method: 'POST',
+                               		header: {
+                               		"Token":this.userToken,
+                               		"Content-Type":"application/x-www-form-urlencoded"
+                               		},
+                               		data: params,
+                               		success: res => {
+                               		if(res.data.code==200){
+                               			let resobj=JSON.parse(res.data.data)
+                               			let payInfo={
+                               				appid: resobj.appid,
+                               				noncestr: resobj.nonce_str,
+                               				package:"Sign=WXPay",
+                               				partnerid: resobj.mch_id,
+                               				prepayid: resobj.prepay_id,
+                               				timestamp: resobj.time_stamp,
+                               				sign: resobj.sign,
+                               			}
+                               			uni.requestPayment({
+                               				provider: 'wxpay',
+                               				orderInfo: payInfo, //微信订单数据（Object类型）
+                               				success: res=>{
+                               					uni.hideLoading();
+                               			  },
+                               				fail: err => {
+                               					uni.hideLoading();
+                               					uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
+                               				}
+                               			});
+                               		}else{
+                               			uni.showToast({title: '获取微信通道失败',icon:'none'})
+                               		}
+                               	}
+                               })
+                               // 跳转微信支付成功页面
+                               // uni.navigateTo({
+                               // 	url: '/pages/merchants/payment/pay-success'
+                               // })
+                               */
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
