@@ -12,10 +12,10 @@
 				<!-- 名片详情 -->
 				<view class="card-details">
 					<view class="avatar">
-						<u-image src="http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png" shape="circle" width="140rpx" height="140rpx"></u-image>
+						<u-image :src="$store.state.user.avatarUrl.length>0?$store.state.user.avatarUrl:'/static/user-center-images/avatar.png'" shape="circle" width="140rpx" height="140rpx"></u-image>
 						<view class="nickname-phone">
-							<view class="nickname">邓超</view>
-							<view class="phone font-28">{{ phoneNum }}</view>
+							<view class="nickname">{{userName}}</view>
+							<view v-if="isLogin===true" class="phone font-28">{{ phoneNum }}</view>
 						</view>
 					</view>
 					<view class="arrow">
@@ -35,8 +35,10 @@
 				</view>
 			</view>
 			<u-gap height="248"></u-gap>
-			<u-button type="error" shape="circle" @click="logout">退出</u-button>
+			<u-button v-if="isLogin===false" type="error" shape="circle" @click="login">去登录</u-button>
+			<u-button v-else type="error" shape="circle" @click="logout">退出</u-button>
 		</view>
+		<u-modal v-model="showLogout" content="退出成功" :mask-close-able="true" :show-confirm-button="false" width="50%"></u-modal>
 	</view>
 </template>
 
@@ -44,6 +46,8 @@
 	export default {
 		data() {
 			return {
+				showLogout: false, // 打开退出登录弹窗
+				isLogin: false, // 用户是否登录
 				phoneNumCode: '15828292076',
 				modules: [{
 						id: 1,
@@ -75,7 +79,19 @@
 				end = this.phoneNumCode.slice(7);
 				console.log(start, end);
 				return start + '****' + end;
-			}
+			},
+			userName() {
+				let nickName = this.$store.state.user.nickName;
+				if(nickName.length>0) {
+					return nickName;
+				} else {
+					return '未登录'
+				}
+			},
+		},
+		onShow() {
+			console.log('检查登录状态',this.$store.state.isLogin);
+			this.isLogin = this.$store.state.isLogin;
 		},
 		methods: {
 			/** 
@@ -84,6 +100,13 @@
 			 **/
 			logout() {
 				console.log('退出')
+				this.$store.commit('changeLoginState',false); // 登录状态改为false
+				this.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
+				this.isLogin = false;
+				this.showLogout = true;
+			},
+			login() {
+				console.log('去登录');
 				uni.navigateTo({
 					url: '/pages/me/login'
 				})

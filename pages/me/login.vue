@@ -17,8 +17,6 @@
 				@click="login"
 				open-type="getUserInfo"
 				@getuserinfo="userInfo"
-
-				bindgetphonenumber="getPhoneNumber"
 				>
 					微信授权登录
 				</u-button>
@@ -58,28 +56,28 @@
 			// 登录微信
 			login() {
 				if (this.isChecked === true) {
-					console.log(this.value, '调用微信登录接口')
+					console.log('调用微信登录接口')
 					// 获取供应商
 					uni.getProvider({
 						service: 'oauth', // 服务类型: oauth 授权登录 payment 支付 share 分享
 						success: (res) => {
+							const _this = this;
 							// success 返回参数说明 service(服务类型)  provider(得到的服务供应商)
 							if (~res.provider.indexOf('weixin')) {
 								uni.login({
 									provider: 'weixin',
-									success: function(loginRes) {
-										console.log(JSON.stringify(loginRes.errMsg));
-										console.log(JSON.stringify(loginRes.code, loginRes.authResult));
-										// 登录
-										uni.login({
+									success: (loginRes) => {
+										// 获取用户信息
+										uni.getUserInfo({
 											provider: 'weixin',
-											success: function(infoRes) {
-												console.log('打印登录信息', infoRes);
+											success: (loginRes) => {
+												_this.$store.commit('changeLoginState', true);
+												console.log('打印登录信息', loginRes,'是否已登录呢？',this.$store.state.isLogin);
 												uni.switchTab({
 													url: '/pages/me/index',
 												})
 											},
-											fail: function(err) {
+											fail: (err) => {
 												console.log('登录失败了')
 												// uni.showToast({
 												// 	icon: 'none',
@@ -104,7 +102,9 @@
 
 			// 用户登录信息
 			userInfo(info) {
-				console.log('用户信息', info.detail.userInfo);
+				console.log('用户信息', info.detail.userInfo); // 将用户信息存入VUEX
+				this.$store.state.user.nickName = info.detail.userInfo.nickName; 
+				this.$store.state.user.avatarUrl = info.detail.userInfo.avatarUrl;
 			},
 			// 跳到隐私条款页面
 			serviceItem() {
