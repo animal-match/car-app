@@ -94,21 +94,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components = {
-  uGap: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 161))
-  },
-  uSwiper: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 168))
-  },
-  uImage: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 175))
-  },
-  uButton: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 182))
-  },
-  uTag: function() {
-    return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 189))
+var components
+try {
+  components = {
+    uGap: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 171))
+    },
+    uSwiper: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 178))
+    },
+    uImage: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 185))
+    },
+    uButton: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 192))
+    },
+    uTag: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 199))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
   }
 }
 var render = function() {
@@ -379,11 +398,19 @@ var _default =
     goDetailsPage: function goDetailsPage(pageName) {
       switch (pageName) {
         case 'supply':
+          uni.setStorageSync(
+          'tabBarIndex',
+          1);
+
           uni.switchTab({
             url: '/pages/require/index' });
 
           break;
         case 'require':
+          uni.setStorageSync(
+          'tabBarIndex',
+          2);
+
           uni.switchTab({
             url: '/pages/require/index' });
 
@@ -392,7 +419,15 @@ var _default =
           uni.navigateTo({
             url: '/pages/me/merchant-enter/index' });
 
-          break;}
+          break;
+        case 'supNeed':
+          uni.setStorageSync(
+          'tabBarIndex',
+          0);
+
+          uni.switchTab({
+            url: '/pages/require/index' });}
+
 
     },
     /**
@@ -401,17 +436,19 @@ var _default =
         **/
     toMerchantPage: function toMerchantPage(pageName) {
       console.log(pageName);
-      uni.switchTab({
-        url: '../merchants/index' });
+      switch (pageName) {
+        case 'manufacturers':
+          uni.setStorageSync('pageIndex', 0);
+          uni.switchTab({
+            url: '../merchants/index' });
 
-    },
-    /**
-        * @desc 点击更多跳转到供求页
-        * @param {string}
-        **/
-    supplyDemand: function supplyDemand() {
-      uni.switchTab({
-        url: '/pages/require/index' });
+          break;
+        case 'dealer':
+          uni.setStorageSync('pageIndex', 1);
+          uni.switchTab({
+            url: '../merchants/index' });
+
+          break;}
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

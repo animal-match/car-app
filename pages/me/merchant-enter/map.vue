@@ -33,7 +33,7 @@
 	.map-page {
 		.map {
 			width: 100%;
-			height: 1000vh;
+			height: 500rpx;
 		}
 	}
 </style>

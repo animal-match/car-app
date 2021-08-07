@@ -139,7 +139,15 @@
 				}
 			}
 		},
-		
+		onShow() {
+			this.currentTab = 0;
+			const that = this;
+			console.log('页面加载')
+			const value = uni.getStorageSync('tabBarIndex') || 0;
+			that.currentTab = value;
+			uni.removeStorageSync('tabBarIndex')
+		},
+
 		methods: {
 			/**
 			 * @desc 切换选项卡
@@ -185,10 +193,6 @@
 		onReady() {
 			this.$refs.ruleForm.setRules(this.rules);
 			this.$refs.ruleFormMore.setRules(this.rulesMore);
-		},
-		
-		onLoad(options) {
-			console.log(options)
 		},
 	}
 </script>

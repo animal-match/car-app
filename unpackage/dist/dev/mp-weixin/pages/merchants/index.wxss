@@ -88,8 +88,7 @@
   height: 82rpx;
   line-height: 82rpx;
   text-align: center;
-  -webkit-border-bottom-right-radius: 20rpx;
-          border-bottom-right-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
   border-top: 2rpx solid #f8f8f8;
 }
 .nav-and-list .left-nav-bar ._ul .list.data-v-bdd919f6 {
@@ -106,8 +105,7 @@
   overflow-y: auto;
 }
 .nav-and-list .right-list-bar .information-block.data-v-bdd919f6 {
-  -webkit-border-radius: 20rpx;
-          border-radius: 20rpx;
+  border-radius: 20rpx;
   margin: 0 30rpx 20rpx 15rpx;
   padding: 28rpx 15rpx;
   background-color: #fff;

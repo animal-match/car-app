@@ -95,7 +95,7 @@
 			<!-- 供求信息。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">供求信息</view>
-				<view class="manufacturers-title-more" @click="supplyDemand">更多 ></view>
+				<view class="manufacturers-title-more" @click="goDetailsPage('supNeed')">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
@@ -229,11 +229,19 @@
 			goDetailsPage(pageName) {
 				switch (pageName) {
 					case 'supply':
+						uni.setStorageSync(
+							'tabBarIndex',
+							 1,
+						);
 						uni.switchTab({
 							url: '/pages/require/index',
 						})
 					break;
 					case 'require':
+						uni.setStorageSync(
+							'tabBarIndex',
+							 2,
+						);
 					  uni.switchTab({
 					  	url: '/pages/require/index',
 					  })
@@ -243,6 +251,14 @@
 							url: '/pages/me/merchant-enter/index',
 						})
 					break;
+					case 'supNeed':
+					uni.setStorageSync(
+						'tabBarIndex',
+						 0,
+					);
+					uni.switchTab({
+						url: '/pages/require/index',
+					})
 				}
 			},
 			/**
@@ -251,18 +267,20 @@
 			 **/
 			toMerchantPage(pageName) {
 				console.log(pageName)
-				uni.switchTab({
-					url: '../merchants/index'
-				})
-			},
-			/**
-			 * @desc 点击更多跳转到供求页
-			 * @param {string}
-			 **/
-			supplyDemand() {
-				uni.switchTab({
-					url: '/pages/require/index',
-				})
+				switch(pageName) {
+					case 'manufacturers':
+						uni.setStorageSync('pageIndex',0);
+						uni.switchTab({
+							url: '../merchants/index'
+						})
+					break;
+					case 'dealer':
+					  uni.setStorageSync('pageIndex',1);
+						uni.switchTab({
+							url: '../merchants/index'
+						})
+					break;
+				}
 			}
 		}
 	}

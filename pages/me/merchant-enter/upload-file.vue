@@ -218,9 +218,9 @@
 				padding: 20rpx 0;
 				display: flex;
 				flex-wrap: wrap;
+				justify-content: space-evenly;
 				.pics,.video {
-					margin-bottom: 15rpx;
-					margin-right: 15rpx;
+					margin: 0 15rpx 15rpx 0 !important;
 				}
 				.close-btn {
 					position: relative;

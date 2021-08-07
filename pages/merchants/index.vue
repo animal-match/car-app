@@ -8,7 +8,7 @@
 		<view class="search">
 			<u-form :model="form">
 				<u-form-item label="搜索">
-					<u-input v-model="form.searchKey" />
+					<u-input v-model="form.searchKey" confirm-type="search" @confirm="search"/>
 				</u-form-item>
 			</u-form>
 		</view>
@@ -225,10 +225,25 @@
 						name: "经销商"
 					}
 				],
-
 			}
 		},
+		onShow() {
+			this.currentTab = 0;
+			const that = this;
+				console.log('页面加载')
+				const value = uni.getStorageSync('pageIndex') || 0;
+				console.log('value',value)
+				that.currentTab = value;
+		},
 		methods: {
+			/**
+			 * @desc 输入框搜索事件
+			 * @param
+			 **/
+			search() {
+				// 点搜索后调用页面接口
+				console.log(this.form.searchKey);
+			},
 			/**
 			 * @desc 切换选项卡
 			 * @param {number}
