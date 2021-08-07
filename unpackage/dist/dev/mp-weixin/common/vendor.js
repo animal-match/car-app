@@ -12264,6 +12264,71 @@ function sys() {
 
 /***/ }),
 
+/***/ 357:
+/*!*********************************************!*\
+  !*** D:/Uniapp/carApp/utils/httpRequest.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(uni) {// 封装网络请求
+module.exports = function (params) {
+  var baseUrl = '';
+  var url = baseUrl + params.url;
+  var method = params.methods;
+  var header = params.header || {};
+  var data = params.data || {};
+  // GET或POST请求方式
+  if (method) {
+    method = method.toUpperCase();
+    if (method === 'POST') {
+      header = {
+        "content-type": "application/x-www-form-urlencoded",
+        "token": uni.getStorageSync("token") };
+
+    }
+  }
+  if (!params.hideLoading) {
+    uni.showLoading({
+      title: '加载中',
+      mask: true });
+
+  }
+  // 发起请求
+  uni.request({
+    url: url,
+    method: method || "GET",
+    header: header,
+    data: data,
+    dataType: "json",
+    sslVerify: false,
+    success: function success(res) {
+      if (res.statusCode && res.statusCode !== 200) {
+        uni.showModal({
+          content: res.msg });
+
+        return false;
+      }
+      typeof params.success == "function" && params.success(res.data);
+    },
+    fail: function fail(err) {
+      uni.showModal({
+        content: err.msg });
+
+      typeof params.fail == "function" && params.fail(err.data);
+    },
+    complete: function complete(e) {
+      console.log('请求完成');
+      uni.hideLoading();
+      typeof params.complete == "function" && params.complete(e.data);
+      return;
+    } });
+
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 36:
 /*!************************************************************************!*\
   !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/debounce.js ***!

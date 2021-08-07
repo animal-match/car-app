@@ -210,9 +210,28 @@
 			}
 		},
 		onLoad() {
-
+			// 请求示例
+			this.getList();
 		},
 		methods: {
+			/**
+			 * @desc 请求页面数据
+			 * @param
+			 **/
+			 getList() {
+				 this.$request({
+					 url: "",
+					 method: "POST",
+					 data: {}, // 请求参数
+					 // hideLoading: true,
+					 success: res=> {
+						 console.log(res);
+					 },
+					 fail: err=> {
+						 console.log(err);
+					 }
+				 })
+			 },
 			/**
 			 * @desc 跳转商家进店页面
 			 * @param

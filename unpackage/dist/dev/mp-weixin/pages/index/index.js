@@ -379,13 +379,32 @@ var _default =
 
   },
   onLoad: function onLoad() {
-
+    // 请求示例
+    this.getList();
   },
   methods: {
     /**
-              * @desc 跳转商家进店页面
+              * @desc 请求页面数据
               * @param
               **/
+    getList: function getList() {
+      this.$request({
+        url: "",
+        method: "POST",
+        data: {}, // 请求参数
+        // hideLoading: true,
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(err) {
+          console.log(err);
+        } });
+
+    },
+    /**
+        * @desc 跳转商家进店页面
+        * @param
+        **/
     handleClick: function handleClick() {
       uni.navigateTo({
         url: '/pages/merchants/merchant-into-store/index' });
