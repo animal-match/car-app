@@ -29,6 +29,7 @@
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text class="address ellipsis">成都市金牛区二环路北二段199号</text>
+			<u-button type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
@@ -157,7 +158,16 @@
 				 uni.navigateTo({
 				 	url: '/pages/me/my-supply-info/index'
 				 })
-			 },				 
+			 },
+			 /**
+			  * @desc 跳转到留言列表
+			  * @param 
+			  **/
+			 sendMessage() {
+				  uni.navigateTo({
+				  	url: 'sendMessage'
+				  })
+			 },
 		}
 	}
 </script>
@@ -221,7 +231,7 @@
 				width: 400rpx;
 			}
 			.u-btn {
-				
+				margin-right: 20rpx;
 			}
 		}
 		// 底部部分

@@ -24,7 +24,13 @@
 		{
 			"path": "pages/merchants/merchant-into-store/index",
 			"style": {
-				"navigationBarTitleText": "商家-进店"
+				"navigationBarTitleText": "店铺"
+			}
+		},
+		{
+			"path": "pages/merchants/merchant-into-store/sendMessage",
+			"style": {
+				"navigationBarTitleText": "留言"
 			}
 		},
 		{
