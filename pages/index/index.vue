@@ -38,7 +38,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view class="information-block" v-for="(_item,_index) in informations" :key="_index">
+			<view @click="handleClick" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
@@ -68,7 +68,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view class="information-block" v-for="(item2,index2) in informations" :key="index2">
+			<view @click="handleClick" class="information-block" v-for="(item2,index2) in informations" :key="index2">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
@@ -99,7 +99,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in infos" :key="index4" class="information-require">
+			<view v-for="(item4,index4) in infos" @click="goDetails" :key="index4" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
@@ -300,7 +300,16 @@
 						})
 					break;
 				}
-			}
+			},
+			/**
+			 * @desc 跳转供求详情页
+			 * @param {string}
+			 **/
+			goDetails() {
+				uni.navigateTo({
+					url: '/pages/require/details/index'
+				})
+			},
 		}
 	}
 </script>

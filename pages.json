@@ -16,6 +16,12 @@
 			}
 		},
 		{
+			"path": "pages/require/details/index",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
 			"path": "pages/merchants/index",
 			"style": {
 				"navigationBarTitleText": "商家"

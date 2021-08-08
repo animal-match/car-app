@@ -4,7 +4,7 @@
 		<view class="container">
 			<u-gap height="42"></u-gap>
 			<!-- 我的名片 -->
-			<view class="business-card">
+			<view @click="login" class="business-card">
 				<view class="vip">
 					<u-image src="/static/user-center-images/golden_vip.png" width="22rpx" height="28rpx"></u-image>
 					<text class="normal-vip font-24">普通会员</text>
@@ -105,11 +105,16 @@
 				this.isLogin = false;
 				this.showLogout = true;
 			},
+			/**
+			 * @description 登录
+			 * @param {}
+			 **/
 			login() {
-				console.log('去登录');
-				uni.navigateTo({
-					url: '/pages/me/login'
-				})
+				if(this.isLogin==false) {
+					uni.navigateTo({
+						url: '/pages/me/login'
+					})
+				}
 			},
 
 			/**

@@ -85,14 +85,13 @@
 						nickName: '我是复制人',
 						dateTime: '2021/10/10 19:33:50',
 						sendMessage: '你们家有5台三轮吗？给我来5台',
-						// answerMessage: '有的哦亲',
+						answerMessage: '有的哦亲',
 					}
 				],
 				activeItem: 1, // 展开选中的其中一个列表
 				replyItem: 1, // 回复的对象
 				isShow: false, // 显示回复框
 				isDisabled: false, // 是否禁用输入框
-				answerTimes: 0, // 回复次数
 				form: {
 					message: '', // 输入留言
 				},
@@ -105,9 +104,6 @@
 		onShow() {
 			let value = uni.getStorageSync('answerTimes'); // 页面初始化获取已回复的次数
 			this.answerTimes = value || 0;
-			console.log('回复次数',this.answerTimes);
-			// let value2 = uni.getStorageSync('replyObj');
-			// this.replyItem = value2 || 1;
 		},
 		methods: {
 			/**

@@ -24,7 +24,7 @@
 			<!-- 右侧为列表 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
 				<!-- 最外层大盒子 Start-->
-				<view class="information-block" v-for="(_item,_index) in informations" :key="_index">
+				<view @click="goToStore" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 					<!-- 第一行 Logo 标题 按钮 -->
 					<view class="first-line">
 						<!-- 左侧 Logo和标题 -->
