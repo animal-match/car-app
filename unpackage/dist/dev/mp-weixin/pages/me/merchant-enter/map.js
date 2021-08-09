@@ -39,7 +39,7 @@ var renderjs
 
 /* normalize component */
 
-var component = Object(_C_Hbuilder_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_HBuilderX_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _map_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _map_vue_vue_type_template_id_1156b78e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _map_vue_vue_type_template_id_1156b78e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],

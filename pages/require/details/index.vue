@@ -89,6 +89,13 @@
 					}
 				],
 			}
+		},
+		methods: {
+			goDetails() {
+				uni.navigateTo({
+					url: '/pages/require/details/index'
+				})
+			},
 		}
 	}
 </script>
