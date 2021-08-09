@@ -87,12 +87,18 @@
           align-items: center;
   margin: 0 50rpx;
 }
+.merchant-into-store .center-container .btn-position.data-v-088d3d62 {
+  margin: 0 25rpx 0 15rpx;
+}
 .merchant-into-store .center-container .address.data-v-088d3d62 {
   display: inline-block;
   color: #999;
   margin-left: 22rpx;
   font-size: 24rpx;
   width: 400rpx;
+}
+.merchant-into-store .center-container .u-btn.data-v-088d3d62 {
+  margin-right: 20rpx;
 }
 .merchant-into-store .bottom-container.data-v-088d3d62 {
   margin: 30rpx 46rpx;

@@ -107,12 +107,16 @@
 }
 .upload .container .upload-image .close-btn, .upload .container .upload-video .close-btn {
   position: relative;
-  bottom: 185rpx;
+  bottom: 202rpx;
   left: 175rpx;
+}
+.upload .container .upload-image .u-image__image, .upload .container .upload-video .u-image__image {
+  position: relative !important;
+  bottom: -12rpx !important;
 }
 .upload .container .upload-image .delete-btn, .upload .container .upload-video .delete-btn {
   position: relative;
-  bottom: 240rpx;
+  bottom: 255rpx;
   left: 280rpx;
 }
 .upload .container .upload-image .video, .upload .container .upload-video .video {

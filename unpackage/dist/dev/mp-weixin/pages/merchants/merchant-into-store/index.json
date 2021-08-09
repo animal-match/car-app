@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "商家-进店",
+  "navigationBarTitleText": "店铺",
   "usingComponents": {
     "u-image": "/node-modules/uview-ui/components/u-image/u-image",
     "u-button": "/node-modules/uview-ui/components/u-button/u-button",

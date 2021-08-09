@@ -12,7 +12,7 @@
 				<!-- 名片详情 -->
 				<view class="card-details">
 					<view class="avatar">
-						<u-image :src="$store.state.user.avatarUrl.length>0?$store.state.user.avatarUrl:'/static/user-center-images/avatar.png'" shape="circle" width="140rpx" height="140rpx"></u-image>
+						<u-image :src="avatar.length>0 ? avatar:'/static/user-center-images/avatar.png'" shape="circle" width="140rpx" height="140rpx"></u-image>
 						<view class="nickname-phone">
 							<view class="nickname">{{userName}}</view>
 							<view v-if="isLogin===true" class="phone font-28">{{ phoneNum }}</view>
@@ -46,6 +46,7 @@
 	export default {
 		data() {
 			return {
+				avatar: '', // 用户头像
 				showLogout: false, // 打开退出登录弹窗
 				isLogin: false, // 用户是否登录
 				phoneNumCode: '15828292076',
@@ -92,6 +93,10 @@
 		onShow() {
 			console.log('检查登录状态',this.$store.state.isLogin);
 			this.isLogin = this.$store.state.isLogin;
+			console.log('用户头像',this.$store.state.user.avatarUrl);
+			this.$nextTick(function(){
+				this.avatar = this.$store.state.user.avatarUrl;
+			})
 		},
 		methods: {
 			/** 

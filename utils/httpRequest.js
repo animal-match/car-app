@@ -1,8 +1,8 @@
 // 封装网络请求
 module.exports = (params) => {
-	const baseUrl = '';
+	const baseUrl = 'https://yanxu.n867.cn/index.php';
 	let url = baseUrl + params.url;
-	let method = params.methods;
+	let method = params.method;
 	let header = params.header || {};
 	let data = params.data || {};
 	// GET或POST请求方式
@@ -30,7 +30,7 @@ module.exports = (params) => {
 		dataType: "json",
 		sslVerify: false,
 		success: (res) => {
-			if(res.statusCode && res.statusCode !== 200) {
+			if(res.code && res.code !== 1) {
 				uni.showModal({
 					content: res.msg
 				})

@@ -30,7 +30,7 @@
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text class="address ellipsis">成都市金牛区二环路北二段199号</text>
 			<u-button type="error" size="mini" @click="sendMessage">留言</u-button>
-			<u-button type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
+			<u-button class="btn-position" type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
 			</u-button>
@@ -223,6 +223,9 @@
 			justify-content: space-between;
 			align-items: center;
 			margin: 0 50rpx;
+			.btn-position {
+				margin: 0 25rpx 0 15rpx;
+			}
 			.address {
 				display: inline-block;
 				color: $uni-text-color-grey;

@@ -31,8 +31,8 @@
 						<view class="left-block">
 							<u-image :src="_item.image" width="80rpx" height="80rpx" shape="circle"></u-image>
 							<view class="title-and-text">
-								<view class="title ellipsis">{{_item.title}}</view>
-								<view class="text ellipsis">{{_item.subtitle}}</view>
+								<view class="title ellipsis">{{_item.store_name}}</view>
+								<view class="text ellipsis">{{_item.information}}</view>
 							</view>
 						</view>
 						<view class="right-block">
@@ -56,95 +56,23 @@
 		data() {
 			return {
 				scrollTop: 0, // 距离顶部多少时设置滚动条
-				informations: [{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
-					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
-					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
-					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					}, {
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
+				informations: [
+					// {
+					// 	image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
+					// 	title: '成都市保时捷汽车有限公司',
+					// 	subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
+					// 	imageList: [{
+					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
+					// 		},
+					// 		{
+					// 			img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
+					// 		},
+					// 		{
+					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
+					// 		},
+					// 		{
+					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
+					// 		}
 				],
 				searchValue: '', // 搜索条件
 				type: 'text',
@@ -164,60 +92,8 @@
 						id: 3,
 						name: '承诺'
 					},
-					{
-						id: 4,
-						name: '形容'
-					},
-					{
-						id: 5,
-						name: '解锁'
-					},
-					{
-						id: 6,
-						name: '省份'
-					},
-					{
-						id: 7,
-						name: '承诺'
-					},
-					{
-						id: 8,
-						name: '形容'
-					},
-					{
-						id: 9,
-						name: '解锁'
-					},
-					{
-						id: 10,
-						name: '省份'
-					},
-					{
-						id: 11,
-						name: '承诺'
-					},
-					{
-						id: 12,
-						name: '形容'
-					},
-					{
-						id: 13,
-						name: '解锁'
-					},
-					{
-						id: 14,
-						name: '省份'
-					},
-					{
-						id: 15,
-						name: '承诺'
-					},
-					{
-						id: 16,
-						name: '形容'
-					}
 				],
-				currentTab: 0, // 当前tab的索引
+				currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
 				tabList: [{
 						name: "厂商"
 					},
@@ -229,13 +105,27 @@
 		},
 		onShow() {
 			this.currentTab = 0;
-			const that = this;
-				console.log('页面加载')
-				const value = uni.getStorageSync('pageIndex') || 0;
-				console.log('value',value)
-				that.currentTab = value;
+			this.getStoreList();
 		},
 		methods: {
+			/**
+			 * @desc 获取商家列表
+			 * @param
+			 **/
+			getStoreList() {
+				this.$request({
+					url: "/api/store/index",
+					method: "GET",
+					data: { type: this.currentTab },
+					success: res=> {
+											 console.log('成功',res);
+							this.informations = res.data.data;
+					},
+					fail: err=> {
+											 console.log(err);
+					}
+				})
+			},
 			/**
 			 * @desc 输入框搜索事件
 			 * @param
@@ -250,6 +140,7 @@
 			 **/
 			change(index) {
 				this.currentTab = index;
+				this.getStoreList();
 			},
 			/**
 			 * @desc 左侧导航切换

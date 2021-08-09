@@ -42,6 +42,7 @@
 				loginToast: '登录失败', // 微信登录失败提示
 				isChecked: false, // 是否勾选协议
 				name: 'ckeckBox',
+				openid: '',
 			}
 		},
 		methods: {
@@ -67,22 +68,27 @@
 								uni.login({
 									provider: 'weixin',
 									success: (loginRes) => {
+										let code = loginRes.code; // 登录code
 										// 获取用户信息
 										uni.getUserInfo({
 											provider: 'weixin',
 											success: (loginRes) => {
 												_this.$store.commit('changeLoginState', true);
 												console.log('打印登录信息', loginRes,'是否已登录呢？',this.$store.state.isLogin);
-												uni.switchTab({
-													url: '/pages/me/index',
-												})
+												let info = {
+													encryptedData: loginRes.encryptedData,
+													signature: loginRes.signature,
+													iv: loginRes.iv,
+													refresh: true,  // 重新获取或刷新最新的用户信息
+													pid: '', // 	上级用户id
+												}
+												this.getSessionKey(code,info);
 											},
 											fail: (err) => {
-												console.log('登录失败了')
-												// uni.showToast({
-												// 	icon: 'none',
-												// 	title: err
-												// })
+												uni.showToast({
+													icon: 'none',
+													title: '获取用户信息失败'
+												})
 											}
 										})
 									}
@@ -109,6 +115,59 @@
 			// 跳到隐私条款页面
 			serviceItem() {
 				console.log('跳到隐私条款页面')
+			},
+			// 获取sessionKey
+			getSessionKey(code,info) {
+				this.$request({
+					url: "/api/user/getWxMiniProgramSessionKey",
+					method: "GET",
+					data: {
+						code: code
+					},
+					success: res=> {
+						const key = res.data.session_key;
+						this.openid = res.data.openid;
+						this.userLogin(info,key); // 服务器后台登录操作
+					},
+					fail: err=> {
+						console.log('每有得到session',err);
+					}
+				}) 
+			},
+			// 登录接口
+			userLogin(data,sessionKey) {
+				this.$request({
+					url: "/api/user/wxMiniProgramOauth",
+					method: "POST",
+					data: {
+						session_key: sessionKey,
+						...data
+					},
+					success: res => {
+						console.log('登录success',res);
+						this.token = res.data.token; // 获取token
+						uni.setStorageSync("token",this.token); // 保存token到缓存中
+						// 会员中心接口 获取用户头像，手机号码, vip状态
+						this.$request({
+							url: "/api/user/index",
+							data: { token: this.token },
+							success: res => {
+								console.log('用户中心',res);
+								let isVip = res.data.user.is_vip; // 0 非会员 1会员
+								uni.setStorageSync("isVip",isVip); // 把会员状态存入缓存
+							}
+						})
+						uni.switchTab({
+							url: '/pages/me/index',
+						})
+					},
+					fail: res => {
+						uni.showToast({
+							icon: "none",
+							title: "登录失败"
+						})
+					}
+				})
 			}
 		}
 	}

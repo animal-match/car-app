@@ -224,12 +224,16 @@
 				}
 				.close-btn {
 					position: relative;
-					bottom: 185rpx;
+					bottom: 202rpx;
 					left: 175rpx;
+				}
+				/deep/.u-image__image {
+					position: relative !important;
+					bottom: -12rpx !important;
 				}
 				.delete-btn {
 					position: relative;
-					bottom: 240rpx;
+					bottom: 255rpx;
 					left: 280rpx;
 				}
 				.video {

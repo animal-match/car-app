@@ -220,7 +220,7 @@
 			 **/
 			 getList() {
 				 this.$request({
-					 url: "",
+					 url: "/",
 					 method: "POST",
 					 data: {}, // 请求参数
 					 // hideLoading: true,

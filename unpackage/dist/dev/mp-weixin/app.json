@@ -2,8 +2,10 @@
   "pages": [
     "pages/index/index",
     "pages/require/index",
+    "pages/require/details/index",
     "pages/merchants/index",
     "pages/merchants/merchant-into-store/index",
+    "pages/merchants/merchant-into-store/sendMessage",
     "pages/merchants/payment/index",
     "pages/merchants/payment/pay-success",
     "pages/me/index",
@@ -54,5 +56,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap73.json"
 }
