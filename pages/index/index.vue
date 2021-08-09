@@ -38,7 +38,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view class="information-block" v-for="(_item,_index) in informations" :key="_index">
+			<view @click="handleClick" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
@@ -55,7 +55,7 @@
 				</view>
 				<!-- 第二行 图片组 -->
 				<view class="second-line">
-					<u-image v-for="($item,$index) in _item.imageList" :key="$item.img" class="image-list" :src="$item.img" width="160rpx"
+					<u-image v-for="($item,$index) in _item.imageList" :key="$index" class="image-list" :src="$item.img" width="160rpx"
 					 height="110rpx"></u-image>
 				</view>
 			</view>
@@ -68,15 +68,15 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view class="information-block" v-for="(_item,_index) in informations" :key="_index">
+			<view @click="handleClick" class="information-block" v-for="(item2,index2) in informations" :key="index2">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
 					<view class="left-block">
-						<u-image :src="_item.image" width="80rpx" height="80rpx" shape="circle"></u-image>
+						<u-image :src="item2.image" width="80rpx" height="80rpx" shape="circle"></u-image>
 						<view class="title-and-text">
-							<view class="title ellipsis">{{_item.title}}</view>
-							<view class="text ellipsis">{{_item.subtitle}}</view>
+							<view class="title ellipsis">{{item2.title}}</view>
+							<view class="text ellipsis">{{item2.subtitle}}</view>
 						</view>
 					</view>
 					<view class="right-block">
@@ -85,7 +85,7 @@
 				</view>
 				<!-- 第二行 图片组 -->
 				<view class="second-line">
-					<u-image v-for="(item,index) in _item.imageList" :key="index" class="image-list" :src="item.img" width="160rpx"
+					<u-image v-for="(item3,index3) in item2.imageList" :key="index3" class="image-list" :src="item3.img" width="160rpx"
 					 height="110rpx"></u-image>
 				</view>
 			</view>
@@ -95,39 +95,39 @@
 			<!-- 供求信息。。。更多 -->
 			<view class="manufacturers-title">
 				<view class="manufacturers-title-merchant">供求信息</view>
-				<view class="manufacturers-title-more" @click="supplyDemand">更多 ></view>
+				<view class="manufacturers-title-more" @click="goDetailsPage('supNeed')">更多 ></view>
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(_item,_index) in infos" :key="_index" class="information-require">
+			<view v-for="(item4,index4) in infos" @click="goDetails" :key="index4" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
 					<view class="left-block-other" >
 						<u-tag text="求购" mode="dark" />
 						<view class="title-other ellipsis">
-							<view class="title ellipsis">{{_item.title}}</view>
+							<view class="title ellipsis">{{item4.title}}</view>
 						</view>
 					</view>
 					<view class="right-block">
-						{{_item.city}}
+						{{item4.city}}
 					</view>
 				</view>
 				<!-- 第二行 描述 -->
 				<view class="second-line-other multi-ellipsis">
-					{{_item.desc}}
+					{{item4.desc}}
 				</view>
 				<!-- 第三行 头像 昵称 时间 -->
 				<view class="third-line-other">
 					<!-- 左侧 头像 昵称 -->
 					<view class="left-nickname">
-						<u-image :src="_item.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
+						<u-image :src="item4.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
 						<view class="nickname">
-							{{_item.nickname}}
+							{{item4.nickname}}
 						</view>
 					</view>
 					<!-- 右侧 时间 -->
-					<view class="date-other">{{_item.date}}</view>
+					<view class="date-other">{{item4.date}}</view>
 				</view>
 			</view>
 			<!-- 最外层大盒子End -->
@@ -210,9 +210,28 @@
 			}
 		},
 		onLoad() {
-
+			// 请求示例
+			this.getList();
 		},
 		methods: {
+			/**
+			 * @desc 请求页面数据
+			 * @param
+			 **/
+			 getList() {
+				 this.$request({
+					 url: "",
+					 method: "POST",
+					 data: {}, // 请求参数
+					 // hideLoading: true,
+					 success: res=> {
+						 console.log(res);
+					 },
+					 fail: err=> {
+						 console.log(err);
+					 }
+				 })
+			 },
 			/**
 			 * @desc 跳转商家进店页面
 			 * @param
@@ -229,11 +248,19 @@
 			goDetailsPage(pageName) {
 				switch (pageName) {
 					case 'supply':
+						uni.setStorageSync(
+							'tabBarIndex',
+							 1,
+						);
 						uni.switchTab({
 							url: '/pages/require/index',
 						})
 					break;
 					case 'require':
+						uni.setStorageSync(
+							'tabBarIndex',
+							 2,
+						);
 					  uni.switchTab({
 					  	url: '/pages/require/index',
 					  })
@@ -243,6 +270,14 @@
 							url: '/pages/me/merchant-enter/index',
 						})
 					break;
+					case 'supNeed':
+					uni.setStorageSync(
+						'tabBarIndex',
+						 0,
+					);
+					uni.switchTab({
+						url: '/pages/require/index',
+					})
 				}
 			},
 			/**
@@ -251,19 +286,30 @@
 			 **/
 			toMerchantPage(pageName) {
 				console.log(pageName)
-				uni.switchTab({
-					url: '../merchants/index'
-				})
+				switch(pageName) {
+					case 'manufacturers':
+						uni.setStorageSync('pageIndex',0);
+						uni.switchTab({
+							url: '../merchants/index'
+						})
+					break;
+					case 'dealer':
+					  uni.setStorageSync('pageIndex',1);
+						uni.switchTab({
+							url: '../merchants/index'
+						})
+					break;
+				}
 			},
 			/**
-			 * @desc 点击更多跳转到供求页
+			 * @desc 跳转供求详情页
 			 * @param {string}
 			 **/
-			supplyDemand() {
-				uni.switchTab({
-					url: '/pages/require/index',
+			goDetails() {
+				uni.navigateTo({
+					url: '/pages/require/details/index'
 				})
-			}
+			},
 		}
 	}
 </script>

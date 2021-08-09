@@ -41,7 +41,7 @@
 					</view>
 					<!-- 右侧 时间 -->
 					<view class="operation-btn">
-						<u-button type="primary" size="mini" class="check">查看</u-button>
+						<u-button @click="goDetails" type="primary" size="mini" class="check">查看</u-button>
 						<u-button type="error" size="mini" class="delete">删除</u-button>
 					</view>
 				</view>
@@ -144,6 +144,10 @@
 			}
 		},
 		methods: {
+			/**
+			 * @desc 切换tab标签
+			 * @param {string}
+			 **/
 			switchTab(btnId) {
 				console.log(btnId);
 				if(btnId === 1) {
@@ -151,7 +155,16 @@
 				}else {
 					this.activeItem = 2;
 				}
-			}
+			},
+			/**
+			 * @desc 跳转供求详情页
+			 * @param {string}
+			 **/
+			goDetails() {
+				uni.navigateTo({
+					url: '/pages/require/details/index'
+				})
+			},
 		}
 	}
 </script>

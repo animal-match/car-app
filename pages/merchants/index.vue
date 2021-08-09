@@ -8,7 +8,7 @@
 		<view class="search">
 			<u-form :model="form">
 				<u-form-item label="搜索">
-					<u-input v-model="form.searchKey" />
+					<u-input v-model="form.searchKey" confirm-type="search" @confirm="search"/>
 				</u-form-item>
 			</u-form>
 		</view>
@@ -24,7 +24,7 @@
 			<!-- 右侧为列表 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
 				<!-- 最外层大盒子 Start-->
-				<view class="information-block" v-for="(_item,_index) in informations" :key="_index">
+				<view @click="goToStore" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 					<!-- 第一行 Logo 标题 按钮 -->
 					<view class="first-line">
 						<!-- 左侧 Logo和标题 -->
@@ -225,10 +225,25 @@
 						name: "经销商"
 					}
 				],
-
 			}
 		},
+		onShow() {
+			this.currentTab = 0;
+			const that = this;
+				console.log('页面加载')
+				const value = uni.getStorageSync('pageIndex') || 0;
+				console.log('value',value)
+				that.currentTab = value;
+		},
 		methods: {
+			/**
+			 * @desc 输入框搜索事件
+			 * @param
+			 **/
+			search() {
+				// 点搜索后调用页面接口
+				console.log(this.form.searchKey);
+			},
 			/**
 			 * @desc 切换选项卡
 			 * @param {number}

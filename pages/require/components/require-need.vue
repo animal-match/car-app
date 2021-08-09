@@ -11,7 +11,7 @@
 			<u-gap height="26"></u-gap>
 			
 			<!-- 循环结构 主体内容-->
-			<view v-for="(_item,_index) in infos" :key="_index" class="information-require">
+			<view v-for="(_item,_index) in infos" :key="_index" class="information-require" @click="goDetails">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
@@ -140,6 +140,7 @@
 			}
 		},
 		methods: {
+			// 切换tab标签页
 			switchTab(btnId) {
 				console.log(btnId);
 				if(btnId === 1) {
@@ -147,7 +148,14 @@
 				}else {
 					this.activeItem = 2;
 				}
-			}
+			},
+			// 跳转供求详情页
+			goDetails() {
+				console.log('1')
+				uni.navigateTo({
+					url: '/pages/require/details/index'
+				})
+			},
 		}
 	}
 </script>

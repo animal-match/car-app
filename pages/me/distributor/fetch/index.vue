@@ -23,7 +23,7 @@
 		</view>
 		<!-- 提现按钮 -->
 		<view class="confirm-btn">
-			<u-button type="error" shape="circle" size="default">全部提现</u-button>
+			<u-button type="error" shape="circle" size="default">确认提现</u-button>
 		</view>
 		<!-- 提现记录 -->
 		<view class="fetch-records">

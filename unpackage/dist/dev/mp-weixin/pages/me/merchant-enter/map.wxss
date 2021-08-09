@@ -26,6 +26,14 @@
 /* 文章场景相关 */
 .map-page .map.data-v-1156b78e {
   width: 100%;
-  height: 1000vh;
+  height: 500rpx;
+}
+.selected-position.data-v-1156b78e {
+  margin: 30rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.selected-position text.data-v-1156b78e:last-child {
+  color: #CA0303;
 }
 

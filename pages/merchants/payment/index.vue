@@ -9,14 +9,14 @@
 		</view>
 		<view class="common-style payment-way">请选择支付方式</view>
 		<view class="bankcard-box">
-			<!-- 左侧 银联图片 银行卡 描述 -->
+			<!-- 左侧 微信图片 微信支付 描述 -->
 			<view class="left-card">
 				<view class="card-box">
-					<u-image src="/static/user-center-images/union.png" width="80" height="80"></u-image>
+					<u-image src="/static/user-center-images/union.png" width="80" height="72"></u-image>
 				</view>
 				<view class="desc">
 					<ul>
-						<li>银行卡</li>
+						<li>微信支付</li>
 						<li>数亿用户都在用，安全可托付</li>
 					</ul>
 				</view>
@@ -65,9 +65,55 @@
 			 * @param
 			 **/
 			payNow() {
-				uni.navigateTo({
-					url: '/pages/merchants/payment/pay-success'
+				/*
+				uni.getProvider({
+					service: 'payment',
+					fail: res => {
+						uni.hideLoading();
+						uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
+					},
+					success: res => {
+						// 从后端接口获取相关数据配置到orderInfo里，这个接口由后端配置好了
+						url: `${this.$baseUrl}/api-order/amstc/userRechargeAccountByWx`,
+						method: 'POST',
+						header: {
+						"Token":this.userToken,
+						"Content-Type":"application/x-www-form-urlencoded"
+						},
+						data: params,
+						success: res => {
+						if(res.data.code==200){
+							let resobj=JSON.parse(res.data.data)
+							let payInfo={
+								appid: resobj.appid,
+								noncestr: resobj.nonce_str,
+								package:"Sign=WXPay",
+								partnerid: resobj.mch_id,
+								prepayid: resobj.prepay_id,
+								timestamp: resobj.time_stamp,
+								sign: resobj.sign,
+							}
+							uni.requestPayment({
+								provider: 'wxpay',
+								orderInfo: payInfo, //微信订单数据（Object类型）
+								success: res=>{
+									uni.hideLoading();
+							  },
+								fail: err => {
+									uni.hideLoading();
+									uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
+								}
+							});
+						}else{
+							uni.showToast({title: '获取微信通道失败',icon:'none'})
+						}
+					}
 				})
+				// 跳转微信支付成功页面
+				// uni.navigateTo({
+				// 	url: '/pages/merchants/payment/pay-success'
+				// })
+				*/
 			},
 		}
 	}
@@ -110,17 +156,20 @@
 		border-radius: 20rpx;
 		margin: 0 30rpx;
 		background-color: $uni-text-color-inverse;
-		padding: 0 42rpx 0 27rpx;
+		padding: 0 0 0 27rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		.left-card {
 			display: flex;
+			justify-content: center;
+			align-items: center;
 			.card-box {
+
 				background-color: #EEEEEE;
 				border-radius: 10rpx;
-				margin-right: 16rpx;
-				padding: 0 10rpx;
+				margin-right: 18rpx;
+				padding: 10rpx 20rpx;
 			}
 			ul {
 				display: inline-block;
