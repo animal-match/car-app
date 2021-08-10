@@ -212,6 +212,7 @@ var _default =
 {
   data: function data() {
     return {
+      isVip: 0, // 是否黄金会员
       avatar: '', // 用户头像
       userName: '', // 用户昵称
       showLogout: false, // 打开退出登录弹窗
@@ -256,28 +257,36 @@ var _default =
       _this.avatar = res.avatar;
     });
   },
-  onShow: function onShow() {
+  onShow: function onShow() {var _this2 = this;
     console.log('检查登录状态', this.$store.state.isLogin);
     this.isLogin = this.$store.state.isLogin;
+    uni.getStorage({
+      key: 'isVip',
+      success: function success(res) {
+        _this2.isVip = res.data;
+      } });
+
+    console.log('vip', this.isVip);
   },
   methods: {
     /** 
               * @description 退出登录
               * @param {}
               **/
-    logout: function logout() {var _this2 = this;
+    logout: function logout() {var _this3 = this;
       var token = uni.getStorageSync("token");
       this.$request({
         url: '/api/user/logout',
         data: { token: token },
         success: function success(res) {
-          _this2.isLogin = false; // 更改本页登录状态
-          _this2.userName = "",
-          _this2.avatar = "",
-          _this2.$store.commit('changeLoginState', false); // 登录状态改为false
-          _this2.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
+          _this3.isLogin = false; // 更改本页登录状态
+          _this3.userName = "",
+          _this3.avatar = "",
+          _this3.isVip = 0,
+          _this3.$store.commit('changeLoginState', false); // 登录状态改为false
+          _this3.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
           uni.clearStorage();
-          _this2.showLogout = true;
+          _this3.showLogout = true;
         } });
 
     },
@@ -302,9 +311,16 @@ var _default =
       switch (id) {
         case 1:
           // 跳转到支付页面
-          uni.navigateTo({
-            url: '/pages/merchants/payment/index' });
+          if (this.isVip == 0) {
+            uni.navigateTo({
+              url: '/pages/merchants/payment/index' });
 
+          } else {
+            uni.showToast({
+              title: "您已是黄金会员",
+              icon: "none" });
+
+          }
           break;
         case 2:
           // 跳转到商家入驻

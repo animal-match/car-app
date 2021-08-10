@@ -323,7 +323,11 @@ var _default =
               uni.$emit('setUser', user);
               _this4.$store.commit('setUserInfo', user);
               var isVip = res.data.user.is_vip; // 0 非会员 1会员
-              uni.setStorageSync("isVip", isVip); // 把会员状态存入缓存
+              //uni.setStorageSync("isVip",isVip); // 把会员状态存入缓存
+              uni.setStorage({
+                key: 'isVip',
+                data: isVip });
+
             } });
 
           uni.switchTab({

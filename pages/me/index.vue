@@ -7,7 +7,7 @@
 			<view @click="login" class="business-card">
 				<view class="vip">
 					<u-image src="/static/user-center-images/golden_vip.png" width="22rpx" height="28rpx"></u-image>
-					<text class="normal-vip font-24">普通会员</text>
+					<text class="normal-vip font-24">{{isVip==1?'黄金会员':'普通会员'}}</text>
 				</view>
 				<!-- 名片详情 -->
 				<view class="card-details">
@@ -30,7 +30,7 @@
 					<text class="vip-center font-28">{{item.moduleName}}</text>
 				</view>
 				<view class="right-arrow">
-					<text v-if="item.id === 1" class="be-golden-vip font-24">成为黄金会员</text>
+					<text v-if="item.id === 1 && isVip==0" class="be-golden-vip font-24">成为黄金会员</text>
 					<text class="arrow">></text>
 				</view>
 			</view>
@@ -46,6 +46,7 @@
 	export default {
 		data() {
 			return {
+				isVip: 0, // 是否黄金会员
 				avatar: '', // 用户头像
 				userName: '', // 用户昵称
 				showLogout: false, // 打开退出登录弹窗
@@ -93,6 +94,13 @@
 		onShow() {
 			console.log('检查登录状态',this.$store.state.isLogin);
 			this.isLogin = this.$store.state.isLogin;
+			uni.getStorage({
+				key: 'isVip',
+				success: (res)=> {
+					this.isVip = res.data;
+				}
+			})
+			console.log('vip',this.isVip);
 		},
 		methods: {
 			/** 
@@ -108,6 +116,7 @@
 						this.isLogin = false; // 更改本页登录状态
 						this.userName = "",
 						this.avatar = "",
+						this.isVip = 0,
 						this.$store.commit('changeLoginState',false); // 登录状态改为false
 						this.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
 						uni.clearStorage();
@@ -136,9 +145,16 @@
 				switch (id) {
 					case 1:
 						// 跳转到支付页面
-						uni.navigateTo({
-							url: '/pages/merchants/payment/index'
-						})
+						if(this.isVip==0) {
+							uni.navigateTo({
+								url: '/pages/merchants/payment/index'
+							})
+						} else {
+							uni.showToast({
+								title: "您已是黄金会员",
+								icon: "none"
+							})
+						}
 						break;
 					case 2:
 						// 跳转到商家入驻
