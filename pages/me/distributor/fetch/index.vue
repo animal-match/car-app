@@ -4,16 +4,22 @@
 		<!-- 背景 -->
 		<view class="container">
 			<view class="can-fetch font-24">可提现金额</view>
-			<view class="show-cash">789908.03</view>
+			<view class="show-cash">{{canFetchMoney.toFixed(2)}}</view>
 		</view>
 		<!-- 提现金额模块 -->
 		<view class="fetch-money">
 			<view class="title">提现金额</view>
 			<view class="money-btn">
-				<view class="money">65.00</view>
+				<!-- <view class="money">65.00</view>
 				<view>
 					<u-button type="error" shape="circle" size="mini">全部提现</u-button>
-				</view>
+				</view> -->
+				<u-field
+					v-model="cash"
+					@focus="fetch"
+				>
+					<u-button slot="right" type="error" shape="circle" size="mini" @click="totalFetch">全部提现</u-button>
+				</u-field>
 			</view>
 			<view class="tips font-24">提现后可立即到账,请注意查收</view>
 		</view>
@@ -23,7 +29,7 @@
 		</view>
 		<!-- 提现按钮 -->
 		<view class="confirm-btn">
-			<u-button type="error" shape="circle" size="default">确认提现</u-button>
+			<u-button type="error" shape="circle" size="default" @click="fetchConfirm">确认提现</u-button>
 		</view>
 		<!-- 提现记录 -->
 		<view class="fetch-records">
@@ -56,12 +62,16 @@
 			
 		</view>
 		<u-gap height="75"></u-gap>
+		<u-keyboard mode="number" @change="valChange" @backspace="backspace" v-model="showKeyboard" @cancel="cancel" @confirm="confirm" confirm-text="确定" cancel-text="清空" :dot-enabled="false" :mask-close-able="false"></u-keyboard>
 	</view>
 </template>
 <script>
 	export default {
 		data() {
 			return {
+				showKeyboard: false, // 显示数字键盘
+				canFetchMoney: 3000, // 可提现金额
+				cash: '',// 提现金额
 				recordsList: [
 					{
 						dateTime: '2021-07-26 12:00',
@@ -77,6 +87,85 @@
 					},
 				]
 			}
+		},
+		methods: {
+			/**
+			 * @desc 全部提现
+			 * @param {string}
+			 **/
+			totalFetch() {
+				this.cash = this.canFetchMoney.toFixed(2);
+			},
+			fetch() {
+				console.log('激活')
+				uni.hideKeyboard(); //隐藏手机自带键盘
+				this.showKeyboard = true;
+			},
+			/**
+			 * @desc 数字键盘输入事件
+			 * @param {string}
+			 **/
+			valChange(val) {
+				this.cash += val;
+				console.log('你输入的金额',this.cash);
+			},
+			/**
+			 * @desc 数字键盘退格事件
+			 * @param 
+			 **/
+			backspace() {
+				if(this.cash.length) this.cash = this.cash.substr(0, this.cash.length-1);
+				console.log('你输入的金额（退格后)',this.cash);
+			},
+			/**
+			 * @desc 数字键盘左上角取消
+			 * @param 
+			 **/
+			cancel() {
+				this.cash = '';
+			},
+			/**
+			 * @desc 数字键盘右上角确定
+			 * @param 
+			 **/
+			confirm() {
+				this.cash = Number(this.cash).toFixed(2);
+			},
+			/**
+			 * @desc 确认提现
+			 * @param 
+			 **/
+			fetchConfirm() {
+				if(this.cash <= 0) {
+					uni.showToast({
+						title: '请输入提现金额',
+						icon: 'none'
+					})
+				} else {
+					if(this.cash > this.canFetchMoney) {
+						uni.showToast({
+							title: '超出可提现金额范围',
+							icon: 'none'
+						})
+						return false;
+					}
+					const token = uni.getStorageSync("token");
+					this.$request({
+						url: "/api/withdrawal/apply",
+						method: "POST",
+						data: {
+							money: this.cash,
+							token: token
+						},
+						success: res => {
+							console.log('提现成功')
+							uni.navigateTo({
+								url: 'fetch-success?cash='+this.cash,
+							})
+						}
+					})
+				}
+			},
 		}
 	}
 </script>
@@ -129,8 +218,6 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding-bottom: 26rpx;
-			border-bottom: 1rpx solid #D5D5D5;
 			margin-bottom: 20rpx;
 			.money {
 				font-size: 48rpx;

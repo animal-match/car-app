@@ -34,8 +34,10 @@ module.exports = (params) => {
 				uni.showModal({
 					content: res.msg
 				})
+				uni.hideLoading();
 				return false;
 			}
+			uni.hideLoading();
 			typeof params.success == "function" && params.success(res.data);
 		},
 		fail: (err) => {

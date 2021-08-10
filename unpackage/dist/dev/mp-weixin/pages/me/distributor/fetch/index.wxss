@@ -104,8 +104,6 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  padding-bottom: 26rpx;
-  border-bottom: 1rpx solid #D5D5D5;
   margin-bottom: 20rpx;
 }
 .fetch-money .money-btn .money.data-v-77fea852 {

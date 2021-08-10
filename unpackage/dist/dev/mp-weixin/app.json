@@ -15,7 +15,8 @@
     "pages/me/merchant-enter/map",
     "pages/me/merchant-enter/upload-file",
     "pages/me/distributor/index",
-    "pages/me/distributor/fetch/index"
+    "pages/me/distributor/fetch/index",
+    "pages/me/distributor/fetch/fetch-success"
   ],
   "subPackages": [],
   "window": {
