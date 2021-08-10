@@ -14,7 +14,7 @@
 					<view class="avatar">
 						<u-image :src="avatar.length>0 ? avatar:'/static/user-center-images/avatar.png'" shape="circle" width="140rpx" height="140rpx"></u-image>
 						<view class="nickname-phone">
-							<view class="nickname">{{userName}}</view>
+							<view class="nickname">{{userName.length>0?userName:'暂未登录'}}</view>
 							<view v-if="isLogin===true" class="phone font-28">{{ phoneNum }}</view>
 						</view>
 					</view>
@@ -47,6 +47,7 @@
 		data() {
 			return {
 				avatar: '', // 用户头像
+				userName: '', // 用户昵称
 				showLogout: false, // 打开退出登录弹窗
 				isLogin: false, // 用户是否登录
 				phoneNumCode: '15828292076',
@@ -80,23 +81,18 @@
 				end = this.phoneNumCode.slice(7);
 				console.log(start, end);
 				return start + '****' + end;
-			},
-			userName() {
-				let nickName = this.$store.state.user.nickName;
-				if(nickName.length>0) {
-					return nickName;
-				} else {
-					return '未登录'
-				}
-			},
+			}
+		},
+		onLoad() {
+			uni.$on('setUser', res => {
+				console.log('我的信息页面用户信息',res)
+				this.userName = res.nickName;
+				this.avatar = res.avatar;
+			})
 		},
 		onShow() {
 			console.log('检查登录状态',this.$store.state.isLogin);
 			this.isLogin = this.$store.state.isLogin;
-			console.log('用户头像',this.$store.state.user.avatarUrl);
-			this.$nextTick(function(){
-				this.avatar = this.$store.state.user.avatarUrl;
-			})
 		},
 		methods: {
 			/** 
@@ -104,11 +100,20 @@
 			 * @param {}
 			 **/
 			logout() {
-				console.log('退出')
-				this.$store.commit('changeLoginState',false); // 登录状态改为false
-				this.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
-				this.isLogin = false;
-				this.showLogout = true;
+				const token = uni.getStorageSync("token");
+				this.$request({
+					url: '/api/user/logout',
+					data: {token: token},
+					success: res => {
+						this.isLogin = false; // 更改本页登录状态
+						this.userName = "",
+						this.avatar = "",
+						this.$store.commit('changeLoginState',false); // 登录状态改为false
+						this.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
+						uni.clearStorage();
+						this.showLogout = true;
+					}
+				})
 			},
 			/**
 			 * @description 登录

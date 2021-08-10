@@ -73,8 +73,7 @@
 										uni.getUserInfo({
 											provider: 'weixin',
 											success: (loginRes) => {
-												_this.$store.commit('changeLoginState', true);
-												console.log('打印登录信息', loginRes,'是否已登录呢？',this.$store.state.isLogin);
+												console.log('打印登录信息', loginRes);
 												let info = {
 													encryptedData: loginRes.encryptedData,
 													signature: loginRes.signature,
@@ -109,8 +108,6 @@
 			// 用户登录信息
 			userInfo(info) {
 				console.log('用户信息', info.detail.userInfo); // 将用户信息存入VUEX
-				this.$store.state.user.nickName = info.detail.userInfo.nickName; 
-				this.$store.state.user.avatarUrl = info.detail.userInfo.avatarUrl;
 			},
 			// 跳到隐私条款页面
 			serviceItem() {
@@ -144,15 +141,21 @@
 						...data
 					},
 					success: res => {
-						console.log('登录success',res);
 						this.token = res.data.token; // 获取token
 						uni.setStorageSync("token",this.token); // 保存token到缓存中
+						this.$store.commit('changeLoginState', true); // 登录状态为true
 						// 会员中心接口 获取用户头像，手机号码, vip状态
 						this.$request({
 							url: "/api/user/index",
 							data: { token: this.token },
 							success: res => {
 								console.log('用户中心',res);
+								let user = {
+									nickName: res.data.user.nickname,
+									avatar: res.data.user.avatar
+								}; // 保存用户信息到vuex
+								uni.$emit('setUser', user);
+								this.$store.commit('setUserInfo',user);
 								let isVip = res.data.user.is_vip; // 0 非会员 1会员
 								uni.setStorageSync("isVip",isVip); // 把会员状态存入缓存
 							}

@@ -23,6 +23,11 @@ const store = new Vuex.Store({
 		clearUserInfo(state) {
 			state.user.nickName = '';
 			state.user.avatarUrl = '';
+		},
+		// 设置用户信息
+		setUserInfo(state,payLoad) {
+			state.user.nickName = payLoad.nickName;
+			state.user.avatarUrl = payLoad.avatar;
 		}
 	},
 	actions: {
