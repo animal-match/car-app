@@ -4,7 +4,7 @@
 		<!-- 背景 -->
 		<view class="container">
 			<view class="can-fetch font-24">可提现金额</view>
-			<view class="show-cash">{{canFetchMoney.toFixed(2)}}</view>
+			<view class="show-cash">{{canFetchMoney || '0'}}</view>
 		</view>
 		<!-- 提现金额模块 -->
 		<view class="fetch-money">
@@ -67,9 +67,9 @@
 		data() {
 			return {
 				showKeyboard: false, // 显示数字键盘
-				canFetchMoney: 3000, // 可提现金额
+				canFetchMoney: "", // 可提现金额
 				cash: '',// 提现金额
-				recordsList: [],
+				recordsList: [], // 提现记录
 				page: { // 分页参数
 					totalPages: 0,
 					page: 1, // 初始页
@@ -77,7 +77,10 @@
 			}
 		},
 		onShow() {
+			this.page.page = 1;
+			this.recordsList = [];
 			this.fetchList();
+			this.canFetchMoney = this.$store.state.user.money;
 		},
 		onReachBottom() {
 			console.log('触底！');
@@ -92,7 +95,7 @@
 			 * @param 
 			 **/
 			totalFetch() {
-				this.cash = this.canFetchMoney.toFixed(2);
+				this.cash = this.canFetchMoney;
 			},
 			/**
 			 * @desc 提现记录列表
@@ -109,6 +112,7 @@
 								title: res.msg,
 								icon: 'none'
 							});
+							return false;
 						}
 						let arr = res.data.data;
 						this.recordsList = this.recordsList.concat(arr);
@@ -128,6 +132,7 @@
 			 * @param 
 			 **/
 			fetch() {
+				this.cash='';
 				uni.hideKeyboard(); //隐藏手机自带键盘
 				this.showKeyboard = true;
 			},

@@ -131,15 +131,6 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var g0 = _vm.canFetchMoney.toFixed(2)
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        g0: g0
-      }
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -242,9 +233,9 @@ var _default =
   data: function data() {
     return {
       showKeyboard: false, // 显示数字键盘
-      canFetchMoney: 3000, // 可提现金额
+      canFetchMoney: "", // 可提现金额
       cash: '', // 提现金额
-      recordsList: [],
+      recordsList: [], // 提现记录
       page: { // 分页参数
         totalPages: 0,
         page: 1 // 初始页
@@ -252,7 +243,10 @@ var _default =
 
   },
   onShow: function onShow() {
+    this.page.page = 1;
+    this.recordsList = [];
     this.fetchList();
+    this.canFetchMoney = this.$store.state.user.money;
   },
   onReachBottom: function onReachBottom() {
     console.log('触底！');
@@ -267,7 +261,7 @@ var _default =
               * @param 
               **/
     totalFetch: function totalFetch() {
-      this.cash = this.canFetchMoney.toFixed(2);
+      this.cash = this.canFetchMoney;
     },
     /**
         * @desc 提现记录列表
@@ -284,6 +278,7 @@ var _default =
               title: res.msg,
               icon: 'none' });
 
+            return false;
           }
           var arr = res.data.data;
           _this.recordsList = _this.recordsList.concat(arr);
@@ -303,6 +298,7 @@ var _default =
         * @param 
         **/
     fetch: function fetch() {
+      this.cash = '';
       uni.hideKeyboard(); //隐藏手机自带键盘
       this.showKeyboard = true;
     },

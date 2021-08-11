@@ -30,7 +30,8 @@
 			}
 		},
 		onLoad(opt) {
-			this.money = opt.cash;
+			this.money = opt.cash; // 路由传参跳转获取opt参数
+			this.$store.commit("decreaseMoney", opt.cash); // 减少vue中金额的数量
 		},
 		methods: {
 			/**

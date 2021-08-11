@@ -318,12 +318,13 @@ var _default =
               console.log('用户中心', res);
               var user = {
                 nickName: res.data.user.nickname,
-                avatar: res.data.user.avatar };
-              // 保存用户信息到vuex
+                avatar: res.data.user.avatar,
+                money: res.data.user.money // 帐户金额
+              }; // 保存用户信息到vuex
               uni.$emit('setUser', user);
               _this4.$store.commit('setUserInfo', user);
               var isVip = res.data.user.is_vip; // 0 非会员 1会员
-              //uni.setStorageSync("isVip",isVip); // 把会员状态存入缓存
+              // 把会员状态存入缓存
               uni.setStorage({
                 key: 'isVip',
                 data: isVip });

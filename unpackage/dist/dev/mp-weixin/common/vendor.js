@@ -12483,6 +12483,36 @@ module.exports = function (params) {
 
 /***/ }),
 
+/***/ 417:
+/*!**************************************************!*\
+  !*** D:/works/myApp/car-app/utils/timeFormat.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.timeStampFilter = timeStampFilter;exports.default = void 0; // 时间过滤器
+function timeStampFilter(timeStamp) {
+  if (!timeStamp) return '-';else
+  {
+    var date = new Date(timeStamp * 1000);
+    var dateNumFun = function dateNumFun(num) {return num < 10 ? "0".concat(num) : num;};var _ref =
+    [
+    date.getFullYear(),
+    dateNumFun(date.getMonth() + 1),
+    dateNumFun(date.getDate()),
+    dateNumFun(date.getHours()),
+    dateNumFun(date.getMinutes()),
+    dateNumFun(date.getSeconds())],Y = _ref[0],M = _ref[1],D = _ref[2],h = _ref[3],m = _ref[4],s = _ref[5];
+
+    return "".concat(Y, "/").concat(M, "/").concat(D); //时分秒 ${h}:${m}:${s}
+  }
+}var _default =
+{
+  timeStampFilter: timeStampFilter };exports.default = _default;
+
+/***/ }),
+
 /***/ 42:
 /*!*********************************************!*\
   !*** D:/works/myApp/car-app/store/index.js ***!
@@ -12500,9 +12530,10 @@ var store = new _vuex.default.Store({
   state: {
     isLogin: false, // 用户是否登录
     user: { // 用户信息
-      nickName: '',
-      avatarUrl: '' } },
-
+      nickName: '', // 昵称
+      avatarUrl: '', // 头像
+      money: '' // 账户金额
+    } },
 
   getters: {},
 
@@ -12516,11 +12547,17 @@ var store = new _vuex.default.Store({
     clearUserInfo: function clearUserInfo(state) {
       state.user.nickName = '';
       state.user.avatarUrl = '';
+      state.user.money = '';
     },
     // 设置用户信息
     setUserInfo: function setUserInfo(state, payLoad) {
       state.user.nickName = payLoad.nickName;
       state.user.avatarUrl = payLoad.avatar;
+      state.user.money = payLoad.money;
+    },
+    // 提现并减少账户金额的数量
+    decreaseMoney: function decreaseMoney(state, payLoad) {
+      state.user.money -= payLoad;
     } },
 
   actions: {} });var _default =

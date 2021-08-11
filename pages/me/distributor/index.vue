@@ -12,11 +12,11 @@
 					<!-- 收益金额显示 -->
 					<view class="income-text">
 						<view class="cash-coin">
-							<view class="cash">88.00</view>
+							<view class="cash">{{currentMonthProfits.toFixed(2)}}</view>
 							<u-image src="/static/user-center-images/distributor/coin.png" width="28rpx" height="28rpx"></u-image>
 						</view>
 						<view class="cash-coin">
-							<view class="cash">909966.00</view>
+							<view class="cash">{{totalProfits.toFixed(2)}}</view>
 							<u-image src="/static/user-center-images/distributor/coin.png" width="28rpx" height="28rpx"></u-image>
 						</view>
 					</view>
@@ -46,12 +46,12 @@
 						<!-- 第一行 昵称与日期 -->
 						<view class="nickname-date">
 							<text class="nickname">{{item.nickname}}</text>
-							<text class="date font-20">{{item.date}}</text>
+							<text class="date font-20">{{item.createtime | timeStampFilter}}</text>
 						</view>
 						<!-- 第二行 article -->
-						<view class="article font-24 multi-ellipsis">
-							{{item.comment}}
-						</view>
+						<!-- <view class="article font-24 multi-ellipsis">
+								名片下面描述语句？
+						</view> -->
 					</view>
 				</view>
 			</view>
@@ -63,35 +63,47 @@
 	export default {
 		data() {
 			return {
-				depositList: [
-					{
-						avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-						nickname: '不知火舞',
-						date: '2019/11/20',
-						comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达'
-					},
-					{
-						avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-						nickname: 'QQ飞车',
-						date: '2020/10/10',
-						comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达'
-					},
-					{
-						avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-						nickname: '希望号',
-						date: '2021/07/08',
-						comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达'
-					},
-				],
+				currentMonthProfits: 0,// 本月收益
+				totalProfits: 0, // 累计收益
+				depositList: [],
 			}
 		},
+		onShow() {
+			this.merchantInfo();
+		},
 		methods: {
+			/**
+			 * @desc 跳转提现页面
+			 * @param
+			 **/
 			goFetch() {				
-				console.log('009')
 				uni.navigateTo({
 					url: '/pages/me/distributor/fetch/index'
 				})
-			}
+			},
+			/**
+			 * @desc 分销商信息
+			 * @param
+			 **/
+			merchantInfo() {
+				this.$request({
+					url: "/api/user/commission",
+					method: "POST",
+					success: res => {
+						if(!!res&&res.code&&res.code!==1) {
+							console.log('获取失败')
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							})
+							return false;
+						}
+						this.currentMonthProfits = res.data.month_total; // 本月收益
+						this.totalProfits = res.data.total; // 累计收益
+						this.depositList = res.data.team; // 我的下线
+					}
+				})
+			},
 		},
 	}
 </script>
@@ -177,6 +189,9 @@
 				height: 170rpx;
 				display: flex;
 				justify-content: space-between;
+				// 具体看需不需要名片下面的描述样式，
+				align-items: center;
+				// 如果需要就去掉align-items:center。
 				margin-bottom: 20rpx;
 				border-radius: 20rpx;
 				.avatar {
@@ -192,9 +207,8 @@
 					}
 					.nickname-date {
 						display: flex;
+						flex-direction: row;
 						justify-content: space-between;
-						align-items: center;
-						margin: 36rpx 0 10rpx 0;
 						.nickname {
 							font-weight: bold;
 							font-size: 30rpx;

@@ -125,6 +125,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.currentMonthProfits.toFixed(2)
+  var g1 = _vm.totalProfits.toFixed(2)
+
+  var l0 = _vm.__map(_vm.depositList, function(item, index) {
+    var $orig = _vm.__get_orig(item)
+
+    var f0 = _vm._f("timeStampFilter")(item.createtime)
+
+    return {
+      $orig: $orig,
+      f0: f0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0,
+        g1: g1,
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -223,33 +247,45 @@ var _default =
 {
   data: function data() {
     return {
-      depositList: [
-      {
-        avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-        nickname: '不知火舞',
-        date: '2019/11/20',
-        comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达' },
-
-      {
-        avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-        nickname: 'QQ飞车',
-        date: '2020/10/10',
-        comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达' },
-
-      {
-        avatar: 'https://img2.baidu.com/it/u=1325995315,4158780794&fm=26&fmt=auto&gp=0.jpg',
-        nickname: '希望号',
-        date: '2021/07/08',
-        comment: '本人诚心求购8诚心三轮车5辆价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系十多个感受到阿达' }] };
-
-
+      currentMonthProfits: 0, // 本月收益
+      totalProfits: 0, // 累计收益
+      depositList: [] };
 
   },
+  onShow: function onShow() {
+    this.merchantInfo();
+  },
   methods: {
+    /**
+              * @desc 跳转提现页面
+              * @param
+              **/
     goFetch: function goFetch() {
-      console.log('009');
       uni.navigateTo({
         url: '/pages/me/distributor/fetch/index' });
+
+    },
+    /**
+        * @desc 分销商信息
+        * @param
+        **/
+    merchantInfo: function merchantInfo() {var _this = this;
+      this.$request({
+        url: "/api/user/commission",
+        method: "POST",
+        success: function success(res) {
+          if (!!res && res.code && res.code !== 1) {
+            console.log('获取失败');
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this.currentMonthProfits = res.data.month_total; // 本月收益
+          _this.totalProfits = res.data.total; // 累计收益
+          _this.depositList = res.data.team; // 我的下线
+        } });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
