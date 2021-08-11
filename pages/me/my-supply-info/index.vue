@@ -55,6 +55,10 @@
 	export default {
 		data() {
 			return {
+				page: {
+					start: 1,
+					totalPages: 0
+				},
 				activeItem: 1,
 				buttons: [
 					{
@@ -66,6 +70,7 @@
 						name: '求购',
 					}
 				],
+				type: 'supply',
 				infos: [
 					{
 						title: '求购二手三轮车5辆成色8成都市',
@@ -143,17 +148,42 @@
 				],
 			}
 		},
+		onShow() {
+			this.getDemandsList();
+		},
 		methods: {
 			/**
+			 * @desc 我的供求列表
+			 * @param
+			 **/
+			getDemandsList() {
+				const userId = this.$store.state.user.userId;
+				this.$request({
+					url: "/api/supply/index",
+					method: "POST",
+					data: {
+						user_id: userId,
+						type: this.type, // supply, demand
+						list_rows: 10,// 条数
+						page: this.page.start,// 页数
+					},
+					success: res=> {
+						console.log('数据',res)
+					}
+				})
+			},
+			/**
 			 * @desc 切换tab标签
-			 * @param {string}
+			 * @param {number}
 			 **/
 			switchTab(btnId) {
 				console.log(btnId);
 				if(btnId === 1) {
 					this.activeItem = 1;
+					this.type = 'supply';
 				}else {
 					this.activeItem = 2;
+					this.type = 'demand';
 				}
 			},
 			/**

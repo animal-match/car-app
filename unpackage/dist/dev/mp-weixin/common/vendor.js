@@ -12530,6 +12530,7 @@ var store = new _vuex.default.Store({
   state: {
     isLogin: false, // 用户是否登录
     user: { // 用户信息
+      userId: '', // id
       nickName: '', // 昵称
       avatarUrl: '', // 头像
       money: '' // 账户金额
@@ -12551,6 +12552,7 @@ var store = new _vuex.default.Store({
     },
     // 设置用户信息
     setUserInfo: function setUserInfo(state, payLoad) {
+      state.user.userId = payLoad.id;
       state.user.nickName = payLoad.nickName;
       state.user.avatarUrl = payLoad.avatar;
       state.user.money = payLoad.money;

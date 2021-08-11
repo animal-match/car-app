@@ -317,6 +317,7 @@ var _default =
             success: function success(res) {
               console.log('用户中心', res);
               var user = {
+                id: res.data.user.id, // 用户id
                 nickName: res.data.user.nickname,
                 avatar: res.data.user.avatar,
                 money: res.data.user.money // 帐户金额

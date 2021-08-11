@@ -151,6 +151,7 @@
 							success: res => {
 								console.log('用户中心',res);
 								let user = {
+									id: res.data.user.id, // 用户id
 									nickName: res.data.user.nickname,
 									avatar: res.data.user.avatar,
 									money: res.data.user.money // 帐户金额
