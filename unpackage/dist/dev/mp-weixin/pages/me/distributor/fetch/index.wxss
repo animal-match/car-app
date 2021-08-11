@@ -67,6 +67,11 @@
 .text-color.data-v-77fea852 {
   color: #999;
 }
+.nomore.data-v-77fea852 {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}
 .container.data-v-77fea852 {
   height: 455rpx;
   background-color: #CA0303;

@@ -1,11 +1,11 @@
 <template>
-	<!-- 支付成功页 -->
+	<!-- 提现成功页 -->
 	<view class="success">
 		<u-gap height="285"></u-gap>
 		<u-image class="success-img" src="/static/user-center-images/pay-success.png" width="168" height="168"></u-image>
 		<u-gap height="50"></u-gap>
 		<view class="pay-success common-style">
-			提现成功
+			提现申请成功
 		</view>
 		<u-gap height="33"></u-gap>
 		<view class="pay-price common-style">

@@ -27,12 +27,13 @@ module.exports = (params) => {
 		method: method || "GET",
 		header: header,
 		data: data,
+		token: uni.getStorageSync("token"),
 		dataType: "json",
 		sslVerify: false,
 		success: (res) => {
 			if(res.code && res.code !== 1) {
-				uni.showModal({
-					content: res.msg
+				uni.showToast({
+					title: res.msg
 				})
 				uni.hideLoading();
 				return false;
@@ -41,8 +42,8 @@ module.exports = (params) => {
 			typeof params.success == "function" && params.success(res.data);
 		},
 		fail: (err) => {
-			uni.showModal({
-				content: err.msg
+			uni.showToast({
+				title: err.msg
 			})
 			typeof params.fail == "function" && params.fail(err.data);
 		},

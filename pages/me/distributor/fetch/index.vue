@@ -10,10 +10,6 @@
 		<view class="fetch-money">
 			<view class="title">提现金额</view>
 			<view class="money-btn">
-				<!-- <view class="money">65.00</view>
-				<view>
-					<u-button type="error" shape="circle" size="mini">全部提现</u-button>
-				</view> -->
 				<u-field
 					v-model="cash"
 					@focus="fetch"
@@ -37,31 +33,32 @@
 			<!-- 循环体 -->
 			<view v-for="(item,index) in recordsList" :key="index" class="all-details">
 				<view class="left-right">
-					<view class="date-time">{{item.dateTime}}</view>
-					<view class="total-monoey cash-color">￥{{item.totalMonoey}}</view>
+					<view class="date-time">{{item.createtime}}</view>
+					<view class="total-monoey cash-color">￥{{item.money}}</view>
 				</view>
 				<!-- 提现详情 -->
 				<view class="fetch-details">
 					<!-- 第一行 -->
 					<view class="first-line">
 						<view>提现金额</view>
-						<view class="text-color">￥{{item.fetchCash}}</view>
+						<view class="text-color">￥{{item.money}}</view>
 					</view>
 					<!-- 第二行 -->
 					<view class="second-line">
 						<view>交易流水号</view>
-						<view class="text-color">{{item.number}}</view>
+						<view class="text-color">{{item.apply_sn}}</view>
 					</view>
 					<!-- 第三行 -->
 					<view class="third-line">
 						<view>提现状态</view>
-						<view class="cash-color">已到账</view>
+						<view class="cash-color">{{item.status_text}}</view>
 					</view>
 				</view>
 			</view>
-			
 		</view>
-		<u-gap height="75"></u-gap>
+		<u-gap height="20"></u-gap>
+		<view v-if="page.page===page.totalPages" class="nomore">---没有更多了---</view>
+		<u-gap height="20"></u-gap>
 		<u-keyboard mode="number" @change="valChange" @backspace="backspace" v-model="showKeyboard" @cancel="cancel" @confirm="confirm" confirm-text="确定" cancel-text="清空" :dot-enabled="false" :mask-close-able="false"></u-keyboard>
 	</view>
 </template>
@@ -72,32 +69,65 @@
 				showKeyboard: false, // 显示数字键盘
 				canFetchMoney: 3000, // 可提现金额
 				cash: '',// 提现金额
-				recordsList: [
-					{
-						dateTime: '2021-07-26 12:00',
-						totalMonoey: 65,
-						fetchCash: 65,
-						number: '123456789',
-					},
-					{
-						dateTime: '2021-09-15 10:00',
-						totalMonoey: 133,
-						fetchCash: 133,
-						number: '123123231',
-					},
-				]
+				recordsList: [],
+				page: { // 分页参数
+					totalPages: 0,
+					page: 1, // 初始页
+				},
+			}
+		},
+		onShow() {
+			this.fetchList();
+		},
+		onReachBottom() {
+			console.log('触底！');
+			if(this.page.page < this.page.totalPages) {
+				this.page.page+=1;
+				this.fetchList();
 			}
 		},
 		methods: {
 			/**
 			 * @desc 全部提现
-			 * @param {string}
+			 * @param 
 			 **/
 			totalFetch() {
 				this.cash = this.canFetchMoney.toFixed(2);
 			},
+			/**
+			 * @desc 提现记录列表
+			 * @param 
+			 **/
+			fetchList() {
+				this.$request({
+					url: "/api/withdrawal/index",
+					method: "POST",
+					data: {page: this.page.page},
+					success: res => {
+						if(!!res&&res.code&&res.code!==1) {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+						}
+						let arr = res.data.data;
+						this.recordsList = this.recordsList.concat(arr);
+						console.log(this.recordsList,'列表')
+						this.page.totalPages = res.data.last_page;
+					},
+					fail: res => {
+						uni.showToast({
+							title: res.msg,
+							icon: none
+						})
+					}
+				});
+			},
+			/**
+			 * @desc 激活输入框，打开数字键盘
+			 * @param 
+			 **/
 			fetch() {
-				console.log('激活')
 				uni.hideKeyboard(); //隐藏手机自带键盘
 				this.showKeyboard = true;
 			},
@@ -162,6 +192,7 @@
 							uni.navigateTo({
 								url: 'fetch-success?cash='+this.cash,
 							})
+							this.cash = '';
 						}
 					})
 				}
@@ -187,6 +218,11 @@
 	}
 	.text-color {
 		color: $uni-text-color-grey;
+	}
+	.nomore {
+		font-size:28rpx;
+		color: $uni-text-color-grey;
+		text-align: center;
 	}
 	.container {
 		height: 455rpx;
