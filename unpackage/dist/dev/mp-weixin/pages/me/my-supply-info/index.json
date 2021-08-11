@@ -1,9 +1,4 @@
 {
   "navigationBarTitleText": "我的供应信息",
-  "usingComponents": {
-    "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
-    "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",
-    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
-    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
-  }
+  "usingComponents": {}
 }

@@ -6,7 +6,7 @@
 				bar-width="200"></u-tabs>
 		</view>
 		<!-- 供应信息组件 -->
-		<require-need v-if="currentTab===0"></require-need>
+		<require-supply ref="requireSupply" @refresh-page="refreshPage" :infos="infos" :page-info="page" v-if="currentTab===0"></require-supply>
 		
 		<!-- 供应发布 -->
 		<view v-show="currentTab===1" class="supply-publish">
@@ -56,16 +56,19 @@
 </template>
 
 <script>
-	import requireNeed from './components/require-need.vue'
 	export default {
-		components: {
-			requireNeed
-		},
 		data() {
 			return {
+				type: 'supply', // 初始化供应信息列表
 				supplyloading: false, // 供应发布loading
 				requireloading: false, // 求购发布Loading
 				currentTab: 0, // 当前tab的索引
+				infos: [], // 供求信息数据
+				page: { // 供求信息分页
+					start: 1,
+					totalPages: 0,
+					pageSort: 'requireSupply', // 代表此页是全局供求页面
+				},
 				tabList: [{
 						name: "供应信息"
 					},
@@ -139,21 +142,31 @@
 				}
 			}
 		},
+		onReachBottom() {
+			console.log('页面触底了')
+			if(this.page.start < this.page.totalPages) {
+				this.page.start+=1;
+				this.getDemandsList();
+			}
+		},
 		onShow() {
+			this.getDemandsList();
 			this.currentTab = 0;
 			const that = this;
-			console.log('页面加载')
 			const value = uni.getStorageSync('tabBarIndex') || 0;
 			that.currentTab = value;
 			uni.removeStorageSync('tabBarIndex')
 		},
-
 		methods: {
 			/**
 			 * @desc 切换选项卡
 			 * @param {number}
 			 **/
 			change(index) {
+				if(index===0) {
+					this.type = 'supply';
+					this.getDemandsList();
+				}
 				this.currentTab = index;
 				this.$refs.ruleForm.resetFields();
 				this.$refs.ruleFormMore.resetFields();
@@ -187,6 +200,33 @@
 					}
 				})
 				this.requireloading = false;
+			},
+			getDemandsList() {
+				this.$request({
+					url: "/api/supply/index",
+					method: "POST",
+					data: {
+						// user_id: 2,
+						type: this.type, // supply, demand
+						list_rows: 10,// 条数
+						page: this.page.start,// 页数
+					},
+					success: res=> {
+						let arr = res.data.data;
+						this.infos = this.infos.concat(arr);
+						this.page.totalPages = res.data.last_page;
+					}
+				})
+			},
+			/**
+			 * @desc 切换tab页刷新本页面数据
+			 * @param {string}
+			 **/
+			refreshPage(type) {
+				this.type = type;
+				this.page.start = 1;
+				this.infos = [];
+				this.getDemandsList();
 			}
 		},
 		

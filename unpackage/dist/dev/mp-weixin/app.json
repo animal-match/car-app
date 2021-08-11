@@ -57,6 +57,7 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {
+    "require-supply": "/components/require-supply"
+  }
 }
