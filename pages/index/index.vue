@@ -99,7 +99,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in totalinfo" @click="goDetails" :key="index4" class="information-require">
+			<view v-for="(item4,index4) in totalinfo" @click="goDetails(item4.id)" :key="index4" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
@@ -334,9 +334,9 @@
 			 * @desc 跳转供求详情页
 			 * @param {string}
 			 **/
-			goDetails() {
+			goDetails(id) {
 				uni.navigateTo({
-					url: '/pages/require/details/index'
+					url: '/pages/require/details/index?id='+id
 				})
 			},
 		}

@@ -17,8 +17,8 @@
 			<!-- 左侧为导航 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="left-nav-bar">
 				<ul>
-					<li class="list" v-for="(item,index) in navList" :class="activeItem===index+1?'list':'white-list'"
-						@click="switchTab(item.id)" :key="item.id">{{item.name}}</li>
+					<li class="list" v-for="(item,index) in categoryList" :class="activeItem===index+1?'list':'white-list'"
+						@click="switchTab(index,item.id)" :key="item.id">{{item.name}}</li>
 				</ul>
 			</scroll-view>
 			<!-- 右侧为列表 -->
@@ -29,10 +29,10 @@
 					<view class="first-line">
 						<!-- 左侧 Logo和标题 -->
 						<view class="left-block">
-							<u-image :src="_item.image" width="80rpx" height="80rpx" shape="circle"></u-image>
+							<u-image :src="_item.log || '/static/user-center-images/avatar.png'" width="80rpx" height="80rpx" shape="circle"></u-image>
 							<view class="title-and-text">
-								<view class="title ellipsis">{{_item.store_name}}</view>
-								<view class="text ellipsis">{{_item.information}}</view>
+								<view class="title ellipsis">{{_item.store_name || '-'}}</view>
+								<view class="text ellipsis">{{_item.information || '-'}}</view>
 							</view>
 						</view>
 						<view class="right-block">
@@ -42,8 +42,8 @@
 					</view>
 					<!-- 第二行 图片组 -->
 					<view class="second-line">
-						<u-image v-for="(sitem,sindex) in _item.imageList" :key="sindex" class="image-list"
-							:src="sitem.img" width="110rpx" height="67rpx"></u-image>
+						<u-image v-for="(sitem,sindex) in _item.goods" :key="sindex" class="image-list"
+							:src="sitem.image || '-'" width="110rpx" height="67rpx"></u-image>
 					</view>
 				</view>
 			</scroll-view>
@@ -56,44 +56,15 @@
 		data() {
 			return {
 				scrollTop: 0, // 距离顶部多少时设置滚动条
-				informations: [
-					// {
-					// 	image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-					// 	title: '成都市保时捷汽车有限公司',
-					// 	subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-					// 	imageList: [{
-					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-					// 		},
-					// 		{
-					// 			img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-					// 		},
-					// 		{
-					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-					// 		},
-					// 		{
-					// 			img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-					// 		}
-				],
-				searchValue: '', // 搜索条件
+				informations: [], // 商家信息
 				type: 'text',
 				form: {
 					searchKey: ''
 				},
+				categoryList: [], // 分类列表
 				activeItem: 1, // 当前激活的色块item.id
-				navList: [{
-						id: 1,
-						name: '解锁'
-					},
-					{
-						id: 2,
-						name: '省份'
-					},
-					{
-						id: 3,
-						name: '承诺'
-					},
-				],
 				currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
+				id: 3, // 选择的分类数据 配件的id为3默认
 				tabList: [{
 						name: "厂商"
 					},
@@ -104,27 +75,60 @@
 			}
 		},
 		onShow() {
+			this.activeItem = 1;
 			const value = uni.getStorageSync('pageIndex') || 0;
 			this.currentTab = value;
 			uni.removeStorageSync('pageIndex')
-			this.getStoreList();
+			this.getCategory(); // 获取分类
+			this.getStoreList(); // 获取商家列表
 		},
 		methods: {
+			/**
+			 * @desc 获取分类
+			 * @param
+			 **/
+			 getCategory() {
+				 this.$request({
+					 url: "/api/category/getList",
+					 method: "POST",
+					 data: {
+						 type: this.currentTab
+					 },
+					 success: res => {
+						 if(res&&res.code&&res.code!==1) {
+						 	uni.showToast({
+						 		icon: "none",
+						 		title: res.msg
+						 	})
+						 	return false
+						 }	
+						 this.categoryList = res.data;
+						 console.log(this.categoryList,'分类列表')
+					 }
+				 })
+			 },
 			/**
 			 * @desc 获取商家列表
 			 * @param
 			 **/
 			getStoreList() {
 				this.$request({
-					url: "/api/store/index",
-					method: "GET",
-					data: { type: this.currentTab },
-					success: res=> {
-											 console.log('成功',res);
-							this.informations = res.data.data;
+					url: "/api/category/index",
+					method: "POST",
+					data: {
+						id: this.id,
+						keyword: this.form.searchKey
 					},
-					fail: err=> {
-											 console.log(err);
+					success: res=> {
+						if(res&&res.code&&res.code!==1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							return false
+						}	
+						console.log(res.data,'商家列表')
+						this.informations = res.data;
 					}
 				})
 			},
@@ -134,22 +138,29 @@
 			 **/
 			search() {
 				// 点搜索后调用页面接口
-				console.log(this.form.searchKey);
+				this.getStoreList();
 			},
 			/**
-			 * @desc 切换选项卡
+			 * @desc 切换顶部选项卡
 			 * @param {number}
 			 **/
 			change(index) {
+				this.form.searchKey = '';
 				this.currentTab = index;
+				this.getCategory();
+				// this.informations = [];
 				this.getStoreList();
 			},
 			/**
 			 * @desc 左侧导航切换
 			 * @param {number}
 			 **/
-			switchTab(btnId) {
-				this.activeItem = btnId;
+			switchTab(index,id) {
+				console.log('index',index,'id',id)
+				this.form.searchKey = '';
+				this.activeItem = index+1; // 当前激活的分类
+				this.id = id; // 通过id查询改分类下的商铺
+				this.getStoreList();
 			},
 			/**
 			 * @desc 右侧列表滚动条触底事件
@@ -271,7 +282,6 @@
 
 				.second-line {
 					display: flex;
-					justify-content: space-between;
 
 					.image-list {
 						display: inline-block;

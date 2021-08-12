@@ -151,9 +151,6 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
 }
 .nav-and-list .right-list-bar .information-block .second-line .image-list.data-v-bdd919f6 {
   display: inline-block;
