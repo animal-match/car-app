@@ -11,7 +11,7 @@
 			<u-gap height="26"></u-gap>
 			
 			<!-- 循环结构 主体内容-->
-			<view v-for="(_item,_index) in infos" :key="_index" class="information-require">
+			<view v-for="(_item,_index) in infos" :key="_index" class="information-require" @click="goDetails(_item.id)">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
@@ -41,7 +41,7 @@
 					</view>
 					<!-- 右侧 时间 -->
 					<view class="operation-btn" v-if="pageInfo.pageSort==='myRequireSupply'">
-						<u-button @click="goDetails" type="primary" size="mini" class="check">查看</u-button>
+						<u-button @click="goDetails(_item.id)" type="primary" size="mini" class="check">查看</u-button>
 						<u-button type="error" size="mini" class="delete">删除</u-button>
 					</view>
 				</view>
@@ -99,11 +99,18 @@
 			},
 			/**
 			 * @desc 跳转供求详情页
-			 * @param {string}
+			 * @param {Number}
 			 **/
-			goDetails() {
+			goDetails(id) {
+				console.log('详情页',id)
+				let arr;
+				if(this.pageInfo.pageSort==='requireSupply') {
+					  arr = this.infos.slice(0,2)
+				} else {
+					  arr=[];
+				}
 				uni.navigateTo({
-					url: '/pages/require/details/index'
+					url: '/pages/require/details/index?id=' + id +'&arr='+JSON.stringify(arr)
 				})
 			},
 		}

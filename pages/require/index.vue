@@ -201,12 +201,15 @@
 				})
 				this.requireloading = false;
 			},
+			/**
+			 * @desc 获取供求信息数据
+			 * @param
+			 **/
 			getDemandsList() {
 				this.$request({
 					url: "/api/supply/index",
 					method: "POST",
 					data: {
-						// user_id: 2,
 						type: this.type, // supply, demand
 						list_rows: 10,// 条数
 						page: this.page.start,// 页数
@@ -214,6 +217,7 @@
 					success: res=> {
 						let arr = res.data.data;
 						this.infos = this.infos.concat(arr);
+						console.log("页面请求", res);
 						this.page.totalPages = res.data.last_page;
 					}
 				})
