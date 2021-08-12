@@ -60,5 +60,9 @@
   "usingComponents": {
     "require-supply": "/components/require-supply"
   },
+<<<<<<< HEAD
   "sitemapLocation": "sitemap81.json"
+=======
+  "sitemapLocation": "sitemap.json"
+>>>>>>> 3a51a82d47532c0ff004543419acdfd0bc8f1214
 }

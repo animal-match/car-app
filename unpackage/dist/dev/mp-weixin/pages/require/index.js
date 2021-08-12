@@ -320,7 +320,7 @@ var _default =
     }
   },
   onShow: function onShow() {
-    this.getDemandsList();
+    this.init();
     this.currentTab = 0;
     var that = this;
     var value = uni.getStorageSync('tabBarIndex') || 0;
@@ -329,12 +329,22 @@ var _default =
   },
   methods: {
     /**
-              * @desc 切换选项卡
-              * @param {number}
+              * @desc 初始化页面
+              * @param 
               **/
+    init: function init() {
+      this.infos = [];
+      this.page.start = 1;
+      this.getDemandsList();
+    },
+    /**
+        * @desc 切换选项卡
+        * @param {number}
+        **/
     change: function change(index) {
       if (index === 0) {
         this.type = 'supply';
+        this.init();
         this.getDemandsList();
       }
       this.currentTab = index;
@@ -371,12 +381,15 @@ var _default =
       });
       this.requireloading = false;
     },
+    /**
+        * @desc 获取供求信息数据
+        * @param
+        **/
     getDemandsList: function getDemandsList() {var _this2 = this;
       this.$request({
         url: "/api/supply/index",
         method: "POST",
         data: {
-          // user_id: 2,
           type: this.type, // supply, demand
           list_rows: 10, // 条数
           page: this.page.start // 页数
@@ -384,6 +397,7 @@ var _default =
         success: function success(res) {
           var arr = res.data.data;
           _this2.infos = _this2.infos.concat(arr);
+          console.log("页面请求", res);
           _this2.page.totalPages = res.data.last_page;
         } });
 

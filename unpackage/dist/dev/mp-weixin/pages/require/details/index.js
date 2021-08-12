@@ -225,36 +225,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      infos: [
-      {
-        title: '求购二手三轮车5辆成色8成都市',
-        desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-        city: '成都市',
-        nickname: '旋风冷少',
-        date: '2021/09/28',
-        avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963' },
-
-      {
-        title: '求购二手三轮车5辆成色上海市',
-        desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-        city: '上海市',
-        nickname: '小可爱',
-        date: '2021/09/28',
-        avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963' }] };
-
-
-
+      detail: {}, // 详情页数据
+      commentList: [], // 相关推荐列表
+      isShowComment: false // 是否展示相关推荐，（我的供求不需要展示）
+    };
+  },
+  onLoad: function onLoad(opt) {
+    var arr = opt.arr ? JSON.parse(opt.arr) : [];
+    this.isShowComment = arr.length > 1;
+    console.log('展示推荐', this.isShowComment);
+    if (this.isShowComment === true) {
+      this.commentList = arr;
+    }
+    this.detailInfo(opt.id);
   },
   methods: {
-    goDetails: function goDetails() {
+    /**
+              * @desc 获取详情页数据
+              * @param
+              **/
+    detailInfo: function detailInfo(id) {var _this = this;
+      this.$request({
+        url: "/api/supply/detail?id=" + id,
+        method: "GET",
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          console.log(res, '详情页数据');
+          _this.detail = res.data;
+        } });
+
+    },
+    /**
+        * @desc 跳转到相关推荐的详情页
+        * @param
+        **/
+    goDetails: function goDetails(id) {
+      console.log(id, '详情的详情');
       uni.navigateTo({
-        url: '/pages/require/details/index' });
+        url: '/pages/require/details/index?id=' + id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

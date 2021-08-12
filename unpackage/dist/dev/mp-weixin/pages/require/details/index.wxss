@@ -32,7 +32,6 @@
   margin: 0 30rpx;
   padding: 35rpx 24rpx;
   background-color: #fff;
-  height: 1000rpx;
   border-radius: 20rpx;
 }
 .details .container-top .title.data-v-064a011c {

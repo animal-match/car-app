@@ -92,6 +92,9 @@ try {
     },
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 225))
+    },
+    uModal: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 278))
     }
   }
 } catch (e) {
@@ -203,6 +206,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default2 =
 {
   props: {
@@ -218,6 +222,8 @@ var _default2 =
   name: 'require-supply',
   data: function data() {
     return {
+      userid: '',
+      show: false,
       activeItem: 1,
       buttons: [
       {
@@ -241,19 +247,60 @@ var _default2 =
       console.log(btnId);
       if (btnId === 1) {
         this.activeItem = 1;
+        this.type = 'supply';
         this.$emit('refresh-page', 'supply');
       } else {
         this.activeItem = 2;
+        this.type = 'demand';
         this.$emit('refresh-page', 'demand');
       }
     },
     /**
         * @desc 跳转供求详情页
-        * @param {string}
+        * @param {Number}
         **/
-    goDetails: function goDetails() {
+    goDetails: function goDetails(id) {
+      var arr;
+      if (this.pageInfo.pageSort === 'requireSupply') {
+        arr = this.infos.slice(0, 2);
+      } else {
+        arr = [];
+      }
       uni.navigateTo({
-        url: '/pages/require/details/index' });
+        url: '/pages/require/details/index?id=' + id + '&arr=' + JSON.stringify(arr) });
+
+    },
+    /**
+        * @desc 删除数据弹窗
+        * @param {Number}
+        **/
+    deleteItem: function deleteItem(id) {
+      this.show = true;
+      this.userid = id;
+    },
+    /**
+        * @desc 直接删除数据
+        * @param {Number}
+        **/
+    deleteConfirm: function deleteConfirm(id) {var _this = this;
+      this.$request({
+        url: "/api/supply/delete?id=" + id,
+        method: "POST",
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          } else {
+            uni.showToast({
+              title: "操作成功",
+              icon: "none" });
+
+            _this.$emit("refreshPage", _this.type);
+          }
+        } });
 
     } } };exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

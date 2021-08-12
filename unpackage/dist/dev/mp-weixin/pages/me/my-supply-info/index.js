@@ -156,13 +156,22 @@ var _default =
     }
   },
   onShow: function onShow() {
-    this.getDemandsList();
+    this.init();
   },
   methods: {
     /**
-              * @desc 我的供求列表
-              * @param
+              * @desc 初始化页面
+              * @param 
               **/
+    init: function init() {
+      this.infos = [];
+      this.page.start = 1;
+      this.getDemandsList();
+    },
+    /**
+        * @desc 我的供求列表
+        * @param
+        **/
     getDemandsList: function getDemandsList() {var _this = this;
       var userId = this.$store.state.user.userId;
       this.$request({
