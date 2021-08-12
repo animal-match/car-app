@@ -320,7 +320,7 @@ var _default =
     }
   },
   onShow: function onShow() {
-    this.getDemandsList();
+    this.init();
     this.currentTab = 0;
     var that = this;
     var value = uni.getStorageSync('tabBarIndex') || 0;
@@ -329,12 +329,22 @@ var _default =
   },
   methods: {
     /**
-              * @desc 切换选项卡
-              * @param {number}
+              * @desc 初始化页面
+              * @param 
               **/
+    init: function init() {
+      this.infos = [];
+      this.page.start = 1;
+      this.getDemandsList();
+    },
+    /**
+        * @desc 切换选项卡
+        * @param {number}
+        **/
     change: function change(index) {
       if (index === 0) {
         this.type = 'supply';
+        this.init();
         this.getDemandsList();
       }
       this.currentTab = index;

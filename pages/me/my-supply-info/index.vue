@@ -26,9 +26,18 @@
 			}
 		},
 		onShow() {
-			this.getDemandsList();
+			this.init();
 		},
 		methods: {
+			/**
+			 * @desc 初始化页面
+			 * @param 
+			 **/
+			init() {
+				this.infos = [];
+				this.page.start = 1;
+				this.getDemandsList();
+			},
 			/**
 			 * @desc 我的供求列表
 			 * @param
