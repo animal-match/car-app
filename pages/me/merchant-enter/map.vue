@@ -23,7 +23,7 @@
 					success: res => {
 						console.log('地点名：', res.name, '详细地址：', res.address, '经度：', res.longitude, '纬度', res.latitude);
 						this.addressPosition = res.address;
-						const addressObj = {
+						let addressObj = {
 							address: res.address,
 							longitude: res.longitude,
 							latitude: res.latitude

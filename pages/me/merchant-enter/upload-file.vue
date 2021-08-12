@@ -89,7 +89,7 @@
 					sourceType: ['album', 'camera'], //从相册选择
 					success:res=>{
 						this.imageList = this.imageList.concat(res.tempFilePaths);
-						//console.log(this.imageList)
+						console.log(this.imageList,'你选择的图片')
 						if(this.imageList.length == 9){
 							this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
 						}
@@ -105,7 +105,7 @@
 					sourceType: sourceType[this.sourceTypeIndex],//['camera', 'album'],//sourceType[this.sourceTypeIndex],
 					success:res =>{
 						this.VideoList = this.VideoList.concat(res.tempFilePath);
-						console.log(this.VideoList,'视频数组')
+						console.log(this.VideoList,'你选择的视频')
 						if (this.VideoList.length == 4) {
 							this.VideoOfImagesShow = false;
 						}

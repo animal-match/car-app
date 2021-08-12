@@ -253,7 +253,7 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
         sourceType: ['album', 'camera'], //从相册选择
         success: function success(res) {
           _this2.imageList = _this2.imageList.concat(res.tempFilePaths);
-          //console.log(this.imageList)
+          console.log(_this2.imageList, '你选择的图片');
           if (_this2.imageList.length == 9) {
             _this2.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
           }
@@ -269,7 +269,7 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
         sourceType: sourceType[this.sourceTypeIndex], //['camera', 'album'],//sourceType[this.sourceTypeIndex],
         success: function success(res) {
           _this3.VideoList = _this3.VideoList.concat(res.tempFilePath);
-          console.log(_this3.VideoList, '视频数组');
+          console.log(_this3.VideoList, '你选择的视频');
           if (_this3.VideoList.length == 4) {
             _this3.VideoOfImagesShow = false;
           }
