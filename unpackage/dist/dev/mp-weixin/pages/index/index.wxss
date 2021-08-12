@@ -206,7 +206,6 @@
 }
 .container .information-block.data-v-57280228 {
   border-radius: 20rpx;
-  height: 280rpx;
   background-color: #ffffff;
   padding: 27rpx 20rpx 44rpx 20rpx;
   margin-bottom: 20rpx;
@@ -252,9 +251,6 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
 }
 .container .information-block .second-line .image-list.data-v-57280228 {
   display: inline-block;

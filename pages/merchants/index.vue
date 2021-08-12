@@ -104,7 +104,9 @@
 			}
 		},
 		onShow() {
-			this.currentTab = 0;
+			const value = uni.getStorageSync('pageIndex') || 0;
+			this.currentTab = value;
+			uni.removeStorageSync('pageIndex')
 			this.getStoreList();
 		},
 		methods: {

@@ -4,7 +4,7 @@
 		<view class="container">
 			<u-gap height="20"></u-gap>
 			<!-- 轮播图 -->
-			<u-swiper :list="list"></u-swiper>
+			<u-swiper :list="banner"></u-swiper>
 			<u-gap height="45"></u-gap>
 			<view class="nav-district">
 				<u-image @click="goDetailsPage('supply')" src="/static/nav-images/supply_publish.png" width="120rpx" height="120rpx"></u-image>
@@ -23,11 +23,11 @@
 				<view class="today-come-desc">
 					<view class="manufacturers">
 						<text class="title">厂家</text>
-						<text class="quantity">233</text>
+						<text class="quantity">{{manufactor}}</text>
 					</view>
 					<view class="merchant">
 						<text class="title">经销商</text>
-						<text class="quantity">456</text>
+						<text class="quantity">{{distributor}}</text>
 					</view>
 				</view>
 			</view>
@@ -38,15 +38,15 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick" class="information-block" v-for="(_item,_index) in informations" :key="_index">
+			<view @click="handleClick" class="information-block" v-for="(_item,_index) in merchant_0" :key="_index">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
 					<view class="left-block">
-						<u-image :src="_item.image" width="80rpx" height="80rpx" shape="circle"></u-image>
+						<u-image :src="_item.log" width="80rpx" height="80rpx" shape="circle"></u-image>
 						<view class="title-and-text">
-							<view class="title ellipsis">{{_item.title}}</view>
-							<view class="text ellipsis">{{_item.subtitle}}</view>
+							<view class="title ellipsis">{{_item.store_name}}</view>
+							<view class="text ellipsis">{{_item.information}}</view>
 						</view>
 					</view>
 					<view class="right-block">
@@ -55,7 +55,7 @@
 				</view>
 				<!-- 第二行 图片组 -->
 				<view class="second-line">
-					<u-image v-for="($item,$index) in _item.imageList" :key="$index" class="image-list" :src="$item.img" width="160rpx"
+					<u-image v-for="($item,$index) in _item.goods" :key="$index" class="image-list" :src="$item.image" width="160rpx"
 					 height="110rpx"></u-image>
 				</view>
 			</view>
@@ -68,15 +68,15 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick" class="information-block" v-for="(item2,index2) in informations" :key="index2">
+			<view @click="handleClick" class="information-block" v-for="(item2,index2) in merchant_1" :key="index2">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
 					<view class="left-block">
-						<u-image :src="item2.image" width="80rpx" height="80rpx" shape="circle"></u-image>
+						<u-image :src="item2.log" width="80rpx" height="80rpx" shape="circle"></u-image>
 						<view class="title-and-text">
-							<view class="title ellipsis">{{item2.title}}</view>
-							<view class="text ellipsis">{{item2.subtitle}}</view>
+							<view class="title ellipsis">{{item2.store_name}}</view>
+							<view class="text ellipsis">{{item2.information}}</view>
 						</view>
 					</view>
 					<view class="right-block">
@@ -85,7 +85,7 @@
 				</view>
 				<!-- 第二行 图片组 -->
 				<view class="second-line">
-					<u-image v-for="(item3,index3) in item2.imageList" :key="index3" class="image-list" :src="item3.img" width="160rpx"
+					<u-image v-for="(item3,index3) in item2.goods" :key="index3" class="image-list" :src="item3.image" width="160rpx"
 					 height="110rpx"></u-image>
 				</view>
 			</view>
@@ -99,35 +99,35 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in infos" @click="goDetails" :key="index4" class="information-require">
+			<view v-for="(item4,index4) in totalinfo" @click="goDetails" :key="index4" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
 					<view class="left-block-other" >
 						<u-tag text="求购" mode="dark" />
 						<view class="title-other ellipsis">
-							<view class="title ellipsis">{{item4.title}}</view>
+							<view class="title ellipsis">{{item4.title || '-'}}</view>
 						</view>
 					</view>
 					<view class="right-block">
-						{{item4.city}}
+						{{item4.city || '-'}}
 					</view>
 				</view>
 				<!-- 第二行 描述 -->
 				<view class="second-line-other multi-ellipsis">
-					{{item4.desc}}
+					{{item4.content || '-'}}
 				</view>
 				<!-- 第三行 头像 昵称 时间 -->
 				<view class="third-line-other">
 					<!-- 左侧 头像 昵称 -->
 					<view class="left-nickname">
-						<u-image :src="item4.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
+						<u-image :src="item4.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
 						<view class="nickname">
-							{{item4.nickname}}
+							{{item4.user.nickname || '-'}}
 						</view>
 					</view>
 					<!-- 右侧 时间 -->
-					<view class="date-other">{{item4.date}}</view>
+					<view class="date-other">{{item4.user.createtime | timeStampFilter}}</view>
 				</view>
 			</view>
 			<!-- 最外层大盒子End -->
@@ -140,98 +140,127 @@
 	export default {
 		data() {
 			return {
-				infos: [
-					{
-						title: '求购二手三轮车5辆成色8成都市',
-						desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-						city: '成都市',
-						nickname: '旋风冷少',
-						date: '2021/09/28',
-						avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963',
-					},
-					{
-						title: '求购二手三轮车5辆成色上海市',
-						desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-						city: '上海市',
-						nickname: '小可爱',
-						date: '2021/09/28',
-						avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963',
-					}
-				],
-				informations: [{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
-
-					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-						title: '成都市保时捷汽车有限公司',
-						subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-						imageList: [{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2',
-							},
-							{
-								img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04',
-							},
-							{
-								img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696',
-							}
-						],
-					},
-				],
-				// 轮播图
-				list: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-					}
-				],
+				manufactor: 0,
+				distributor: 0,
+				banner: [], // // 轮播图
+				merchant_0: [], // 厂家
+				merchant_1: [], // 经销商
+				totalinfo: [] // 供求信息
 			}
 		},
-		onLoad() {
-			// 请求示例
+		onShow() {
+			this.getBanner();
 			this.getList();
+			this.getMoreList();
+			this.static(); // 厂家和经销商数量
+			this.getRequireSupply();
 		},
 		methods: {
 			/**
-			 * @desc 请求页面数据
+			 * @desc 轮播图
+			 * @param
+			 **/
+			 getBanner() {
+				 this.$request({
+					 url: "/api/decorate/banner",
+					 success: res => {
+						 if(res&&res.code&&res.code!==1) {
+							 uni.showToast({
+							 	title: res.msg,
+								icon: "none"
+							 })
+							 return false;
+						 }
+						 this.banner = res.data;
+					 }
+				 })
+			 },
+			/**
+			 * @desc 请求页面数据（厂家列表）
 			 * @param
 			 **/
 			 getList() {
 				 this.$request({
-					 url: "/",
-					 method: "POST",
-					 data: {}, // 请求参数
+					 url: "/api/store/index",
+					 method: "GET",
+					 data: {type: 0}, // 厂家
 					 // hideLoading: true,
 					 success: res=> {
-						 console.log(res);
-					 },
-					 fail: err=> {
-						 console.log(err);
+						 if(res&&res.code&&res.code!==1) {
+							 uni.showToast({
+							 	title: res.msg,
+								icon: "none"
+							 })
+							 return false;
+						 }
+						 this.merchant_0 = res.data.slice(0,2);
+						 console.log(res,"首页厂家");
 					 }
 				 })
 			 },
+			 /**
+			  * @desc 请求页面数据（经销商列表）
+			  * @param
+			  **/
+			getMoreList() {
+				this.$request({
+					 url: "/api/store/index",
+					 method: "GET",
+					 data: {type: 1}, // 经销商
+					 // hideLoading: true,
+					 success: res=> {
+						 if(res&&res.code&&res.code!==1) {
+							 uni.showToast({
+								title: res.msg,
+								icon: "none"
+							 })
+							 return false;
+						 }
+						 this.merchant_1 = res.data.slice(0,2);
+						 console.log(res,"首页经销商");
+				 }
+				})
+			},
+			/**
+			 * @desc 获取厂家经销商数量
+			 * @param
+			 **/
+			static() {
+				this.$request({
+					url: "/api/store/statistics",
+					 success: res=> {
+						 if(res&&res.code&&res.code!==1) {
+							 uni.showToast({
+								title: res.msg,
+								icon: "none"
+							 })
+							 return false;
+						 }
+						 this.manufactor = res.data.manufactor;
+						 this.distributor = res.data.distributor;
+					}
+				})
+			},
+			/**
+			 * @desc 获取供求信息
+			 * @param
+			 **/
+			getRequireSupply() {
+				this.$request({
+					url: "/api/supply/index",
+					method: "POST",
+					success: res => {
+						if(res&&res.code&&res.code!==1) {
+							uni.showToast({
+								title: res.msg,
+								icon: "none"
+							})
+							return false
+						}
+						this.totalinfo = res.data.data.slice(0,2);
+					}
+				})
+			},
 			/**
 			 * @desc 跳转商家进店页面
 			 * @param
@@ -454,7 +483,6 @@
 		}
 		.information-block {
 			border-radius: 20rpx;
-			height: 280rpx;
 			background-color: $uni-bg-color;
 			padding: 27rpx 20rpx 44rpx 20rpx;
 			margin-bottom: 20rpx;
@@ -488,8 +516,6 @@
 			}
 			.second-line {
 				display: flex;
-				justify-content: space-between;
-
 				.image-list {
 					display: inline-block;
 					border: 2rpx solid #E5E5E5;

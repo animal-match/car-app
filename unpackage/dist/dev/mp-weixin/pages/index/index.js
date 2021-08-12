@@ -98,19 +98,19 @@ var components
 try {
   components = {
     uGap: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 199))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 204))
     },
     uSwiper: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 206))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 211))
     },
     uImage: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 213))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 218))
     },
     uButton: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 220))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 225))
     },
     uTag: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 227))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 232))
     }
   }
 } catch (e) {
@@ -134,6 +134,25 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.totalinfo, function(item4, index4) {
+    var $orig = _vm.__get_orig(item4)
+
+    var f0 = _vm._f("timeStampFilter")(item4.user.createtime)
+
+    return {
+      $orig: $orig,
+      f0: f0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -309,95 +328,124 @@ var _default =
 {
   data: function data() {
     return {
-      infos: [
-      {
-        title: '求购二手三轮车5辆成色8成都市',
-        desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-        city: '成都市',
-        nickname: '旋风冷少',
-        date: '2021/09/28',
-        avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963' },
-
-      {
-        title: '求购二手三轮车5辆成色上海市',
-        desc: '本人诚心求购8诚心三轮车5辆，价格面议急用欢迎联系本人诚心求购辆价格面议急用欢迎联系电话号码：139987765509008879',
-        city: '上海市',
-        nickname: '小可爱',
-        date: '2021/09/28',
-        avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.alicdn.com%2Fimgextra%2Fi4%2FTB2yhlYDeSSBuNjy0FlXXbBpVXa_%21%210-mtopupload.jpg&refer=http%3A%2F%2Fimg.alicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630310660&t=abdac5c377af829bf5065a625f188963' }],
-
-
-      informations: [{
-        image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-        title: '成都市保时捷汽车有限公司',
-        subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-        imageList: [{
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2' },
-
-        {
-          img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg' },
-
-        {
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04' },
-
-        {
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696' }] },
-
-
-
-
-      {
-        image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.boqiicdn.com%2FData%2FBK%2FP%2Fimg57991418291533.jpg&refer=http%3A%2F%2Fimg.boqiicdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630298901&t=be9f4858f70b9d1e575cb8cd36c414f3',
-        title: '成都市保时捷汽车有限公司',
-        subtitle: '是客户端爱空间的丝黛芬妮的解放军报上课施工方啊',
-        imageList: [{
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcms.xitek.com%2Fuploads%2Fallimg%2F120801%2F84-120P1150432-50.jpg&refer=http%3A%2F%2Fcms.xitek.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304332&t=60615b76887ce90dddeedc85fe00dbc2' },
-
-        {
-          img: 'https://img1.baidu.com/it/u=3375251621,733367456&fm=26&fmt=auto&gp=0.jpg' },
-
-        {
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fy1.ifengimg.com%2Fa%2F2014_51%2F27ae2deba334edd.jpg&refer=http%3A%2F%2Fy1.ifengimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304515&t=2042631916e9f2e29e389a3c809baf04' },
-
-        {
-          img: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimage.xcar.com.cn%2Fattachments%2Fa%2Fday_091228%2F20091228_7e5c3baded03d9d32d13aNLs5o80b678.jpg&refer=http%3A%2F%2Fimage.xcar.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1630304450&t=fd64f892b7ca8f4e4312baf0cb6cc696' }] }],
-
-
-
-
-      // 轮播图
-      list: [{
-        image: 'https://cdn.uviewui.com/uview/swiper/1.jpg' },
-
-      {
-        image: 'https://cdn.uviewui.com/uview/swiper/2.jpg' },
-
-      {
-        image: 'https://cdn.uviewui.com/uview/swiper/3.jpg' }] };
-
-
-
+      manufactor: 0,
+      distributor: 0,
+      banner: [], // // 轮播图
+      merchant_0: [], // 厂家
+      merchant_1: [], // 经销商
+      totalinfo: [] // 供求信息
+    };
   },
-  onLoad: function onLoad() {
-    // 请求示例
+  onShow: function onShow() {
+    this.getBanner();
     this.getList();
+    this.getMoreList();
+    this.static(); // 厂家和经销商数量
+    this.getRequireSupply();
   },
   methods: {
     /**
-              * @desc 请求页面数据
+              * @desc 轮播图
               * @param
               **/
-    getList: function getList() {
+    getBanner: function getBanner() {var _this = this;
       this.$request({
-        url: "/",
-        method: "POST",
-        data: {}, // 请求参数
+        url: "/api/decorate/banner",
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this.banner = res.data;
+        } });
+
+    },
+    /**
+        * @desc 请求页面数据（厂家列表）
+        * @param
+        **/
+    getList: function getList() {var _this2 = this;
+      this.$request({
+        url: "/api/store/index",
+        method: "GET",
+        data: { type: 0 }, // 厂家
         // hideLoading: true,
         success: function success(res) {
-          console.log(res);
-        },
-        fail: function fail(err) {
-          console.log(err);
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this2.merchant_0 = res.data.slice(0, 2);
+          console.log(res, "首页厂家");
+        } });
+
+    },
+    /**
+        * @desc 请求页面数据（经销商列表）
+        * @param
+        **/
+    getMoreList: function getMoreList() {var _this3 = this;
+      this.$request({
+        url: "/api/store/index",
+        method: "GET",
+        data: { type: 1 }, // 经销商
+        // hideLoading: true,
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this3.merchant_1 = res.data.slice(0, 2);
+          console.log(res, "首页经销商");
+        } });
+
+    },
+    /**
+        * @desc 获取厂家经销商数量
+        * @param
+        **/
+    static: function _static() {var _this4 = this;
+      this.$request({
+        url: "/api/store/statistics",
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this4.manufactor = res.data.manufactor;
+          _this4.distributor = res.data.distributor;
+        } });
+
+    },
+    /**
+        * @desc 获取供求信息
+        * @param
+        **/
+    getRequireSupply: function getRequireSupply() {var _this5 = this;
+      this.$request({
+        url: "/api/supply/index",
+        method: "POST",
+        success: function success(res) {
+          if (res && res.code && res.code !== 1) {
+            uni.showToast({
+              title: res.msg,
+              icon: "none" });
+
+            return false;
+          }
+          _this5.totalinfo = res.data.data.slice(0, 2);
         } });
 
     },
