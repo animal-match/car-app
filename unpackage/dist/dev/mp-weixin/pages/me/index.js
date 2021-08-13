@@ -279,6 +279,14 @@ var _default =
         url: '/api/user/logout',
         data: { token: token },
         success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
           _this3.isLogin = false; // 更改本页登录状态
           _this3.userName = "",
           _this3.avatar = "",

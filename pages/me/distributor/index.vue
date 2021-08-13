@@ -90,13 +90,13 @@
 					url: "/api/user/commission",
 					method: "POST",
 					success: res => {
-						if(!!res&&res.code&&res.code!==1) {
-							console.log('获取失败')
-							uni.showToast({
-								title: res.msg,
-								icon: "none"
-							})
-							return false;
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
 						}
 						this.currentMonthProfits = res.data.month_total; // 本月收益
 						this.totalProfits = res.data.total; // 累计收益

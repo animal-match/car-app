@@ -12442,7 +12442,7 @@ module.exports = function (params) {
     dataType: "json",
     sslVerify: false,
     success: function success(res) {
-      if (res.code && res.code !== 1) {
+      if (res && res.code && res.code !== 1) {
         uni.showToast({
           title: res.msg });
 
@@ -12459,7 +12459,6 @@ module.exports = function (params) {
       typeof params.fail == "function" && params.fail(err.data);
     },
     complete: function complete(e) {
-      console.log('请求完成');
       uni.hideLoading();
       typeof params.complete == "function" && params.complete(e.data);
       return;

@@ -24,7 +24,7 @@
 			<!-- 右侧为列表 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
 				<!-- 最外层大盒子 Start-->
-				<view @click="goToStore" class="information-block" v-for="(_item,_index) in informations" :key="_index">
+				<view @click="goToStore(_item.id)" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 					<!-- 第一行 Logo 标题 按钮 -->
 					<view class="first-line">
 						<!-- 左侧 Logo和标题 -->
@@ -37,7 +37,7 @@
 						</view>
 						<view class="right-block">
 							<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true"
-								ripple-bg-color="#dd524d" @click="goToStore">进店</u-button>
+								ripple-bg-color="#dd524d" @click="goToStore(_item.id)">进店</u-button>
 						</view>
 					</view>
 					<!-- 第二行 图片组 -->
@@ -95,13 +95,14 @@
 						 type: this.currentTab
 					 },
 					 success: res => {
-						 if(res&&res.code&&res.code!==1) {
-						 	uni.showToast({
-						 		icon: "none",
-						 		title: res.msg
-						 	})
-						 	return false
-						 }	
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
+						 }
 						 this.categoryList = res.data;
 						 console.log(this.categoryList,'分类列表')
 					 }
@@ -120,13 +121,14 @@
 						keyword: this.form.searchKey
 					},
 					success: res=> {
-						if(res&&res.code&&res.code!==1) {
-							uni.showToast({
-								icon: "none",
-								title: res.msg
-							})
-							return false
-						}	
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
 						console.log(res.data,'商家列表')
 						this.informations = res.data;
 					}
@@ -173,9 +175,9 @@
 			 * @desc 跳转到进店详情页
 			 * @param
 			 **/
-			goToStore() {
+			goToStore(id) {
 				uni.navigateTo({
-					url: '/pages/merchants/merchant-into-store/index'
+					url: '/pages/merchants/merchant-into-store/index?id=' + id
 				});
 			},
 		}

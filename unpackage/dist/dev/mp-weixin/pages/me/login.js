@@ -288,6 +288,14 @@ var _default =
           code: code },
 
         success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
           var key = res.data.session_key;
           _this3.openid = res.data.openid;
           _this3.userLogin(info, key); // 服务器后台登录操作
@@ -307,6 +315,14 @@ var _default =
         data),
 
         success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
           _this4.token = res.data.token; // 获取token
           uni.setStorageSync("token", _this4.token); // 保存token到缓存中
           _this4.$store.commit('changeLoginState', true); // 登录状态为true
@@ -315,6 +331,14 @@ var _default =
             url: "/api/user/index",
             data: { token: _this4.token },
             success: function success(res) {
+              if (res.code === 0) {
+                uni.showToast({
+                  icon: "none",
+                  title: res.msg,
+                  duration: 3000 });
+
+                return false;
+              }
               console.log('用户中心', res);
               var user = {
                 id: res.data.user.id, // 用户id

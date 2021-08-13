@@ -164,12 +164,13 @@
 				 this.$request({
 					 url: "/api/decorate/banner",
 					 success: res => {
-						 if(res&&res.code&&res.code!==1) {
-							 uni.showToast({
-							 	title: res.msg,
-								icon: "none"
-							 })
-							 return false;
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
 						 }
 						 this.banner = res.data;
 					 }
@@ -186,12 +187,13 @@
 					 data: {type: 0}, // 厂家
 					 // hideLoading: true,
 					 success: res=> {
-						 if(res&&res.code&&res.code!==1) {
-							 uni.showToast({
-							 	title: res.msg,
-								icon: "none"
-							 })
-							 return false;
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
 						 }
 						 this.merchant_0 = res.data.slice(0,2);
 						 console.log(res,"首页厂家");
@@ -209,12 +211,13 @@
 					 data: {type: 1}, // 经销商
 					 // hideLoading: true,
 					 success: res=> {
-						 if(res&&res.code&&res.code!==1) {
-							 uni.showToast({
-								title: res.msg,
-								icon: "none"
-							 })
-							 return false;
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
 						 }
 						 this.merchant_1 = res.data.slice(0,2);
 						 console.log(res,"首页经销商");
@@ -229,12 +232,13 @@
 				this.$request({
 					url: "/api/store/statistics",
 					 success: res=> {
-						 if(res&&res.code&&res.code!==1) {
-							 uni.showToast({
-								title: res.msg,
-								icon: "none"
-							 })
-							 return false;
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
 						 }
 						 this.manufactor = res.data.manufactor;
 						 this.distributor = res.data.distributor;

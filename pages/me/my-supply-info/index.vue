@@ -54,6 +54,14 @@
 						page: this.page.start,// 页数
 					},
 					success: res=> {
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
 						let arr = res.data.data;
 						this.infos = this.infos.concat(arr);
 						this.page.totalPages = res.data.last_page;

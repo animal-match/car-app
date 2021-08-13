@@ -273,10 +273,11 @@ var _default =
         method: "POST",
         data: { page: this.page.page },
         success: function success(res) {
-          if (!!res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: 'none' });
+              duration: 3000 });
 
             return false;
           }
@@ -359,7 +360,14 @@ var _default =
             token: token },
 
           success: function success(res) {
-            console.log('提现成功');
+            if (res.code === 0) {
+              uni.showToast({
+                icon: "none",
+                title: res.msg,
+                duration: 3000 });
+
+              return false;
+            }
             uni.navigateTo({
               url: 'fetch-success?cash=' + _this2.cash });
 

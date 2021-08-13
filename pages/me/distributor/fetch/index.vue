@@ -107,12 +107,13 @@
 					method: "POST",
 					data: {page: this.page.page},
 					success: res => {
-						if(!!res&&res.code&&res.code!==1) {
-							uni.showToast({
-								title: res.msg,
-								icon: 'none'
-							});
-							return false;
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
 						}
 						let arr = res.data.data;
 						this.recordsList = this.recordsList.concat(arr);
@@ -193,7 +194,14 @@
 							token: token
 						},
 						success: res => {
-							console.log('提现成功')
+							if(res.code===0) {
+								 uni.showToast({
+									 icon: "none",
+									 title: res.msg,
+									 duration: 3000
+								 })
+								 return false;
+							}
 							uni.navigateTo({
 								url: 'fetch-success?cash='+this.cash,
 							})

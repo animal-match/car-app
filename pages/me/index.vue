@@ -113,6 +113,14 @@
 					url: '/api/user/logout',
 					data: {token: token},
 					success: res => {
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
 						this.isLogin = false; // 更改本页登录状态
 						this.userName = "",
 						this.avatar = "",

@@ -270,10 +270,11 @@ var _default =
           type: this.currentTab },
 
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
               icon: "none",
-              title: res.msg });
+              title: res.msg,
+              duration: 3000 });
 
             return false;
           }
@@ -295,10 +296,11 @@ var _default =
           keyword: this.form.searchKey },
 
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
               icon: "none",
-              title: res.msg });
+              title: res.msg,
+              duration: 3000 });
 
             return false;
           }
@@ -348,9 +350,9 @@ var _default =
         * @desc 跳转到进店详情页
         * @param
         **/
-    goToStore: function goToStore() {
+    goToStore: function goToStore(id) {
       uni.navigateTo({
-        url: '/pages/merchants/merchant-into-store/index' });
+        url: '/pages/merchants/merchant-into-store/index?id=' + id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

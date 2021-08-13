@@ -31,7 +31,7 @@ module.exports = (params) => {
 		dataType: "json",
 		sslVerify: false,
 		success: (res) => {
-			if(res.code && res.code !== 1) {
+			if(res && res.code && res.code !== 1) {
 				uni.showToast({
 					title: res.msg
 				})
@@ -48,7 +48,6 @@ module.exports = (params) => {
 			typeof params.fail == "function" && params.fail(err.data);
 		},
 		complete: (e) => {
-			console.log('请求完成');
 			uni.hideLoading();
 			typeof params.complete == "function" && params.complete(e.data);
 			return;

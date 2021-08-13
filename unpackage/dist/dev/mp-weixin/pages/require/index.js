@@ -409,10 +409,11 @@ var _default =
           content: this.form.content },
 
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
               icon: "none",
-              title: res.msg });
+              title: res.msg,
+              duration: 3000 });
 
             _this2.supplyloading = false;
             return false;
@@ -444,10 +445,11 @@ var _default =
           num: this.formMore.num },
 
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
               icon: "none",
-              title: res.msg });
+              title: res.msg,
+              duration: 3000 });
 
             _this3.requireloading = false;
             return false;
@@ -513,10 +515,11 @@ var _default =
           page: this.page.start // 页数
         },
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
               icon: "none",
-              title: res.msg });
+              title: res.msg,
+              duration: 3000 });
 
             return false;
           }

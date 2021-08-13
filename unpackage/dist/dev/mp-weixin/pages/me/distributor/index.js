@@ -274,11 +274,11 @@ var _default =
         url: "/api/user/commission",
         method: "POST",
         success: function success(res) {
-          if (!!res && res.code && res.code !== 1) {
-            console.log('获取失败');
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }

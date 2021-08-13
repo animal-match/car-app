@@ -73,7 +73,60 @@
 				]
 			}
 		},
+		onLoad(opt) {
+			const idValue = opt.id;
+			this.storeInfo(idValue);		
+		},
+		onShow() {
+			// this.getDetailInfo()
+		},
 		methods: {
+			/**
+			 * @desc 商家详情数据
+			 * @param 
+			 **/
+			storeInfo(idValue) {
+				this.$request({
+					url: "/api/store/detail",
+					method: "POST",
+					data:{
+						user_id: idValue
+					},
+					success: res => {
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
+						console.log('详情',res.data);
+					}
+				})
+			},
+			/**
+			 * @desc 获取地址手机号
+			 * @param 
+			 **/
+			 getDetailInfo() {
+				 this.$request({
+					 url: "/api/store/getAddress",
+					 method: "POST",
+					 success: res => {
+						 if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						 }
+						 console.log('查询成功手机地址',res.data);
+					 }
+				 })
+			 },
+			// /api/store/getAddress
 			/**
 			 * @desc 展示经销商电话
 			 * @param 

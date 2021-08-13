@@ -122,6 +122,14 @@
 						code: code
 					},
 					success: res=> {
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
 						const key = res.data.session_key;
 						this.openid = res.data.openid;
 						this.userLogin(info,key); // 服务器后台登录操作
@@ -141,6 +149,14 @@
 						...data
 					},
 					success: res => {
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
+						}
 						this.token = res.data.token; // 获取token
 						uni.setStorageSync("token",this.token); // 保存token到缓存中
 						this.$store.commit('changeLoginState', true); // 登录状态为true
@@ -149,6 +165,14 @@
 							url: "/api/user/index",
 							data: { token: this.token },
 							success: res => {
+								if(res.code===0) {
+									 uni.showToast({
+										 icon: "none",
+										 title: res.msg,
+										 duration: 3000
+									 })
+									 return false;
+								}
 								console.log('用户中心',res);
 								let user = {
 									id: res.data.user.id, // 用户id

@@ -128,7 +128,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -184,6 +184,14 @@ var _default =
           page: this.page.start // 页数
         },
         success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
           var arr = res.data.data;
           _this.infos = _this.infos.concat(arr);
           _this.page.totalPages = res.data.last_page;
@@ -200,6 +208,7 @@ var _default =
       this.infos = [];
       this.getDemandsList();
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

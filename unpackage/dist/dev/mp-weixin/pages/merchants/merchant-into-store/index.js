@@ -243,11 +243,64 @@ var _default =
 
 
   },
+  onLoad: function onLoad(opt) {
+    var idValue = opt.id;
+    this.storeInfo(idValue);
+  },
+  onShow: function onShow() {
+    // this.getDetailInfo()
+  },
   methods: {
     /**
-              * @desc 展示经销商电话
+              * @desc 商家详情数据
               * @param 
               **/
+    storeInfo: function storeInfo(idValue) {
+      this.$request({
+        url: "/api/store/detail",
+        method: "POST",
+        data: {
+          user_id: idValue },
+
+        success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
+          console.log('详情', res.data);
+        } });
+
+    },
+    /**
+        * @desc 获取地址手机号
+        * @param 
+        **/
+    getDetailInfo: function getDetailInfo() {
+      this.$request({
+        url: "/api/store/getAddress",
+        method: "POST",
+        success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
+          console.log('查询成功手机地址', res.data);
+        } });
+
+    },
+    // /api/store/getAddress
+    /**
+     * @desc 展示经销商电话
+     * @param 
+     **/
     showPhone: function showPhone() {
       this.phoneNoShow = true;
     },

@@ -253,10 +253,11 @@ var _default =
         url: "/api/supply/detail?id=" + id,
         method: "GET",
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }

@@ -352,10 +352,11 @@ var _default =
       this.$request({
         url: "/api/decorate/banner",
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }
@@ -374,10 +375,11 @@ var _default =
         data: { type: 0 }, // 厂家
         // hideLoading: true,
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }
@@ -397,10 +399,11 @@ var _default =
         data: { type: 1 }, // 经销商
         // hideLoading: true,
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }
@@ -417,10 +420,11 @@ var _default =
       this.$request({
         url: "/api/store/statistics",
         success: function success(res) {
-          if (res && res.code && res.code !== 1) {
+          if (res.code === 0) {
             uni.showToast({
+              icon: "none",
               title: res.msg,
-              icon: "none" });
+              duration: 3000 });
 
             return false;
           }

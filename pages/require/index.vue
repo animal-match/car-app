@@ -231,13 +231,14 @@
 						content: this.form.content,
 					},
 					success: res => {
-						if(res&&res.code&&res.code!==1) {
-							uni.showToast({
-								icon: "none",
-								title: res.msg
-							})
-							this.supplyloading = false;
-							return false;
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 this.supplyloading = false;
+							 return false;
 						}
 						uni.showToast({
 							icon: "success",
@@ -266,13 +267,14 @@
 						num: this.formMore.num,
 					},
 					success: res => {
-						if(res&&res.code&&res.code!==1) {
-							uni.showToast({
-								icon: "none",
-								title: res.msg
-							})
-							this.requireloading = false;
-							return false;
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 this.requireloading = false;
+							 return false;
 						}
 						uni.showToast({
 							icon: "success",
@@ -335,12 +337,13 @@
 						page: this.page.start,// 页数
 					},
 					success: res=> {
-						if(res&&res.code&&res.code!==1) {
-							uni.showToast({
-								icon: "none",
-								title: res.msg
-							})
-							return false;
+						if(res.code===0) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 return false;
 						}
 						let arr = res.data.data;
 						this.infos = this.infos.concat(arr);

@@ -92,12 +92,13 @@
 					 url: "/api/supply/detail?id="+id,
 					 method: "GET",
 					 success: res => {
-						 if(res&&res.code&&res.code!==1) {
-							 uni.showToast({
-							 	title: res.msg,
-								icon: "none"
-							 })
-							 return false;
+						 if(res.code===0) {
+						 	 uni.showToast({
+						 		 icon: "none",
+						 		 title: res.msg,
+						 		 duration: 3000
+						 	 })
+						 	 return false;
 						 }
 						 console.log(res,'详情页数据');
 						 this.detail = res.data;
