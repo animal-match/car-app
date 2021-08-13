@@ -40,7 +40,7 @@
 							{{item.message}}
 						</view>
 						<view class="anwser" v-if="item.reply">
-							<text class="anwser-text">回复：</text>
+							<text class="anwser-text">商家回复：</text>
 							{{item.reply}}
 						</view>
 					</view>

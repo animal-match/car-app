@@ -3,15 +3,13 @@
 	<view class="merchant-into-store">
 		<!-- 上半部分 -->
 		<view class="top-container">
-			<u-image src="http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png" height="320rpx" shape="square" border-radius="20rpx"></u-image>
+			<u-image :src="storeInformation.image" height="320rpx" shape="square" border-radius="20rpx"></u-image>
 			<view class="name-tags-button">
 				<!-- 左侧 厂家名称和标签 -->
 				<view class="name-and-tags">
-					<view class="merchant-name">成都品牌豪车厂家</view>
+					<view class="merchant-name">{{storeInformation.store_name || '-'}}</view>
 					<view class="tags">
-						<text class="tag-name">品牌商</text>
-						<text class="tag-name">品牌商</text>
-						<text class="tag-name">品牌商</text>
+						<text class="tag-name" v-for="(item,index) in goodsTags" :key="index">{{item}}</text>
 					</view>
 				</view>
 				<!-- 右侧 按钮 -->
@@ -21,14 +19,14 @@
 			</view>
 			<view class="informations">
 				<u-tag text="介绍" type="error" mode="dark" class="intro"/>
-				<text>&nbsp;&nbsp;&nbsp;&nbsp;锁定拉动房价肯定的法国时尚 开个房反馈给坑了发过来看房 撒旦非十大撒是发给客服但是法国发过模块是敢死队风格 ，手动阀手动阀是德国通过邮件看try对方的</text>
+				<text>{{storeInformation.information || '-'}}</text>
 			</view>
 		</view>
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 中间部分 联系电话 定位 -->
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
-			<text v-if="!!isvip" class="address ellipsis">地址：成都市金牛区二环路北二段199号</text>
+			<text v-if="!!isvip || userLoginId==idValue" class="address ellipsis">地址：成都市金牛区二环路北二段199号</text>
 			<text v-else class="address ellipsis">地址：*************</text>
 			<u-button v-if="showMessageButton || userLoginId==idValue" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
@@ -41,10 +39,10 @@
 		<!-- 底部部分 产品图 -->
 		<view class="production">产品</view>
 		<view class="bottom-container">
-			<view v-for="(_item,_index) in productText" :key="index" class="image-box">
+			<view v-for="(_item,_index) in productions" :key="index" class="image-box">
 				<view style="display: flex; flex-direction: column;">
-					<u-image class="production-iamges" :src="_item.url" width="210" height="190"></u-image>
-					<text class="production-text ellipsis">{{_item.text}}</text>
+					<u-image @click="previewImage(_index)" class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
+					<text class="production-text ellipsis">{{_item.title}}</text>
 				</view>
 			</view>
 			<u-gap height="40"></u-gap>
@@ -60,17 +58,6 @@
 	export default {
 		data() {
 			return {
-				productText: [
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:1},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:2},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:3},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:4},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:5},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:6},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:7},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:8},
-					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:9},
-				],
 				showMessageButton: false, // 显示留言按钮
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
@@ -79,6 +66,9 @@
 				isvip: false, // 是否是会员
 				idValue: '', // 商家id
 				userLoginId: '', // 用户登录的id
+				goodsTags: [], // 标签
+				productions: [], // 产品
+				storeInformation: {} // 详情数据
 			}
 		},
 		onLoad(opt) {
@@ -102,7 +92,7 @@
 					url: "/api/store/detail",
 					method: "POST",
 					data:{
-						user_id: idValue
+						store_id: idValue
 					},
 					success: res => {
 						if(res.code===0) {
@@ -114,6 +104,9 @@
 							 return false;
 						}
 						console.log('详情',res.data);
+						this.goodsTags = res.data.category; // array 商品标签
+						this.productions = res.data.goods; // array 产品
+						this.storeInformation = res.data; // Object 详情数据
 					}
 				})
 			},
@@ -248,6 +241,14 @@
 				  	url: 'sendMessage?id='+this.idValue
 				  })
 			 },
+			 // 预览图片
+			 previewImage: function(e) {
+				 console.log(e)
+				 uni.previewImage({
+						current: this.productions[e].image,
+						urls: this.productions
+				})
+			},
 		}
 	}
 </script>

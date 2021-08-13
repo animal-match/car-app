@@ -224,23 +224,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
     return {
-      productText: [
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 1 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 2 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 3 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 4 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 5 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 6 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 7 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 8 },
-      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 9 }],
-
       showMessageButton: false, // 显示留言按钮
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
@@ -248,7 +235,10 @@ var _default =
       adressTips: '非会员查看地址电话需支付120元费用',
       isvip: false, // 是否是会员
       idValue: '', // 商家id
-      userLoginId: '' // 用户登录的id
+      userLoginId: '', // 用户登录的id
+      goodsTags: [], // 标签
+      productions: [], // 产品
+      storeInformation: {} // 详情数据
     };
   },
   onLoad: function onLoad(opt) {
@@ -267,12 +257,12 @@ var _default =
               * @desc 商家详情数据
               * @param 
               **/
-    storeInfo: function storeInfo(idValue) {
+    storeInfo: function storeInfo(idValue) {var _this = this;
       this.$request({
         url: "/api/store/detail",
         method: "POST",
         data: {
-          user_id: idValue },
+          store_id: idValue },
 
         success: function success(res) {
           if (res.code === 0) {
@@ -284,6 +274,9 @@ var _default =
             return false;
           }
           console.log('详情', res.data);
+          _this.goodsTags = res.data.category; // array 商品标签
+          _this.productions = res.data.goods; // array 产品
+          _this.storeInformation = res.data; // Object 详情数据
         } });
 
     },
@@ -416,6 +409,14 @@ var _default =
     sendMessage: function sendMessage() {
       uni.navigateTo({
         url: 'sendMessage?id=' + this.idValue });
+
+    },
+    // 预览图片
+    previewImage: function previewImage(e) {
+      console.log(e);
+      uni.previewImage({
+        current: this.productions[e].image,
+        urls: this.productions });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

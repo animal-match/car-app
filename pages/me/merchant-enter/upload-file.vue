@@ -13,7 +13,7 @@
 			<!-- 上传图片 -->
 			<view class="upload-image">
 				<view v-for="(item, index) in imageList" :key="index">
-					<u-image  :src="item" @click="previewImage(index)" width="200" height="150" class="pics"></u-image>
+					<u-image :src="item" @click="previewImage(index)" width="200" height="150" class="pics"></u-image>
 					<u-image v-if="imageList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delect(index)"  class="close-btn"></u-image>
 				</view>
 			</view>
