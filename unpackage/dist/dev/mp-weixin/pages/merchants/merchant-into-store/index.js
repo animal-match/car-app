@@ -222,33 +222,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      productText: [
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 1 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 2 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 3 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 4 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 5 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 6 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 7 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 8 },
+      { text: '一级产品，品质优良，值得信奈！！！', url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png', id: 9 }],
+
+      showMessageButton: false, // 显示留言按钮
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
       phoneTips: '商家查看经销商电话需成为会员',
       adressTips: '非会员查看地址电话需支付120元费用',
-      imgList: [
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' },
-      { url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png' }] };
-
-
+      isvip: false // 是否是会员
+    };
   },
   onLoad: function onLoad(opt) {
     var idValue = opt.id;
     this.storeInfo(idValue);
   },
   onShow: function onShow() {
-    // this.getDetailInfo()
+    this.isvip = uni.getStorageSync("isVip"); // 判断用户是否为会员
+    if (!!this.isvip) this.showMessageButton = true;
   },
   methods: {
     /**
@@ -302,57 +309,72 @@ var _default =
      * @param 
      **/
     showPhone: function showPhone() {
-      this.phoneNoShow = true;
+      if (!!this.isvip) {
+        // 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能
+        uni.makePhoneCall({
+          phoneNumber: '15828292076',
+          success: function success(res) {
+            console.log('打电话');
+          } });
+
+      } else {
+        // 否则打开去升级弹窗
+        this.phoneNoShow = true;
+      }
     },
     /**
         * @desc 展示定位地址
         * @param 
         **/
     showAddress: function showAddress(longi, lati, address) {
-      // 非会员需要先打开弹窗成为会员
-      // this.addressShow = true;
-      var latitude = Number(lati);
-      var longitude = Number(longi);
-      // 获取定位信息
-      uni.getLocation({
-        type: 'wgs84', //返回可以用于uni.openLocation的经纬度
-        // 用户允许获取定位的时候
-        success: function success(res) {
-          console.log('用户当前位置的经纬度', res);
-          if (res.errMsg === 'getLocation:ok') {
-            uni.openLocation({
-              latitude: latitude,
-              longitude: longitude,
-              address: address,
-              scale: 18,
-              success: function success() {
-                console.log('定位成功');
-              } });
+      // 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能
+      if (!!this.isvip) {
+        var latitude = Number(lati);
+        var longitude = Number(longi);
+        // 获取定位信息
+        uni.getLocation({
+          type: 'wgs84', //返回可以用于uni.openLocation的经纬度
+          // 用户允许获取定位的时候
+          success: function success(res) {
+            console.log('用户当前位置的经纬度', res);
+            if (res.errMsg === 'getLocation:ok') {
+              uni.openLocation({
+                latitude: latitude,
+                longitude: longitude,
+                address: address,
+                scale: 18,
+                success: function success() {
+                  console.log('定位成功');
+                } });
 
-          }
-        },
-        // 用户拒绝获取定位后 再次点击触发
-        fail: function fail(res) {
-          if (res.errMsg === 'getLocation:fail auth deny') {
-            uni.showModal({
-              content: '检测到您没打开获取信息功能权限，是否去设置打开？',
-              confirmText: '确认',
-              cancelText: '取消',
-              success: function success(res) {
-                if (res.confirm) {
-                  uni.openSetting({
-                    success: function success(res) {
+            }
+          },
+          // 用户拒绝获取定位后 再次点击触发
+          fail: function fail(res) {
+            if (res.errMsg === 'getLocation:fail auth deny') {
+              uni.showModal({
+                content: '检测到您没打开获取信息功能权限，是否去设置打开？',
+                confirmText: '确认',
+                cancelText: '取消',
+                success: function success(res) {
+                  if (res.confirm) {
+                    uni.openSetting({
+                      success: function success(res) {
 
-                    } });
+                      } });
 
-                } else {
-                  return false;
-                }
-              } });
+                  } else {
+                    return false;
+                  }
+                } });
 
-          }
-        } });
+            }
+          } });
 
+      } else {
+        // 如果不是会员，就打开去升级弹窗
+        this.addressShow = true;
+      }
     },
     /**
         * @desc 点击 去升级按钮

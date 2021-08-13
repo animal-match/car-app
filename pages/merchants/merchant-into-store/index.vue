@@ -28,8 +28,9 @@
 		<!-- 中间部分 联系电话 定位 -->
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
-			<text class="address ellipsis">成都市金牛区二环路北二段199号</text>
-			<u-button type="error" size="mini" @click="sendMessage">留言</u-button>
+			<text v-if="!!isvip" class="address ellipsis">地址：成都市金牛区二环路北二段199号</text>
+			<text v-else class="address ellipsis">地址：*************</text>
+			<u-button v-if="showMessageButton" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
@@ -38,10 +39,13 @@
 		</view>
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 底部部分 产品图 -->
+		<view class="production">产品</view>
 		<view class="bottom-container">
-			<view class="production">产品</view>
-			<view class="image-box">
-				<u-image class="production-iamges" :src="item.url" width="32%" height="190" v-for="(item,index) in imgList" :key="index" ></u-image>
+			<view v-for="(_item,_index) in productText" :key="index" class="image-box">
+				<view style="display: flex; flex-direction: column;">
+					<u-image class="production-iamges" :src="_item.url" width="210" height="190"></u-image>
+					<text class="production-text ellipsis">{{_item.text}}</text>
+				</view>
 			</view>
 			<u-gap height="40"></u-gap>
 		</view>
@@ -56,21 +60,23 @@
 	export default {
 		data() {
 			return {
+				productText: [
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:1},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:2},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:3},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:4},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:5},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:6},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:7},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:8},
+					{text: '一级产品，品质优良，值得信奈！！！',url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png',id:9},
+				],
+				showMessageButton: false, // 显示留言按钮
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
 				phoneTips: '商家查看经销商电话需成为会员',
 				adressTips: '非会员查看地址电话需支付120元费用',
-				imgList: [
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-					{url: 'http://cdnfile.op110.com.cn/files/895/image/20170801/%E9%A3%9E%E6%9C%BA4_1501553952047.png'},
-				]
+				isvip: false, // 是否是会员
 			}
 		},
 		onLoad(opt) {
@@ -78,7 +84,8 @@
 			this.storeInfo(idValue);		
 		},
 		onShow() {
-			// this.getDetailInfo()
+			 this.isvip = uni.getStorageSync("isVip") // 判断用户是否为会员
+			 if(!!this.isvip) this.showMessageButton = true;
 		},
 		methods: {
 			/**
@@ -132,57 +139,72 @@
 			 * @param 
 			 **/
 			showPhone() {
-				this.phoneNoShow = true;
+				if(!!this.isvip) {
+					// 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能
+					uni.makePhoneCall({
+						phoneNumber: '15828292076',
+						success: res => {
+							console.log('打电话')
+						}
+					})
+				}else{
+					// 否则打开去升级弹窗
+					this.phoneNoShow = true;
+				}
 			},
 			/**
 			 * @desc 展示定位地址
 			 * @param 
 			 **/
 			showAddress(longi,lati,address) {
-				// 非会员需要先打开弹窗成为会员
-				// this.addressShow = true;
-				let latitude = Number(lati);   
-				let longitude = Number(longi);
-				// 获取定位信息
-				uni.getLocation({
-					type: 'wgs84', //返回可以用于uni.openLocation的经纬度
-					// 用户允许获取定位的时候
-					success: function(res) {
-						console.log('用户当前位置的经纬度',res);
-						if(res.errMsg==='getLocation:ok') {
-							uni.openLocation({
-								latitude: latitude,
-								longitude: longitude,
-								address: address,
-								scale: 18,
-								success:function() {
-									console.log('定位成功')
-								}
-							})
-						}
-					},
-					// 用户拒绝获取定位后 再次点击触发
-					fail: function(res) {
-						if(res.errMsg==='getLocation:fail auth deny') {
-							uni.showModal({
-								content: '检测到您没打开获取信息功能权限，是否去设置打开？',
-								confirmText: '确认',
-								cancelText: '取消',
-								success: (res) => {
-									if(res.confirm) {
-										uni.openSetting({
-											success: res => {
-												
-											}
-										})
-									} else {
-										return false;
+				// 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能
+				if(!!this.isvip) {
+					let latitude = Number(lati);
+					let longitude = Number(longi);
+					// 获取定位信息
+					uni.getLocation({
+						type: 'wgs84', //返回可以用于uni.openLocation的经纬度
+						// 用户允许获取定位的时候
+						success: function(res) {
+							console.log('用户当前位置的经纬度',res);
+							if(res.errMsg==='getLocation:ok') {
+								uni.openLocation({
+									latitude: latitude,
+									longitude: longitude,
+									address: address,
+									scale: 18,
+									success:function() {
+										console.log('定位成功')
 									}
-								}
-							})
+								})
+							}
+						},
+						// 用户拒绝获取定位后 再次点击触发
+						fail: function(res) {
+							if(res.errMsg==='getLocation:fail auth deny') {
+								uni.showModal({
+									content: '检测到您没打开获取信息功能权限，是否去设置打开？',
+									confirmText: '确认',
+									cancelText: '取消',
+									success: (res) => {
+										if(res.confirm) {
+											uni.openSetting({
+												success: res => {
+													
+												}
+											})
+										} else {
+											return false;
+										}
+									}
+								})
+							}
 						}
-					}
-				})
+					})
+				}else{
+					// 如果不是会员，就打开去升级弹窗
+					this.addressShow = true;
+				}			
 			},
 			/**
 			 * @desc 点击 去升级按钮
@@ -291,21 +313,31 @@
 			}
 		}
 		// 底部部分
+		.production {
+			padding: 25rpx 0rpx 25rpx 30rpx;
+			border-bottom: 2rpx solid $uni-bg-color-grey;
+			font-size: 30rpx;
+			font-weight: bolder;
+			margin-bottom: 0 0 20rpx 20rpx;
+		}
 		.bottom-container {
 			margin: 30rpx 46rpx;
-			.production {
-				padding-bottom: 25rpx;
-				border-bottom: 2rpx solid $uni-bg-color-grey;
-				font-size: 30rpx;
-				font-weight: bolder;
-				margin-bottom: 20rpx;
-			}
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			
 			.image-box {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
 				.production-iamges {
+					display: inline-block;
 					margin-bottom: 10rpx;
+					margin-right: 10rpx;
+				}
+				.production-text {
+					display: inline-block;
+					width: 210rpx;
+					font-size: 24rpx;
+					margin-bottom: 15rpx;
+					color: $uni-text-color-grey;
 				}
 			}
 		}

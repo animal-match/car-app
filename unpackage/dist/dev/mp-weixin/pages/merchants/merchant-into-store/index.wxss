@@ -100,27 +100,35 @@
 .merchant-into-store .center-container .u-btn.data-v-088d3d62 {
   margin-right: 20rpx;
 }
-.merchant-into-store .bottom-container.data-v-088d3d62 {
-  margin: 30rpx 46rpx;
-}
-.merchant-into-store .bottom-container .production.data-v-088d3d62 {
-  padding-bottom: 25rpx;
+.merchant-into-store .production.data-v-088d3d62 {
+  padding: 25rpx 0rpx 25rpx 30rpx;
   border-bottom: 2rpx solid #f8f8f8;
   font-size: 30rpx;
   font-weight: bolder;
-  margin-bottom: 20rpx;
+  margin-bottom: 0 0 20rpx 20rpx;
 }
-.merchant-into-store .bottom-container .image-box.data-v-088d3d62 {
+.merchant-into-store .bottom-container.data-v-088d3d62 {
+  margin: 30rpx 46rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
 }
 .merchant-into-store .bottom-container .image-box .production-iamges.data-v-088d3d62 {
+  display: inline-block;
   margin-bottom: 10rpx;
+  margin-right: 10rpx;
+}
+.merchant-into-store .bottom-container .image-box .production-text.data-v-088d3d62 {
+  display: inline-block;
+  width: 210rpx;
+  font-size: 24rpx;
+  margin-bottom: 15rpx;
+  color: #999;
 }
 
