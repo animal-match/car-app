@@ -30,7 +30,7 @@
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text v-if="!!isvip" class="address ellipsis">地址：成都市金牛区二环路北二段199号</text>
 			<text v-else class="address ellipsis">地址：*************</text>
-			<u-button v-if="showMessageButton" type="error" size="mini" @click="sendMessage">留言</u-button>
+			<u-button v-if="showMessageButton || userLoginId==idValue" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
@@ -77,13 +77,18 @@
 				phoneTips: '商家查看经销商电话需成为会员',
 				adressTips: '非会员查看地址电话需支付120元费用',
 				isvip: false, // 是否是会员
+				idValue: '', // 商家id
+				userLoginId: '', // 用户登录的id
 			}
 		},
 		onLoad(opt) {
-			const idValue = opt.id;
-			this.storeInfo(idValue);		
+			this.idValue = opt.id;
+			console.log('商家id',this.idValue ,typeof this.idValue)
+			this.storeInfo(opt.id);		
 		},
 		onShow() {
+			 this.userLoginId = this.$store.state.user.userId; // 用户登录id
+			 console.log('用户登录id',this.userLoginId,typeof this.userLoginId)
 			 this.isvip = uni.getStorageSync("isVip") // 判断用户是否为会员
 			 if(!!this.isvip) this.showMessageButton = true;
 		},
@@ -139,8 +144,8 @@
 			 * @param 
 			 **/
 			showPhone() {
-				if(!!this.isvip) {
-					// 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能
+				if(!!this.isvip || this.userLoginId==this.idValue) {
+					// 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能 （商家自己也能看到自己的电话）
 					uni.makePhoneCall({
 						phoneNumber: '15828292076',
 						success: res => {
@@ -157,8 +162,8 @@
 			 * @param 
 			 **/
 			showAddress(longi,lati,address) {
-				// 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能
-				if(!!this.isvip) {
+				// 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能 (商家自己也能看到自己的定位)
+				if(!!this.isvip || this.userLoginId==this.idValue) {
 					let latitude = Number(lati);
 					let longitude = Number(longi);
 					// 获取定位信息
@@ -240,7 +245,7 @@
 			  **/
 			 sendMessage() {
 				  uni.navigateTo({
-				  	url: 'sendMessage'
+				  	url: 'sendMessage?id='+this.idValue
 				  })
 			 },
 		}

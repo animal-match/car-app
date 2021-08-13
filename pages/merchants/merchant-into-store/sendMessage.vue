@@ -1,11 +1,11 @@
 <template>
 	<!-- 留言板 -->
 	<view class="send-message">
-		<u-gap height="20"></u-gap>
+		<u-gap height="20" v-if="userLoginId!=storeId"></u-gap>
 		<!-- 上层 留言框 -->
 		<view class="container-top" v-if="true">
 			<!-- 输入框和按钮盒子 -->
-			<view class="input-button">
+			<view class="input-button" v-if="userLoginId!=storeId">
 				<view class="input">
 					<u-form :model="form">
 						<u-form-item :border-bottom="false">
@@ -14,7 +14,7 @@
 					</u-form>
 				</view>
 				<view class="button">
-					<u-button type="error" size="medium" :custom-style="customStyle">留言</u-button>
+					<u-button type="error" size="medium" :custom-style="customStyle" @click="emitMessage">留言</u-button>
 				</view>
 			</view>
 		</view>
@@ -28,24 +28,24 @@
 					<!-- 左侧 头像 昵称 时间 -->
 					<view class="avatar-box">
 						<view class="top">
-							<u-image width="80" height="80" :src="item.avatarUrl" shape="circle" class="avatar"></u-image>
+							<u-image width="80" height="80" :src="item.user.avatar" shape="circle" class="avatar"></u-image>
 							<view class="nickname">
-								<text>{{item.nickName}}</text>
-								<text>{{item.dateTime}}</text>
+								<text>{{item.user.nickname}}</text>
+								<text>{{item.createtime}}</text>
 							</view>
 						</view>
 					</view>
-					<view class="message-box" @click="showAwserInput(index)">
+					<view class="message-box" @click="showAwserInput(index,item.id)">
 						<view class="sender">
-							{{item.sendMessage}}
+							{{item.message}}
 						</view>
-						<view class="anwser" v-if="item.answerMessage">
+						<view class="anwser" v-if="item.reply">
 							<text class="anwser-text">回复：</text>
-							{{item.answerMessage}}
+							{{item.reply}}
 						</view>
 					</view>
 					<!-- 回复输入框 -->
-					<view v-if="isShow==true&&activeItem==index+1" class="anwser-input">
+					<view v-if="userLoginId==storeId&&isShow==true&&activeItem==index+1" class="anwser-input">
 						<view class="enter-content">
 							<u-input placeholder="请输入回复内容" v-model="answer" :border="true" />
 						</view>
@@ -65,33 +65,18 @@
 	export default {
 		data() {
 			return {
-				messageList: [
-					{
-						avatarUrl:'https://pic1.zhimg.com/v2-3f73f9a06801f5f7405fcba09715edae_r.jpg?source=1940ef5c',
-						nickName: '不可爱233',
-						dateTime: '2021/10/12 13:29:30',
-						sendMessage: '我想买一个8成新左右的品牌三轮，下单以后可以尽快发货吗？',
-						answerMessage: '没问题，我们会尽快安排',
-					},
-					{
-						avatarUrl: 'https://pic1.zhimg.com/80/v2-efb69ed639b04c9952aeb8cd3163bf8e_1440w.jpg?source=1940ef5c',
-						nickName: '走心小卖家',
-						dateTime: '2021/10/10 19:33:50',
-						sendMessage: '你们家有5台三轮吗？给我来5台',
-						// answerMessage: '有的哦亲',
-					},
-					{
-						avatarUrl: 'https://pic1.zhimg.com/80/v2-efb69ed639b04c9952aeb8cd3163bf8e_1440w.jpg?source=1940ef5c',
-						nickName: '我是复制人',
-						dateTime: '2021/10/10 19:33:50',
-						sendMessage: '你们家有5台三轮吗？给我来5台',
-						answerMessage: '有的哦亲',
-					}
-				],
+				page: {
+					start: 1,
+					totalPages: 0
+				},
+				userLoginId: '', // 用户登录Id 用于判断是商家还是用户身份userloginid===storeId则是商家
+				storeId: '', // 商家id
+				messageList: [], // 留言列表
 				activeItem: 1, // 展开选中的其中一个列表
 				replyItem: 1, // 回复的对象
 				isShow: false, // 显示回复框
 				isDisabled: false, // 是否禁用输入框
+				messageId: '', // 留言信息的id
 				form: {
 					message: '', // 输入留言
 				},
@@ -101,27 +86,125 @@
 				}
 			}
 		},
+		onLoad(opt) {
+			this.storeId = opt.id;
+			console.log('商家id',opt.id, typeof opt.id)
+		},
 		onShow() {
-			let value = uni.getStorageSync('answerTimes'); // 页面初始化获取已回复的次数
-			this.answerTimes = value || 0;
+			const userLoginId = this.$store.state.user.userId; // 用户登录Id
+			this.userLoginId = userLoginId;
+			console.log('登录Id',this.userLoginId, typeof this.userLoginId);
+			this.getMessageList();
+		},
+		onReachBottom() {
+			console.log('到底了','起始页',this.page.start)
+			if(this.page.start < this.page.totalPages) {
+				this.page.start+=1;
+				this.getMessageList();
+			}
 		},
 		methods: {
 			/**
-			 * @desc 显示经销商输入框
+			 * @desc 获取留言列表
 			 * @param
 			 **/
-			showAwserInput(index) {
-				console.log(index)
-				this.activeItem = index+1;
-				this.isShow = true; // 显示回复输入框
+			getMessageList() {
+				this.$request({
+					url: "/api/message/getList",
+					method: "POST",
+					data: {
+						store_id: this.storeId, 
+						page: this.page.start, 
+						list_rows: 10,
+					},
+					success: res => {
+						if(res.code===0) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							return false;
+						}
+						console.log(res.data,'数据哦')
+						let arr = res.data.data;
+						this.messageList = this.messageList.concat(arr);
+						this.page.totalPages = res.data.last_page;
+					}
+				})
 			},
 			/**
-			 * @desc 提交回复内容
+			 * @desc 用户发送留言
+			 * @param
+			 **/
+			emitMessage() {
+				this.$request({
+					url: "/api/message/index",
+					method: "POST",
+					data: {
+						store_id: this.storeId,
+						message: this.form.message
+					},
+					success: res => {
+						if(res.code===0) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							return false;
+						}
+						uni.showToast({
+							icon: "success",
+							title: "已发送",
+							duration: 3000
+						})
+						this.page.start = 1;
+						this.messageList = [];
+						this.getMessageList();
+						this.form.message = '';
+					}
+				})
+			},
+			/**
+			 * @desc 商家回复
 			 * @param
 			 **/
 			answerSubmit(index) {
+				this.$request({
+					url: "/api/message/reply",
+					method: "POST",
+					data: {
+						id: this.messageId, // 留言id
+						reply: this.answer // 回复内容
+					},
+					success: res => {
+						if(res.code===0) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							return false;
+						}
+						uni.showToast({
+							icon: "success",
+							title: "已发送",
+							duration: 3000
+						})
+						this.getMessageList();
+						this.answer = '';
+					}
+				})
 				this.answer = '';
-			}
+			},
+			/**
+			 * @desc 显示商家输入框
+			 * @param {Number}
+			 **/
+			showAwserInput(index,messageId) {
+				console.log(index,'留言ID',messageId)
+				this.messageId = messageId;
+				this.activeItem = index+1;
+				this.isShow = true; // 显示回复输入框
+			},
 		}
 	}
 </script>
@@ -181,6 +264,7 @@
 						background: $uni-bg-color-grey;
 						border-radius: 20rpx;
 						padding: 20rpx 20rpx;
+						word-break: break-all;
 						.sender {
 							font-size:24rpx;
 							padding-bottom: 10rpx;

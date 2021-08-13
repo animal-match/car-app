@@ -38,7 +38,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick" class="information-block" v-for="(_item,_index) in merchant_0" :key="_index">
+			<view @click="handleClick(_item.id)" class="information-block" v-for="(_item,_index) in merchant_0" :key="_index">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
@@ -50,7 +50,7 @@
 						</view>
 					</view>
 					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick">进店</u-button>
+						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.id)">进店</u-button>
 					</view>
 				</view>
 				<!-- 第二行 图片组 -->
@@ -68,7 +68,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick" class="information-block" v-for="(item2,index2) in merchant_1" :key="index2">
+			<view @click="handleClick(item2.id)" class="information-block" v-for="(item2,index2) in merchant_1" :key="index2">
 				<!-- 第一行 Logo 标题 按钮 -->
 				<view class="first-line">
 					<!-- 左侧 Logo和标题 -->
@@ -80,7 +80,7 @@
 						</view>
 					</view>
 					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick">进店</u-button>
+						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(item2.id)">进店</u-button>
 					</view>
 				</view>
 				<!-- 第二行 图片组 -->
@@ -269,9 +269,10 @@
 			 * @desc 跳转商家进店页面
 			 * @param
 			 **/
-			handleClick() {
+			handleClick(id) {
+				console.log('dianle',id)
 				uni.navigateTo({
-					url: '/pages/merchants/merchant-into-store/index'
+					url: '/pages/merchants/merchant-into-store/index?id='+id
 				})
 			},
 			/**

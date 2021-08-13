@@ -95,6 +95,7 @@
   background: #f8f8f8;
   border-radius: 20rpx;
   padding: 20rpx 20rpx;
+  word-break: break-all;
 }
 .send-message .container-bottom .message-list .modal .message-box .sender.data-v-736d2cc8 {
   font-size: 24rpx;
