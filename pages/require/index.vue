@@ -11,11 +11,11 @@
 		<!-- 供应发布 -->
 		<view v-show="currentTab===1" class="supply-publish">
 			<u-form :model="form" ref="ruleForm" label-position="top">
-				<u-form-item label="请填写你的供应标题" :required="true" prop="supplyTitle">
-					<u-input v-model="form.supplyTitle" />
+				<u-form-item label="请填写你的供应标题" :required="true" prop="title">
+					<u-input v-model="form.title" maxlength="30"/>
 				</u-form-item>
-				<u-form-item label="请填写你的供应内容" :required="true" prop="supplyContent" :border-bottom="false">
-					<u-input v-model="form.supplyContent" type="textarea" height="300" :border="true" placeholder="24管控制器，国标1200瓦电机，双梁等"/>
+				<u-form-item label="请填写你的供应内容" :required="true" prop="content" :border-bottom="false">
+					<u-input v-model="form.content" maxlength="200" type="textarea" height="300" :border="true" placeholder="24管控制器，国标1200瓦电机，双梁等"/>
 				</u-form-item>
 			</u-form>
 			<u-gap height="200"></u-gap>
@@ -26,23 +26,23 @@
 		<view v-show="currentTab===2"  class="require-publish">
 			<view class="form">
 				<u-form :model="formMore" ref="ruleFormMore" label-position="top">
-					<u-form-item label="请填写你的求购标题" :required="true" prop="requireTitle">
-						<u-input v-model="formMore.requireTitle" />
+					<u-form-item label="请填写你的求购标题" :required="true" prop="title">
+						<u-input v-model="formMore.title" maxlength="30"/>
 					</u-form-item>
-					<u-form-item label="求购品牌" :required="true" prop="requireBrand">
-						<u-input v-model="formMore.requireBrand" />
+					<u-form-item label="求购品牌" :required="true" prop="brand">
+						<u-input v-model="formMore.brand" maxlength="30"/>
 					</u-form-item>
-					<u-form-item label="求购型号" :required="true" prop="requireModel">
-						<u-input v-model="formMore.requireModel" />
+					<u-form-item label="求购型号" :required="true" prop="model">
+						<u-input v-model="formMore.model" maxlength="30"/>
 					</u-form-item>
-					<u-form-item label="求购车辆数量" prop="requireCars">
-						<u-input v-model="formMore.requireCars" type="number"/>
+					<u-form-item label="求购车辆数量" prop="num">
+						<u-input v-model="formMore.num" type="number" maxlength="6"/>
 					</u-form-item>
-					<u-form-item label="求购车辆成色" prop="requireCondition">
-						<u-input v-model="formMore.requireCondition" />
+					<u-form-item label="求购车辆成色" prop="condition">
+						<u-input v-model="formMore.condition" :type="type" @click="showSheet = true" maxlength="3" />
 					</u-form-item>
-					<u-form-item label="请填写联系电话" :required="true" prop="phoneNo">
-						<u-input v-model="formMore.phoneNo" placeholder="请填写电话号码"/>
+					<u-form-item label="请填写联系电话" :required="true" prop="phone">
+						<u-input v-model="formMore.phone" maxlength="11" placeholder="请填写电话号码"/>
 					</u-form-item>
 					<u-gap height="30"></u-gap>
 				</u-form>
@@ -52,6 +52,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 		</view>
+		<u-action-sheet :list="actionSheetList" v-model="showSheet" @click="actionSheetCallback"></u-action-sheet>
 	</view>
 </template>
 
@@ -59,6 +60,33 @@
 	export default {
 		data() {
 			return {
+				showSheet: false, // 显示上拉选择器
+				actionSheetList: [
+					{
+						text: '全新'
+					},
+					{
+						text: '9成新'
+					},
+					{
+						text: '8成新'
+					},
+					{
+						text: '7成新'
+					},
+					{
+						text: '6成新'
+					},
+					{
+						text: '5成新'
+					},
+					{
+						text: '4成新'
+					},
+					{
+						text: '3成新'
+					}
+				],
 				type: 'supply', // 初始化供应信息列表
 				supplyloading: false, // 供应发布loading
 				requireloading: false, // 求购发布Loading
@@ -80,56 +108,56 @@
 					}
 				],
 				form: {
-					supplyTitle: '', // 供应标题
-					supplyContent: '', // 供应内容
+					title: '', // 供应标题
+					content: '', // 供应内容
 				},
 				formMore: {
-					requireTitle: '', // 求购标题
-					requireBrand: '', // 求购品牌
-					requireModel: '', // 求购型号
-					requireCars: '', // 求购车辆数量
-					requireCondition: '', // 求购车辆成色
-					phoneNo: '', // 电话号码
+					title: '', // 求购标题
+					brand: '', // 求购品牌
+					model: '', // 求购型号
+					num: '', // 求购车辆数量
+					condition: '', // 求购车辆成色
+					phone: '', // 电话号码
 				},
 				// 供应页面验证规则
 				rules: {
-					supplyTitle: [
+					title: [
 						{
 							required: true,
 							message: '请填写供应标题',
 							trigger: ['change','blur'],
 						}
 					],
-					supplyContent: [
+					content: [
 						{
 							required: true,
 							message: '请填写供应内容',
-							trigger: ['change','blur'],
+							trigger: 'change'
 						}
 					]
 				},
 				// 求购页面验证规则
 				rulesMore: {
-					requireTitle: [{
+					title: [{
 						required: true,
 						message: '请输入标题',
 						trigger: ['change','blur'],
 					}],
-					requireBrand: [{
+					brand: [{
 						required: true,
 						message: '请输入品牌',
 						trigger: ['change','blur'],
 					}],
-					requireModel: [{
+					model: [{
 						required: true,
 						message: '请输入型号',
 						trigger: ['change','blur'],
 					}],
-					phoneNo: [
+					phone: [
 						{
 							required: true,
 							message: '请输入电话号码',
-							trigger: ['change','blur'],
+							trigger: 'change',
 						},
 						{
 							validator: (rule, value, callback) => {
@@ -143,8 +171,8 @@
 			}
 		},
 		onReachBottom() {
-			console.log('页面触底了')
-			if(this.page.start < this.page.totalPages) {
+			if(this.currentTab===0 && (this.page.start < this.page.totalPages)) {
+				console.log('页面触底了')
 				this.page.start+=1;
 				this.getDemandsList();
 			}
@@ -182,6 +210,79 @@
 				this.$refs.ruleFormMore.resetFields();
 			},
 			/**
+			 * @desc 上拉选择器
+			 * @param 
+			 **/
+			actionSheetCallback(i) {
+				this.formMore.condition = this.actionSheetList[i].text
+			},
+			/**
+			 * @desc 供应发布提交
+			 * @param
+			 **/
+			productPublic() {
+				this.supplyloading = true;
+				this.$request({
+					url: "/api/supply/release",
+					method: "POST",
+					data: {
+						type: 'supply',
+						title: this.form.title,
+						content: this.form.content,
+					},
+					success: res => {
+						if(res&&res.code&&res.code!==1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							this.supplyloading = false;
+							return false;
+						}
+						uni.showToast({
+							icon: "success",
+							title: "发布成功"
+						})
+						this.supplyloading = false;
+					}
+				})
+			},
+			/**
+			 * @desc 求购发布提交
+			 * @param 
+			 **/
+			productPublicMore() {
+				this.requireloading = true;
+				this.$request({
+					url: "/api/supply/release",
+					method: "POST",
+					data: {
+						type: 'demand',
+						title: this.formMore.title,
+						condition: this.formMore.condition,
+						brand: this.formMore.brand,
+						model: this.formMore.model,
+						phone: this.formMore.phone,
+						num: this.formMore.num,
+					},
+					success: res => {
+						if(res&&res.code&&res.code!==1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							this.requireloading = false;
+							return false;
+						}
+						uni.showToast({
+							icon: "success",
+							title: "发布成功"
+						})
+						this.requireloading = false;
+					}
+				})
+			},
+			/**
 			 * @desc 供应发布提交按钮
 			 * @param
 			 **/
@@ -190,11 +291,14 @@
 				this.$refs.ruleForm.validate(valid => {
 					if(valid) {
 						console.log('所有校验通过')
-					}else{
-						console.log('验证失败')
+						this.productPublic();
+						this.$nextTick(function(){
+							for(let key in this.form) {
+								this.form[key] = '';
+							}
+						})
 					}
 				})
-				this.supplyloading = false;
 			},
 			/**
 			 * @desc 求购发布提交按钮
@@ -204,9 +308,15 @@
 				// 验证是否通过校验
 				this.$refs.ruleFormMore.validate(valid => {
 					if(valid) {
-						console.log('所有校验通过')
-					}else{
-						console.log('验证失败')
+						if(valid) {
+							console.log('所有校验通过')
+							this.productPublicMore();
+							this.$nextTick(function(){
+								for(let key in this.formMore) {
+									this.formMore[key] = '';
+								}
+							})
+						}
 					}
 				})
 				this.requireloading = false;
@@ -225,6 +335,13 @@
 						page: this.page.start,// 页数
 					},
 					success: res=> {
+						if(res&&res.code&&res.code!==1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg
+							})
+							return false;
+						}
 						let arr = res.data.data;
 						this.infos = this.infos.concat(arr);
 						console.log("页面请求", res);

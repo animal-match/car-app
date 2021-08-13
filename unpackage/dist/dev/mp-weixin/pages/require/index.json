@@ -6,6 +6,7 @@
     "u-form-item": "/node-modules/uview-ui/components/u-form-item/u-form-item",
     "u-input": "/node-modules/uview-ui/components/u-input/u-input",
     "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
-    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-action-sheet": "/node-modules/uview-ui/components/u-action-sheet/u-action-sheet"
   }
 }

@@ -24,28 +24,14 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.u-model.data-v-713d0fd3 {
-  height: auto;
-  overflow: hidden;
-  font-size: 32rpx;
-  background-color: #fff;
-}
-.u-model__btn--hover.data-v-713d0fd3 {
-  background-color: #e6e6e6;
-}
-.u-model__title.data-v-713d0fd3 {
-  padding-top: 48rpx;
-  font-weight: 500;
+.u-tips.data-v-6766c527 {
+  font-size: 26rpx;
   text-align: center;
-  color: #303133;
+  padding: 34rpx 0;
+  line-height: 1;
+  color: #909399;
 }
-.u-model__content__message.data-v-713d0fd3 {
-  padding: 48rpx;
-  font-size: 30rpx;
-  text-align: center;
-  color: #606266;
-}
-.u-model__footer.data-v-713d0fd3 {
+.u-action-sheet-item.data-v-6766c527 {
 
   display: -webkit-box;
   display: -webkit-flex;
@@ -54,17 +40,29 @@
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
           flex-direction: row;
-}
-.u-model__footer__button.data-v-713d0fd3 {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  height: 100rpx;
-  line-height: 100rpx;
+
+  line-height: 1;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
   font-size: 32rpx;
-  box-sizing: border-box;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 4rpx;
+  padding: 34rpx 0;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.u-action-sheet-item__subtext.data-v-6766c527 {
+  font-size: 24rpx;
+  color: #909399;
+  margin-top: 20rpx;
+}
+.u-gab.data-v-6766c527 {
+  height: 12rpx;
+  background-color: #eaeaec;
+}
+.u-actionsheet-cancel.data-v-6766c527 {
+  color: #303133;
 }
 
