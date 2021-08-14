@@ -26,14 +26,14 @@
 		<!-- 中间部分 联系电话 定位 -->
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
-			<text v-if="!!isvip || userLoginId==idValue" class="address ellipsis">地址：成都市金牛区二环路北二段199号</text>
+			<text v-if="!!isvip || userLoginId==idValue || store.address.length>0" class="address ellipsis">地址：{{store.address}}</text>
 			<text v-else class="address ellipsis">地址：*************</text>
 			<u-button v-if="showMessageButton || userLoginId==idValue" type="error" size="mini" @click="sendMessage">留言</u-button>
-			<u-button class="btn-position" type="error" size="mini" @click="showAddress(104.05293,30.69015,'四川省成都市金牛区碧山路2688号')">
+			<u-button class="btn-position" type="error" size="mini" @click="showAddress(store.longitude,store.latitude,store.address)">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
 			</u-button>
-			<u-image src="/static/user-center-images/call.png" width="21" height="25" @click="showPhone"></u-image>
+			<u-image src="/static/user-center-images/call.png" width="21" height="25" @click="showPhone(store.phoneNo)"></u-image>
 		</view>
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 底部部分 产品图 -->
@@ -61,20 +61,26 @@
 				showMessageButton: false, // 显示留言按钮
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
-				phoneTips: '商家查看经销商电话需成为会员',
+				phoneTips: '非会员查看地址电话需支付120元费用',
 				adressTips: '非会员查看地址电话需支付120元费用',
 				isvip: false, // 是否是会员
 				idValue: '', // 商家id
 				userLoginId: '', // 用户登录的id
 				goodsTags: [], // 标签
 				productions: [], // 产品
-				storeInformation: {} // 详情数据
+				storeInformation: {} ,// 商家详情数据
+				store: { // 商家手机地址
+					longitude: '',
+					latitude: '',
+					phoneNo: '',
+					address: '',
+				},
 			}
 		},
 		onLoad(opt) {
 			this.idValue = opt.id;
-			console.log('商家id',this.idValue ,typeof this.idValue)
-			this.storeInfo(opt.id);		
+			this.storeInfo(opt.id);	
+			this.getPhoneAddr();
 		},
 		onShow() {
 			 this.userLoginId = this.$store.state.user.userId; // 用户登录id
@@ -83,6 +89,35 @@
 			 if(!!this.isvip) this.showMessageButton = true;
 		},
 		methods: {
+			/**
+			 * @desc 获取商家手机地址
+			 * @param 
+			 **/
+			async getPhoneAddr() {
+				await this.$request({
+					url: "/api/store/getAddress",
+					method: "POST",
+					data: {
+						store_id: this.idValue
+					},
+					success: res => {
+						if(res.code===0) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg,
+								duration: 2000
+							})
+							return false
+						}
+						console.log('手机',res.data)
+						this.store.phoneNo = res.data.phone;
+						this.store.address = res.data.address;
+						this.store.longitude = res.data.long;
+						this.store.latitude = res.data.lat;
+						return 'success';
+					}
+				})
+			},
 			/**
 			 * @desc 商家详情数据
 			 * @param 
@@ -110,41 +145,20 @@
 					}
 				})
 			},
-			/**
-			 * @desc 获取地址手机号
-			 * @param 
-			 **/
-			 getDetailInfo() {
-				 this.$request({
-					 url: "/api/store/getAddress",
-					 method: "POST",
-					 success: res => {
-						 if(res.code===0) {
-							 uni.showToast({
-								 icon: "none",
-								 title: res.msg,
-								 duration: 3000
-							 })
-							 return false;
-						 }
-						 console.log('查询成功手机地址',res.data);
-					 }
-				 })
-			 },
 			// /api/store/getAddress
 			/**
 			 * @desc 展示经销商电话
 			 * @param 
 			 **/
-			showPhone() {
+			showPhone(phoneNo) {
+				this.getPhoneAddr();
 				if(!!this.isvip || this.userLoginId==this.idValue) {
 					// 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能 （商家自己也能看到自己的电话）
-					uni.makePhoneCall({
-						phoneNumber: '15828292076',
-						success: res => {
-							console.log('打电话')
-						}
-					})
+				  uni.makePhoneCall({
+				  	phoneNumber: phoneNo,
+				  	success: res => {
+				  	}
+				  })
 				}else{
 					// 否则打开去升级弹窗
 					this.phoneNoShow = true;
@@ -154,21 +168,20 @@
 			 * @desc 展示定位地址
 			 * @param 
 			 **/
-			showAddress(longi,lati,address) {
+			showAddress(longitude,latitude,address) {
+				this.getPhoneAddr();
 				// 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能 (商家自己也能看到自己的定位)
 				if(!!this.isvip || this.userLoginId==this.idValue) {
-					let latitude = Number(lati);
-					let longitude = Number(longi);
 					// 获取定位信息
 					uni.getLocation({
 						type: 'wgs84', //返回可以用于uni.openLocation的经纬度
 						// 用户允许获取定位的时候
 						success: function(res) {
-							console.log('用户当前位置的经纬度',res);
+							console.log('商家位置的经纬度',res);
 							if(res.errMsg==='getLocation:ok') {
 								uni.openLocation({
-									latitude: latitude,
-									longitude: longitude,
+									latitude: Number(latitude),
+									longitude: Number(longitude),
 									address: address,
 									scale: 18,
 									success:function() {

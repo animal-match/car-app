@@ -168,7 +168,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -231,20 +231,26 @@ var _default =
       showMessageButton: false, // 显示留言按钮
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
-      phoneTips: '商家查看经销商电话需成为会员',
+      phoneTips: '非会员查看地址电话需支付120元费用',
       adressTips: '非会员查看地址电话需支付120元费用',
       isvip: false, // 是否是会员
       idValue: '', // 商家id
       userLoginId: '', // 用户登录的id
       goodsTags: [], // 标签
       productions: [], // 产品
-      storeInformation: {} // 详情数据
-    };
+      storeInformation: {}, // 商家详情数据
+      store: { // 商家手机地址
+        longitude: '',
+        latitude: '',
+        phoneNo: '',
+        address: '' } };
+
+
   },
   onLoad: function onLoad(opt) {
     this.idValue = opt.id;
-    console.log('商家id', this.idValue, typeof this.idValue);
     this.storeInfo(opt.id);
+    this.getPhoneAddr();
   },
   onShow: function onShow() {
     this.userLoginId = this.$store.state.user.userId; // 用户登录id
@@ -254,10 +260,39 @@ var _default =
   },
   methods: {
     /**
-              * @desc 商家详情数据
+              * @desc 获取商家手机地址
               * @param 
               **/
-    storeInfo: function storeInfo(idValue) {var _this = this;
+    getPhoneAddr: function getPhoneAddr() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  _this.$request({
+                    url: "/api/store/getAddress",
+                    method: "POST",
+                    data: {
+                      store_id: _this.idValue },
+
+                    success: function success(res) {
+                      if (res.code === 0) {
+                        uni.showToast({
+                          icon: "none",
+                          title: res.msg,
+                          duration: 2000 });
+
+                        return false;
+                      }
+                      console.log('手机', res.data);
+                      _this.store.phoneNo = res.data.phone;
+                      _this.store.address = res.data.address;
+                      _this.store.longitude = res.data.long;
+                      _this.store.latitude = res.data.lat;
+                      return 'success';
+                    } }));case 2:case "end":return _context.stop();}}}, _callee);}))();
+
+    },
+    /**
+        * @desc 商家详情数据
+        * @param 
+        **/
+    storeInfo: function storeInfo(idValue) {var _this2 = this;
       this.$request({
         url: "/api/store/detail",
         method: "POST",
@@ -274,30 +309,9 @@ var _default =
             return false;
           }
           console.log('详情', res.data);
-          _this.goodsTags = res.data.category; // array 商品标签
-          _this.productions = res.data.goods; // array 产品
-          _this.storeInformation = res.data; // Object 详情数据
-        } });
-
-    },
-    /**
-        * @desc 获取地址手机号
-        * @param 
-        **/
-    getDetailInfo: function getDetailInfo() {
-      this.$request({
-        url: "/api/store/getAddress",
-        method: "POST",
-        success: function success(res) {
-          if (res.code === 0) {
-            uni.showToast({
-              icon: "none",
-              title: res.msg,
-              duration: 3000 });
-
-            return false;
-          }
-          console.log('查询成功手机地址', res.data);
+          _this2.goodsTags = res.data.category; // array 商品标签
+          _this2.productions = res.data.goods; // array 产品
+          _this2.storeInformation = res.data; // Object 详情数据
         } });
 
     },
@@ -306,13 +320,13 @@ var _default =
      * @desc 展示经销商电话
      * @param 
      **/
-    showPhone: function showPhone() {
+    showPhone: function showPhone(phoneNo) {
+      this.getPhoneAddr();
       if (!!this.isvip || this.userLoginId == this.idValue) {
         // 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能 （商家自己也能看到自己的电话）
         uni.makePhoneCall({
-          phoneNumber: '15828292076',
+          phoneNumber: phoneNo,
           success: function success(res) {
-            console.log('打电话');
           } });
 
       } else {
@@ -324,21 +338,20 @@ var _default =
         * @desc 展示定位地址
         * @param 
         **/
-    showAddress: function showAddress(longi, lati, address) {
+    showAddress: function showAddress(longitude, latitude, address) {
+      this.getPhoneAddr();
       // 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能 (商家自己也能看到自己的定位)
       if (!!this.isvip || this.userLoginId == this.idValue) {
-        var latitude = Number(lati);
-        var longitude = Number(longi);
         // 获取定位信息
         uni.getLocation({
           type: 'wgs84', //返回可以用于uni.openLocation的经纬度
           // 用户允许获取定位的时候
           success: function success(res) {
-            console.log('用户当前位置的经纬度', res);
+            console.log('商家位置的经纬度', res);
             if (res.errMsg === 'getLocation:ok') {
               uni.openLocation({
-                latitude: latitude,
-                longitude: longitude,
+                latitude: Number(latitude),
+                longitude: Number(longitude),
                 address: address,
                 scale: 18,
                 success: function success() {
