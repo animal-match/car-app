@@ -420,7 +420,7 @@ var _default =
       console.log('除了产品填了些什么', this.form);
       var goods = this.imageTitle.concat(this.videoTitle);
       // console.log('产品传了什么',goods);
-      this.toServer(goods);
+      // this.toServer(goods);
       this.$refs.ruleForm.validate(function (valid) {
         if (valid) {
           console.log('所有校验通过');
@@ -431,6 +431,7 @@ var _default =
 
             return;
           }
+          _this4.toServer(goods);
           console.log('提交成功！！！');
         } else {
           console.log('验证失败');
@@ -451,6 +452,7 @@ var _default =
         }
       });
     },
+    // 提交接口
     toServer: function toServer(goods) {
       console.log('访问接口', this.form.selected);
       this.$request({
@@ -477,35 +479,6 @@ var _default =
 
         } });
 
-      // 调接口传数据
-      // this.$request({
-      // 	url: "/api/store/apply",
-      // 	method: "POST",
-      // 	data: {
-      // 		store_name: this.form.merchantName,// 店铺名
-      // 		information: this.form.merchantIntro,// 介绍
-      // 		type: this.currentTab,// 0厂家 1经销商
-      // 		lat: this.form.selected.latitude,// 经度
-      // 		long: this.from.selected.longitude,// 纬度
-      // 		phone: this.form.phoneNo,// 电话
-      // 		store_category_id: this.form.id,// 标签分类
-      // 		goods: goods// 产品
-      // 	},
-      // 	success: res => {
-      // 		if(res.code == 0) {
-      // 			uni.showToast({
-      // 				icon: "none",
-      // 				title: res.msg
-      // 			})
-      // 			return false;
-      // 		}
-      // 		console.log('已上传服务器')
-      // 		uni.showToast({
-      // 			icon: "success",
-      // 			title: "提交成功"
-      // 		})
-      // 	}
-      // })
     } },
 
   onReady: function onReady() {
