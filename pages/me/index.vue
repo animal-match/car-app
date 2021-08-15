@@ -15,7 +15,8 @@
 						<u-image :src="avatar.length>0 ? avatar:'/static/user-center-images/avatar.png'" shape="circle" width="140rpx" height="140rpx"></u-image>
 						<view class="nickname-phone">
 							<view class="nickname">{{userName.length>0?userName:'未登录'}}</view>
-							<view v-if="isLogin===true" class="phone font-28">{{ phoneNum }}</view>
+							<!-- <view v-if="isLogin===true" class="phone font-28">{{ phoneNum }}</view> -->
+							<view v-if="false" class="phone font-28">{{ phoneNum }}</view>
 						</view>
 					</view>
 					<view class="arrow">

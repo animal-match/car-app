@@ -18,7 +18,9 @@
         },
         /* 模块配置 */
         "modules" : {
-            "OAuth" : {}
+            "OAuth" : {},
+            "Payment" : {},
+            "Share" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -57,6 +59,21 @@
                     "weixin" : {
                         "appid" : "wxfef943555090aa71",
                         "appsecret" : "db8d1e1fecf2ea97dd146d3d1276de11",
+                        "UniversalLinks" : ""
+                    },
+                    "univerify" : {},
+                    "apple" : {}
+                },
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "wxfef943555090aa71",
+                        "UniversalLinks" : ""
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxfef943555090aa71",
                         "UniversalLinks" : ""
                     }
                 }

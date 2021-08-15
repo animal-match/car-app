@@ -196,8 +196,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var _default =
 {
   data: function data() {
@@ -208,7 +206,8 @@ var _default =
       loginToast: '登录失败', // 微信登录失败提示
       isChecked: false, // 是否勾选协议
       name: 'ckeckBox',
-      openid: '' };
+      openid: '',
+      code: '' };
 
   },
   methods: {
@@ -234,31 +233,43 @@ var _default =
               uni.login({
                 provider: 'weixin',
                 success: function success(loginRes) {
-                  var code = loginRes.code; // 登录code
-                  // 获取用户信息
-                  uni.getUserInfo({
-                    provider: 'weixin',
-                    success: function success(loginRes) {
-                      console.log('打印登录信息', loginRes);
-                      var info = {
-                        encryptedData: loginRes.encryptedData,
-                        signature: loginRes.signature,
-                        iv: loginRes.iv,
-                        refresh: true, // 重新获取或刷新最新的用户信息
-                        pid: '' // 	上级用户id
-                      };
-                      _this2.getSessionKey(code, info);
-                    },
-                    fail: function fail(err) {
-                      uni.showToast({
-                        icon: 'none',
-                        title: '获取用户信息失败' });
+                  console.log(loginRes, '登录res');
+                  _this2.code = loginRes.code; // 登录code
+                } });
 
-                    } });
+            };
+            if (uni.getUserProfile) {
+              // 获取用户信息
+              uni.getUserProfile({
+                // provider: 'weixin',
+                desc: "您的登录信息将用于平台展示",
+                success: function success(loginRes) {
+                  console.log('打印登录信息', loginRes);
+                  var user = {
+                    nickName: loginRes.userInfo.nickName,
+                    avatar: loginRes.userInfo.avatarUrl };
+
+                  uni.$emit('setUser', user);
+                  _this2.$store.commit('setUserInfo', user);
+                  var info = {
+                    encryptedData: loginRes.encryptedData,
+                    signature: loginRes.signature,
+                    iv: loginRes.iv,
+                    refresh: true, // 重新获取或刷新最新的用户信息
+                    pid: '' // 	上级用户id
+                  };
+                  _this2.getSessionKey(_this2.code, info);
+                },
+                fail: function fail(err) {
+                  console.log(err, '是不一样');
+                  uni.showToast({
+                    icon: 'none',
+                    title: '获取用户信息失败' });
 
                 } });
 
             }
+
           },
           fail: function fail(res) {
             console.log('失败', res);
@@ -271,10 +282,6 @@ var _default =
       }
     },
 
-    // 用户登录信息
-    userInfo: function userInfo(info) {
-      console.log('用户信息', info.detail.userInfo); // 将用户信息存入VUEX
-    },
     // 跳到隐私条款页面
     serviceItem: function serviceItem() {
       console.log('跳到隐私条款页面');
@@ -342,12 +349,12 @@ var _default =
               console.log('用户中心', res);
               var user = {
                 id: res.data.user.id, // 用户id
-                nickName: res.data.user.nickname, // 昵称
-                avatar: res.data.user.avatar, // 头像
+                //nickName: res.data.user.nickname, // 昵称
+                //avatar: res.data.user.avatar, // 头像
                 money: res.data.user.money, // 帐户金额
                 pid: res.data.user.pid // 下线Id
               }; // 保存用户信息到vuex
-              uni.$emit('setUser', user);
+              //uni.$emit('setUser', user);
               _this4.$store.commit('setUserInfo', user);
               var isVip = res.data.user.is_vip; // 0 非会员 1会员
               // 把会员状态存入缓存

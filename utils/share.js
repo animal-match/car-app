@@ -16,6 +16,8 @@ export default {
 			title: this.share.title,
 			path: this.share.path,
 			// imageUrl:
+			// 分享功能做法：↓
+			//https://blog.csdn.net/qq_35432904/article/details/106330079
 		}
 	}
 }

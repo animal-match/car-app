@@ -38,7 +38,7 @@
     "useApiHostProcess": false
   },
   "compileType": "miniprogram",
-  "libVersion": "",
+  "libVersion": "2.16.0",
   "appid": "wxfef943555090aa71",
   "projectname": "carApp",
   "simulatorType": "wechat",
