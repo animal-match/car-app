@@ -9,10 +9,10 @@
 			<view class="user">
 				<view class="use-info">
 					<view>
-						<u-image :src="detail.avatar" width="42" height="42" shape="circle"></u-image>
+						<u-image :src="detail.user.avatar" width="42" height="42" shape="circle"></u-image>
 					</view>
 					<view>
-						<text class="nickname">狗狗旺旺</text>
+						<text class="nickname">{{detail.user.nickname}}</text>
 						<text class="date-time">{{detail.createtime || '-'}}</text>
 					</view>
 				</view>
@@ -49,9 +49,9 @@
 				<view class="third-line-other">
 					<!-- 左侧 头像 昵称 -->
 					<view class="left-nickname">
-						<u-image :src="item4.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
+						<u-image :src="item4.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
 						<view class="nickname">
-							{{item4.nickname || '-'}}
+							{{item4.user.nickname || '-'}}
 						</view>
 					</view>
 					<!-- 右侧 时间 -->
@@ -79,7 +79,8 @@
 			console.log('展示推荐',this.isShowComment)
 			if(this.isShowComment===true) {
 				this.commentList = arr;
-			}			
+			}	
+					console.log('推荐',this.commentList);
 			this.detailInfo(opt.id);
 		},
 		methods: {

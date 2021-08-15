@@ -98,7 +98,7 @@ var components
 try {
   components = {
     uField: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-field/u-field */ "node-modules/uview-ui/components/u-field/u-field").then(__webpack_require__.bind(null, /*! uview-ui/components/u-field/u-field.vue */ 313))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-field/u-field */ "node-modules/uview-ui/components/u-field/u-field").then(__webpack_require__.bind(null, /*! uview-ui/components/u-field/u-field.vue */ 320))
     },
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 225))
@@ -107,7 +107,7 @@ try {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 204))
     },
     uKeyboard: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-keyboard/u-keyboard */ "node-modules/uview-ui/components/u-keyboard/u-keyboard").then(__webpack_require__.bind(null, /*! uview-ui/components/u-keyboard/u-keyboard.vue */ 320))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-keyboard/u-keyboard */ "node-modules/uview-ui/components/u-keyboard/u-keyboard").then(__webpack_require__.bind(null, /*! uview-ui/components/u-keyboard/u-keyboard.vue */ 327))
     }
   }
 } catch (e) {

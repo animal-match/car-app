@@ -59,6 +59,5 @@
   },
   "usingComponents": {
     "require-supply": "/components/require-supply"
-  },
-  "sitemapLocation": "sitemap85.json"
+  }
 }

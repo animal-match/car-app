@@ -221,7 +221,9 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
 {
   data: function data() {
     return {
+      imageUrl: '', // 后端图片链接
       inputValue: '', // 标题输入框
+      videoUrl: '', // 后端视频链接
       VideoOfImagesShow: true, // 页面图片或视频数量超出后，拍照按钮隐藏
       imageList: [], //存放图片的地址
       VideoList: [], //视频存放的地址
@@ -245,14 +247,30 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
 
         return;
       }
-      console.log('图片：', this.imageList, '视频', this.VideoList, '标题：', this.inputValue);
-      uni.$emit("imagesData", this.imageList); // 传图片
-      uni.$emit('title', this.inputValue); // 传标题
-      uni.$emit('vidiosData', this.VideoList); // 传视频
+      var productDatas = {
+        title: this.inputValue,
+        imageShow: this.imageList[0], // 用来在商家入驻产品上传页面时显示图片
+        image: this.imageUrl // 用来传给后端
+      };
+      var productDatas2 = {
+        title: this.inputValue,
+        videoShow: this.VideoList[0],
+        video: this.videoUrl };
+
+      if (!!productDatas.imageShow) {
+        uni.$emit('proDatas', productDatas); // 图片和标题 发过去进行显示
+      }
+      if (!!productDatas2.videoShow) {
+        uni.$emit('proDatas2', productDatas2); // 视频和标题 发过去进行显示
+      }
+
       uni.showToast({
         icon: "success",
         title: "已保存" });
 
+      this.inputValue = '';
+      this.imageList = [];
+      this.VideoList = [];
     },
     //点击上传图片或视频
     chooseVideoImage: function chooseVideoImage() {var _this = this;
@@ -272,15 +290,30 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
     //上传图片
     chooseImages: function chooseImages() {var _this2 = this;
       uni.chooseImage({
-        count: 9, //默认是9张
+        count: 1, //默认是9张
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], //从相册选择
         success: function success(res) {
           _this2.imageList = _this2.imageList.concat(res.tempFilePaths);
           console.log(_this2.imageList, '你选择的图片');
-          if (_this2.imageList.length == 9) {
+          if (_this2.imageList.length == 1) {
             _this2.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
           }
+          uni.uploadFile({
+            url: "https://yanxu.n867.cn/index.php/api/common/upload",
+            header: {
+              "content-type": "application/x-www-form-urlencoded",
+              "token": uni.getStorageSync("token") },
+
+            filePath: res.tempFilePaths[0],
+            name: 'file',
+            success: function success(uploadFileRes) {
+              console.log(uploadFileRes.data, 'res!!');
+              var data = JSON.parse(uploadFileRes.data);
+              _this2.imageUrl = data.data.fullurl;
+              console.log('图片地址', _this2.imageUrl);
+            } });
+
         } });
 
     },
@@ -288,16 +321,29 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
     chooseVideo: function chooseVideo(index) {var _this3 = this;
       uni.chooseVideo({
         maxDuration: 60, //拍摄视频最长拍摄时间，单位秒。最长支持 60 秒
-        count: 4,
+        count: 1,
         camera: this.cameraList[this.cameraIndex].value, //'front'、'back'，默认'back'
         sourceType: sourceType[this.sourceTypeIndex], //['camera', 'album'],//sourceType[this.sourceTypeIndex],
         success: function success(res) {
           _this3.VideoList = _this3.VideoList.concat(res.tempFilePath);
           console.log(_this3.VideoList, '你选择的视频');
-          if (_this3.VideoList.length == 4) {
+          if (_this3.VideoList.length == 1) {
             _this3.VideoOfImagesShow = false;
           }
-          console.log(_this3.VideoList, '结束');
+          uni.uploadFile({
+            url: "https://yanxu.n867.cn/index.php/api/common/upload",
+            header: {
+              "content-type": "application/x-www-form-urlencoded",
+              "token": uni.getStorageSync("token") },
+
+            filePath: res.tempFilePath,
+            name: 'file',
+            success: function success(uploadFileRes) {
+              console.log('上传视频!!', uploadFileRes);
+              _this3.videoUrl = uploadFileRes.data.fullurl;
+              console.log('视频地址', _this3.videoUrl);
+            } });
+
         } });
 
     },
@@ -317,8 +363,9 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
         success: function success(res) {
           if (res.confirm) {
             _this4.imageList.splice(index, 1);
+            _this4.imageUrl = '';
           }
-          if (_this4.imageList.length == 4) {
+          if (_this4.imageList.length == 1) {
             _this4.VideoOfImagesShow = false;
           } else {
             _this4.VideoOfImagesShow = true;
@@ -334,8 +381,9 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
         success: function success(res) {
           if (res.confirm) {
             _this5.VideoList.splice(index, 1);
+            _this5.videoUrl = '';
           }
-          if (_this5.VideoList.length == 4) {
+          if (_this5.VideoList.length == 1) {
             _this5.VideoOfImagesShow = false;
           } else {
             _this5.VideoOfImagesShow = true;

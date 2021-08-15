@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "提现",
+  "usingComponents": {
+    "u-field": "/node-modules/uview-ui/components/u-field/u-field",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
+    "u-keyboard": "/node-modules/uview-ui/components/u-keyboard/u-keyboard"
+  }
+}

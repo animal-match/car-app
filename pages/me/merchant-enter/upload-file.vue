@@ -48,7 +48,9 @@
 	export default{
 		data(){
 			return {
+				imageUrl: '', // 后端图片链接
 				inputValue: '', // 标题输入框
+				videoUrl: '', // 后端视频链接
 				VideoOfImagesShow: true, // 页面图片或视频数量超出后，拍照按钮隐藏
 				imageList: [], //存放图片的地址
 				VideoList: [],//视频存放的地址
@@ -72,14 +74,30 @@
 					})
 					return 
 				}
-				 console.log('图片：',this.imageList,'视频',this.VideoList,'标题：',this.inputValue);
-				 uni.$emit("imagesData",this.imageList); // 传图片
-				 uni.$emit('title', this.inputValue); // 传标题
-				 uni.$emit('vidiosData',this.VideoList) // 传视频
+				let productDatas = {
+					title: this.inputValue,
+					imageShow: this.imageList[0], // 用来在商家入驻产品上传页面时显示图片
+					image: this.imageUrl, // 用来传给后端
+				};
+				let productDatas2 = {
+					title: this.inputValue,
+					videoShow: this.VideoList[0],
+					video: this.videoUrl,
+				}
+				if(!!productDatas.imageShow) {
+					uni.$emit('proDatas', productDatas); // 图片和标题 发过去进行显示
+				}
+				if(!!productDatas2.videoShow) {
+					uni.$emit('proDatas2', productDatas2); // 视频和标题 发过去进行显示
+				}
+				
 				 uni.showToast({
 				 	icon: "success",
 					title: "已保存"
 				 })
+				this.inputValue = '';
+				this.imageList = [];
+				this.VideoList = [];
 			},
 			//点击上传图片或视频
 			chooseVideoImage(){
@@ -99,15 +117,30 @@
 			//上传图片
 			chooseImages(){
 				uni.chooseImage({
-					count:9, //默认是9张
+					count:1, //默认是9张
 					sizeType:['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album', 'camera'], //从相册选择
 					success:res=>{
 						this.imageList = this.imageList.concat(res.tempFilePaths);
 						console.log(this.imageList,'你选择的图片')
-						if(this.imageList.length == 9){
+						if(this.imageList.length == 1){
 							this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
 						}
+						uni.uploadFile({
+							url: "https://yanxu.n867.cn/index.php/api/common/upload",
+							header: { 
+								"content-type": "application/x-www-form-urlencoded",
+								"token" : uni.getStorageSync("token"),
+							},
+							filePath: res.tempFilePaths[0],
+							name: 'file',
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes.data,'res!!');
+								let data=JSON.parse(uploadFileRes.data);
+								this.imageUrl = data.data.fullurl;
+								console.log('图片地址',this.imageUrl);
+							}
+						})
 					}
 				})
 			},
@@ -115,16 +148,29 @@
 			chooseVideo(index){
 				uni.chooseVideo({	
 					maxDuration: 60,//拍摄视频最长拍摄时间，单位秒。最长支持 60 秒
-					count: 4,
+					count: 1,
 					camera: this.cameraList[this.cameraIndex].value,//'front'、'back'，默认'back'
 					sourceType: sourceType[this.sourceTypeIndex],//['camera', 'album'],//sourceType[this.sourceTypeIndex],
 					success:res =>{
 						this.VideoList = this.VideoList.concat(res.tempFilePath);
 						console.log(this.VideoList,'你选择的视频')
-						if (this.VideoList.length == 4) {
+						if (this.VideoList.length == 1) {
 							this.VideoOfImagesShow = false;
 						}
-						console.log(this.VideoList,'结束');
+						uni.uploadFile({
+							url: "https://yanxu.n867.cn/index.php/api/common/upload",
+							header: { 
+								"content-type": "application/x-www-form-urlencoded",
+								"token" : uni.getStorageSync("token"),
+							},
+							filePath: res.tempFilePath,
+							name: 'file',
+							success: (uploadFileRes) => {
+								console.log('上传视频!!',uploadFileRes);
+								this.videoUrl = uploadFileRes.data.fullurl;
+								console.log('视频地址',this.videoUrl);
+							}
+						})
 					}
 				})
 			},
@@ -144,8 +190,9 @@
 					success: res => {
 						if (res.confirm) {
 							this.imageList.splice(index, 1);
+							this.imageUrl = '';
 						}
-						if (this.imageList.length == 4) {
+						if (this.imageList.length == 1) {
 							this.VideoOfImagesShow = false;
 						} else {
 							this.VideoOfImagesShow = true;
@@ -161,8 +208,9 @@
 					success: res => {
 						if (res.confirm) {
 							this.VideoList.splice(index, 1);
+							this.videoUrl = '';
 						}
-						if (this.VideoList.length == 4) {
+						if (this.VideoList.length == 1) {
 							this.VideoOfImagesShow = false;
 						} else {
 							this.VideoOfImagesShow = true;

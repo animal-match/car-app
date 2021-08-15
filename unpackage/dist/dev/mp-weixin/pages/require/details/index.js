@@ -241,6 +241,7 @@ var _default =
     if (this.isShowComment === true) {
       this.commentList = arr;
     }
+    console.log('推荐', this.commentList);
     this.detailInfo(opt.id);
   },
   methods: {

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商家入驻-产品上传",
+  "usingComponents": {
+    "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
+    "u-input": "/node-modules/uview-ui/components/u-input/u-input",
+    "u-image": "/node-modules/uview-ui/components/u-image/u-image",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="my-require-supply data-v-936eae22"><require-supply vue-id="1abc076a-1" infos="{{infos}}" page-info="{{page}}" data-ref="requireSupply" data-event-opts="{{[['^refreshPage',[['refreshPage']]]]}}" bind:refreshPage="__e" class="data-v-936eae22 vue-ref" bind:__l="__l"></require-supply></view>

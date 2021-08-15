@@ -113,7 +113,7 @@ try {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 225))
     },
     uSelect: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-select/u-select */ "node-modules/uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! uview-ui/components/u-select/u-select.vue */ 420))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-select/u-select */ "node-modules/uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! uview-ui/components/u-select/u-select.vue */ 313))
     },
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 218))
@@ -237,6 +237,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {var _this = this;
@@ -244,9 +248,9 @@ var _default =
       border: true, // 显示表单边框
       currentTab: 0, // 当前tab的索引
       showRegion: false, // 显示省市区选择器
-      showImages: [], // 显示选择好的图片
-      showVideos: [], // 显示选择好的视频
       tagList: [],
+      imageTitle: [], // 产品名称和图片
+      videoTitle: [], // 产品名称和视频
       showTags: false, // 显示标签选择菜单
       tabList: [
       { name: "厂商" },
@@ -316,8 +320,7 @@ var _default =
 
 
       action: '', // 后端服务器地址
-      fileList: [], // 显示预先设置的图片
-      productTitle: "" // 产品名称
+      fileList: [] // 显示预先设置的图片
     };
   },
   computed: {
@@ -331,12 +334,12 @@ var _default =
 
   onLoad: function onLoad() {
     uni.$on('addressInfo', this.addressInfos); // 接收地址
-    uni.$on('imagesData', this.imagesData, this.inputValue); // 接收图片
-    uni.$on('title', this.inputValue); // 接收标题
-    uni.$on('vidiosData', this.videosData); // 接收视频
+    uni.$on('proDatas', this.productDatas); // 接收图片
+    uni.$on('proDatas2', this.productDatas2); // 接收视频
   },
   onShow: function onShow() {
     this.getTags();
+    // this.toServer();
   },
   methods: {
     // 打开选择器
@@ -356,17 +359,14 @@ var _default =
       this.form.selected.longitude = e.longitude;
       this.form.selected.latitude = e.latitude;
     },
-    imagesData: function imagesData(e) {
-      console.log('图片临时文件', e);
-      this.showImages = e;
+    // 产品名称和图片
+    productDatas: function productDatas(e) {
+      this.imageTitle = this.imageTitle.concat(e);
+      console.log('产品名和图', this.imageTitle);
     },
-    videosData: function videosData(e) {
-      console.log('临时视频文件', e);
-      this.showVideos = e;
-    },
-    inputValue: function inputValue(e) {
-      this.productTitle = e;
-      console.log('产品标题', e);
+    productDatas2: function productDatas2(e) {
+      this.videoTitle = this.videoTitle.concat(e);
+      console.log('产品名和视频', this.videoTitle);
     },
     // 获取标签接口
     getTags: function getTags() {var _this2 = this;
@@ -408,6 +408,8 @@ var _default =
       this.currentTab = index;
       this.$refs.ruleForm.resetFields();
       Object.keys(this.form).forEach(function (key) {_this3.form[key] = '';}); // 清空对象的所有属性为''
+      this.imageTitle = [];
+      this.videoTitle = [];
     },
 
     /**
@@ -415,23 +417,14 @@ var _default =
         * @param {Object}
         **/
     submit: function submit() {var _this4 = this;
-      console.log('填了些什么', this.form);
-      // 图片上传
-      //this.$refs.uUpload.upload(); // 手动上传模式
-      //let files = [];
-      // 通过filter，筛选出上传进度为100的文件(因为某些上传失败的文件，进度值不为100，这个是可选的操作)
-      //files = this.$refs.uUpload.lists.filter(val => {
-      //	return val.progress == 100;
-      //})
-      // 如果您不需要进行太多的处理，直接如下即可
-      //files = this.$refs.uUpload.lists;
-      //console.log('上传的图片',files);
-
-      // 验证是否通过校验
+      console.log('除了产品填了些什么', this.form);
+      var goods = this.imageTitle.concat(this.videoTitle);
+      // console.log('产品传了什么',goods);
+      this.toServer(goods);
       this.$refs.ruleForm.validate(function (valid) {
         if (valid) {
           console.log('所有校验通过');
-          if (_this4.showImages.length == 0 && _this4.showVideos.length == 0) {
+          if (_this4.imageTitle.length == 0 && _this4.videoTitle.length == 0) {// && this.videoTitle.length==0
             uni.showToast({
               icon: "none",
               title: "您还未上传产品" });
@@ -441,8 +434,78 @@ var _default =
           console.log('提交成功！！！');
         } else {
           console.log('验证失败');
+          _this4.$request({
+            url: "/api/category/getList",
+            method: "POST",
+            success: function success(res) {
+              if (res.code == 0) {
+                uni.showToast({
+                  icon: "none",
+                  title: res.msg });
+
+                return false;
+              }
+              _this4.tagList = res.data;
+            } });
+
         }
       });
+    },
+    toServer: function toServer(goods) {
+      console.log('访问接口', this.form.selected);
+      this.$request({
+        url: "/api/store/apply",
+        method: "POST",
+        data: {
+          address: this.form.address,
+          store_name: this.form.merchantName, // 店铺名
+          information: this.form.merchantIntro, // 介绍
+          type: this.currentTab, // 0厂家 1经销商
+          // lat: Number(this.form.selected.latitude),// 经度
+          // long: Number(this.from.selected.longitude),// 纬度
+          phone: this.form.phoneNo, // 电话
+          store_category_id: this.form.id, // 标签分类
+          goods: JSON.stringify(goods) //goods// 产品
+        },
+        success: function success(res) {
+          uni.showToast({
+            icon: "success",
+            title: res.msg });
+
+          uni.navigateTo({
+            url: "/pages/me/index" });
+
+        } });
+
+      // 调接口传数据
+      // this.$request({
+      // 	url: "/api/store/apply",
+      // 	method: "POST",
+      // 	data: {
+      // 		store_name: this.form.merchantName,// 店铺名
+      // 		information: this.form.merchantIntro,// 介绍
+      // 		type: this.currentTab,// 0厂家 1经销商
+      // 		lat: this.form.selected.latitude,// 经度
+      // 		long: this.from.selected.longitude,// 纬度
+      // 		phone: this.form.phoneNo,// 电话
+      // 		store_category_id: this.form.id,// 标签分类
+      // 		goods: goods// 产品
+      // 	},
+      // 	success: res => {
+      // 		if(res.code == 0) {
+      // 			uni.showToast({
+      // 				icon: "none",
+      // 				title: res.msg
+      // 			})
+      // 			return false;
+      // 		}
+      // 		console.log('已上传服务器')
+      // 		uni.showToast({
+      // 			icon: "success",
+      // 			title: "提交成功"
+      // 		})
+      // 	}
+      // })
     } },
 
   onReady: function onReady() {
