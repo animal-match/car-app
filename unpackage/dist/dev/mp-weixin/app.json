@@ -57,8 +57,12 @@
       }
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于店铺展示"
+    }
+  },
   "usingComponents": {
     "require-supply": "/components/require-supply"
-  },
-  "sitemapLocation": "sitemap20.json"
+  }
 }

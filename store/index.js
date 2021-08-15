@@ -11,6 +11,7 @@ const store = new Vuex.Store({
 			nickName: '', // 昵称
 			avatarUrl: '', // 头像
 			money: '', // 账户金额
+			pid: '', // 我的下线id
 		}
 	},
 	getters: {
@@ -23,9 +24,11 @@ const store = new Vuex.Store({
 		},
 		// 清空用户信息
 		clearUserInfo(state) {
+			state.user.userId = '';
 			state.user.nickName = '';
 			state.user.avatarUrl = '';
 			state.user.money = '';
+			state.user.pid = '';
 		},
 		// 设置用户信息
 		setUserInfo(state,payLoad) {
@@ -33,6 +36,7 @@ const store = new Vuex.Store({
 			state.user.nickName = payLoad.nickName;
 			state.user.avatarUrl = payLoad.avatar;
 			state.user.money = payLoad.money;
+			state.user.pid = payLoad.pid;
 		},
 		// 提现并减少账户金额的数量
 		decreaseMoney(state, payLoad) {

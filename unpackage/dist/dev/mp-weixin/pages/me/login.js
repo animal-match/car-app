@@ -342,9 +342,10 @@ var _default =
               console.log('用户中心', res);
               var user = {
                 id: res.data.user.id, // 用户id
-                nickName: res.data.user.nickname,
-                avatar: res.data.user.avatar,
-                money: res.data.user.money // 帐户金额
+                nickName: res.data.user.nickname, // 昵称
+                avatar: res.data.user.avatar, // 头像
+                money: res.data.user.money, // 帐户金额
+                pid: res.data.user.pid // 下线Id
               }; // 保存用户信息到vuex
               uni.$emit('setUser', user);
               _this4.$store.commit('setUserInfo', user);

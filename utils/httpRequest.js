@@ -42,13 +42,13 @@ module.exports = (params) => {
 			typeof params.success == "function" && params.success(res.data);
 		},
 		fail: (err) => {
+			uni.hideLoading();
 			uni.showToast({
 				title: err.msg
 			})
 			typeof params.fail == "function" && params.fail(err.data);
 		},
 		complete: (e) => {
-			uni.hideLoading();
 			typeof params.complete == "function" && params.complete(e.data);
 			return;
 		}
