@@ -51,7 +51,33 @@
 				],
 			}
 		},
+		onLoad() {
+			this.checkPrice();
+		},
 		methods: {
+			/**
+			 * @desc 查看价格
+			 * @param
+			 **/
+			 checkPrice() {
+				 this.$request({
+					 url: "/api/pay/prepay",
+					 method: "POST",
+					 data: {
+						 type: 1
+					 },
+					 success: res => {
+						 if(res.code===0) {
+							 uni.showToast({
+							 	icon: "none",
+								title: res.msg
+							 })
+							 return false;
+						 }
+						 console.log('价格',res);
+					 }
+				 })
+			 },
 			/**
 			 * @desc 选择支付方式
 			 * @param

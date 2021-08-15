@@ -112,6 +112,9 @@ try {
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 225))
     },
+    uSelect: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-select/u-select */ "node-modules/uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! uview-ui/components/u-select/u-select.vue */ 420))
+    },
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 218))
     },
@@ -217,6 +220,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {var _this = this;
@@ -224,6 +244,10 @@ var _default =
       border: true, // 显示表单边框
       currentTab: 0, // 当前tab的索引
       showRegion: false, // 显示省市区选择器
+      showImages: [], // 显示选择好的图片
+      showVideos: [], // 显示选择好的视频
+      tagList: [],
+      showTags: false, // 显示标签选择菜单
       tabList: [
       { name: "厂商" },
       { name: "经销商" }],
@@ -231,7 +255,8 @@ var _default =
       form: {
         merchantName: '', // 厂家名称
         merchantIntro: '', // 商家介绍
-        tag: '', // 标签
+        id: '', // 标签id
+        name: '', // 标签名
         phoneNo: '', // 电话号码
         address: '', // 详细地址
         selected: {
@@ -255,16 +280,14 @@ var _default =
           trigger: ['change', 'blur'] }],
 
 
-        tag: [
+        id: [
         {
-          required: true,
-          message: '请填写标签',
-          trigger: 'blur' },
-
-        {
-          max: 20,
-          message: '最多不超过20个字符',
-          trigger: 'blur' }],
+          validator: function validator(rule, value, callback) {
+            console.log(value, '选了什么');
+            return !!value;
+          },
+          message: '请选择标签',
+          trigger: ['change', 'blur'] }],
 
 
         phoneNo: [
@@ -293,7 +316,8 @@ var _default =
 
 
       action: '', // 后端服务器地址
-      fileList: [] // 显示预先设置的图片
+      fileList: [], // 显示预先设置的图片
+      productTitle: "" // 产品名称
     };
   },
   computed: {
@@ -306,14 +330,60 @@ var _default =
     } },
 
   onLoad: function onLoad() {
-    uni.$on('addressInfo', this.addressInfos);
+    uni.$on('addressInfo', this.addressInfos); // 接收地址
+    uni.$on('imagesData', this.imagesData, this.inputValue); // 接收图片
+    uni.$on('title', this.inputValue); // 接收标题
+    uni.$on('vidiosData', this.videosData); // 接收视频
+  },
+  onShow: function onShow() {
+    this.getTags();
   },
   methods: {
+    // 打开选择器
+    openSheet: function openSheet() {
+      this.showTags = true;
+    },
+    // 选择器确定按钮
+    tagConfirm: function tagConfirm(arr) {
+      console.log(arr);
+      this.form.id = arr[0].value;
+      this.form.name = arr[0].label;
+    },
+    // 接收从地图传来的数据
     addressInfos: function addressInfos(e) {
       console.log(e, '传来的地址对象');
       this.form.address = e.address;
       this.form.selected.longitude = e.longitude;
       this.form.selected.latitude = e.latitude;
+    },
+    imagesData: function imagesData(e) {
+      console.log('图片临时文件', e);
+      this.showImages = e;
+    },
+    videosData: function videosData(e) {
+      console.log('临时视频文件', e);
+      this.showVideos = e;
+    },
+    inputValue: function inputValue(e) {
+      this.productTitle = e;
+      console.log('产品标题', e);
+    },
+    // 获取标签接口
+    getTags: function getTags() {var _this2 = this;
+      this.$request({
+        url: "/api/category/getList",
+        method: "POST",
+        success: function success(res) {
+          if (res.code == 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg });
+
+            return false;
+          }
+          _this2.tagList = res.data;
+        } });
+
     },
     /**
         * @desc 选择地址
@@ -334,17 +404,18 @@ var _default =
         * @desc 切换选项卡
         * @param {number}
         **/
-    change: function change(index) {var _this2 = this;
+    change: function change(index) {var _this3 = this;
       this.currentTab = index;
       this.$refs.ruleForm.resetFields();
-      Object.keys(this.form).forEach(function (key) {_this2.form[key] = '';}); // 清空对象的所有属性为''
+      Object.keys(this.form).forEach(function (key) {_this3.form[key] = '';}); // 清空对象的所有属性为''
     },
 
     /**
         * @desc 提交表单数据，提交图片
         * @param {Object}
         **/
-    submit: function submit() {
+    submit: function submit() {var _this4 = this;
+      console.log('填了些什么', this.form);
       // 图片上传
       //this.$refs.uUpload.upload(); // 手动上传模式
       //let files = [];
@@ -360,6 +431,14 @@ var _default =
       this.$refs.ruleForm.validate(function (valid) {
         if (valid) {
           console.log('所有校验通过');
+          if (_this4.showImages.length == 0 && _this4.showVideos.length == 0) {
+            uni.showToast({
+              icon: "none",
+              title: "您还未上传产品" });
+
+            return;
+          }
+          console.log('提交成功！！！');
         } else {
           console.log('验证失败');
         }

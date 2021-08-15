@@ -105,7 +105,7 @@
 							uni.showToast({
 								icon: "none",
 								title: res.msg,
-								duration: 2000
+								duration: 3000
 							})
 							return false
 						}

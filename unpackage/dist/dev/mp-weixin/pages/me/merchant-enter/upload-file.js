@@ -129,6 +129,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = typeof _vm.$$v === "string" ? _vm.$$v.trim() : null
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -206,6 +215,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
 {
@@ -228,7 +238,21 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
   methods: {
     // 保存按钮
     submit: function submit() {
+      if (this.inputValue.length < 1) {
+        uni.showToast({
+          icon: "none",
+          title: "请输入标题" });
+
+        return;
+      }
       console.log('图片：', this.imageList, '视频', this.VideoList, '标题：', this.inputValue);
+      uni.$emit("imagesData", this.imageList); // 传图片
+      uni.$emit('title', this.inputValue); // 传标题
+      uni.$emit('vidiosData', this.VideoList); // 传视频
+      uni.showToast({
+        icon: "success",
+        title: "已保存" });
+
     },
     //点击上传图片或视频
     chooseVideoImage: function chooseVideoImage() {var _this = this;

@@ -5,21 +5,22 @@
 		<view class="container">
 			<view class="upload-title">产品信息</view>
 			<view class="upload-desc">上传自身优势产品图，让我们更了解你</view>
-			<view class="upload-input-title">标题</view>
+			<view class="upload-input-title"><text class="start">*</text>标题</view>
 			<view class="upload-input">
-				<u-input v-model="inputValue" type="text" :border="true" />
+				<u-input v-model.trim="inputValue" type="text" :border="true" maxlength="30"/>
 			</view>
 			<view class="add-elements">添加图片/视频</view>
 			<!-- 上传图片 -->
 			<view class="upload-image">
 				<view v-for="(item, index) in imageList" :key="index">
-					<u-image :src="item" @click="previewImage(index)" width="200" height="150" class="pics"></u-image>
+					<u-image :src="item" @click="previewImage(index)" width="200" height="150" class="pics">
+					</u-image>
 					<u-image v-if="imageList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delect(index)"  class="close-btn"></u-image>
 				</view>
 			</view>
 			<!-- 上传视频 -->
 			<view class="upload-video">
-				<view v-for="(item_1,index_1) in VideoList" :key="index_1">
+				<view style="width: 310rpx;" v-for="(item_1,index_1) in VideoList" :key="index_1">
 					<video :src="item_1" class="video"></video>
 					<u-image v-if="VideoList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delectVideo(index_1)" class="delete-btn"></u-image>
 				</view>
@@ -64,7 +65,21 @@
 		methods:{
 			// 保存按钮
 			submit() {
+				if(this.inputValue.length<1) {
+					uni.showToast({
+						icon: "none",
+						title: "请输入标题"
+					})
+					return 
+				}
 				 console.log('图片：',this.imageList,'视频',this.VideoList,'标题：',this.inputValue);
+				 uni.$emit("imagesData",this.imageList); // 传图片
+				 uni.$emit('title', this.inputValue); // 传标题
+				 uni.$emit('vidiosData',this.VideoList) // 传视频
+				 uni.showToast({
+				 	icon: "success",
+					title: "已保存"
+				 })
 			},
 			//点击上传图片或视频
 			chooseVideoImage(){
@@ -169,6 +184,9 @@
 			padding-top: 54rpx;
 			.upload-title, .upload-desc, .upload-input-title, .upload-input, .add-elements {
 				padding: 0 30rpx;
+				.start {
+					color: $uni-baseColor;
+				}
 			}
 			.add-elements {
 				text-align: right;
@@ -217,24 +235,30 @@
 				margin: 0 20rpx;
 				padding: 20rpx 0;
 				display: flex;
+				flex-direction: row;
 				flex-wrap: wrap;
-				justify-content: space-evenly;
+				view {
+					margin-right: 15rpx !important;
+				}
 				.pics,.video {
 					margin: 0 15rpx 15rpx 0 !important;
 				}
 				.close-btn {
 					position: relative;
-					bottom: 202rpx;
-					left: 175rpx;
+					top: -200rpx;
+					left: 180rpx;
+					z-index: 99;
 				}
 				/deep/.u-image__image {
 					position: relative !important;
-					bottom: -12rpx !important;
+					bottom: 0 !important;
 				}
 				.delete-btn {
+					height: 22rpx;
 					position: relative;
-					bottom: 255rpx;
+					bottom: 240rpx;
 					left: 280rpx;
+					z-index: 99;
 				}
 				.video {
 					width: 300rpx;

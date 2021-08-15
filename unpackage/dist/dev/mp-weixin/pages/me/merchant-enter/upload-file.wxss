@@ -37,6 +37,9 @@
 .upload .container .upload-title, .upload .container .upload-desc, .upload .container .upload-input-title, .upload .container .upload-input, .upload .container .add-elements {
   padding: 0 30rpx;
 }
+.upload .container .upload-title .start, .upload .container .upload-desc .start, .upload .container .upload-input-title .start, .upload .container .upload-input .start, .upload .container .add-elements .start {
+  color: #CA0303;
+}
 .upload .container .add-elements {
   text-align: right;
   margin: 44rpx 0 20rpx 0;
@@ -96,28 +99,35 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-  -webkit-justify-content: space-evenly;
-          justify-content: space-evenly;
+}
+.upload .container .upload-image view, .upload .container .upload-video view {
+  margin-right: 15rpx !important;
 }
 .upload .container .upload-image .pics, .upload .container .upload-image .video, .upload .container .upload-video .pics, .upload .container .upload-video .video {
   margin: 0 15rpx 15rpx 0 !important;
 }
 .upload .container .upload-image .close-btn, .upload .container .upload-video .close-btn {
   position: relative;
-  bottom: 202rpx;
-  left: 175rpx;
+  top: -200rpx;
+  left: 180rpx;
+  z-index: 99;
 }
 .upload .container .upload-image .u-image__image, .upload .container .upload-video .u-image__image {
   position: relative !important;
-  bottom: -12rpx !important;
+  bottom: 0 !important;
 }
 .upload .container .upload-image .delete-btn, .upload .container .upload-video .delete-btn {
+  height: 22rpx;
   position: relative;
-  bottom: 255rpx;
+  bottom: 240rpx;
   left: 280rpx;
+  z-index: 99;
 }
 .upload .container .upload-image .video, .upload .container .upload-video .video {
   width: 300rpx;

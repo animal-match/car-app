@@ -86,7 +86,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -139,11 +139,37 @@ var _default =
 
 
   },
+  onLoad: function onLoad() {
+    this.checkPrice();
+  },
   methods: {
     /**
-              * @desc 选择支付方式
+              * @desc 查看价格
               * @param
               **/
+    checkPrice: function checkPrice() {
+      this.$request({
+        url: "/api/pay/prepay",
+        method: "POST",
+        data: {
+          type: 1 },
+
+        success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg });
+
+            return false;
+          }
+          console.log('价格', res);
+        } });
+
+    },
+    /**
+        * @desc 选择支付方式
+        * @param
+        **/
     radioChange: function radioChange(e) {
       console.log(e, 'eee');
       this.radioValue = e;
@@ -203,6 +229,7 @@ var _default =
                                // })
                                */
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
