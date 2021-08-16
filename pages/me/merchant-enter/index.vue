@@ -21,7 +21,7 @@
 				</view>
 				
 				<view>
-					<u-form-item label="请选择标签" :required="true" prop="id">
+					<u-form-item label="请选择标签" :required="true" prop="id" :border-bottom="false">
 						 <u-checkbox-group @change="checkboxGroupChange">
 							 <u-checkbox 
 									v-model="item.checked" 
@@ -306,9 +306,6 @@
 	::v-deep .u-checkbox__label {
 		font-size: 24rpx;
 		color: $uni-text-color-placeholder;
-	}
-	::v-deep .u-form-item--right__content__slot {
-	  padding: 20rpx 0;
 	}
 </style>
 <style lang="scss" scoped>
