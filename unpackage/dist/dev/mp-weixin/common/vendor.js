@@ -12543,6 +12543,53 @@ store;exports.default = _default;
 
 /***/ }),
 
+/***/ 428:
+/*!*********************************************!*\
+  !*** D:/works/myApp/car-app/utils/share.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  data: function data() {
+    return {
+      //设置默认的分享参数
+      share: {
+        title: "新能源信息对接平台",
+        path: "/pages/index/index",
+        imageUrl: "",
+        desc: "欢迎使用新能源信息对接平台",
+        content: "分享内容：" } };
+
+
+  },
+  onShareAppMessage: function onShareAppMessage(res) {
+    return {
+      title: this.share.title,
+      path: this.share.path,
+      imageUrl: '',
+      desc: this.share.desc,
+      content: this.share.content,
+      success: function success(res) {
+        uni.showToast({
+          title: '分享成功' });
+
+      },
+      fail: function fail(res) {
+        uni.showToast({
+          title: '分享失败',
+          icon: 'none' });
+
+      }
+      // 分享功能做法：↓
+      //https://blog.csdn.net/qq_35432904/article/details/106330079
+    };
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
 /***/ 43:
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!

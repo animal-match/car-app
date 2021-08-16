@@ -15,7 +15,20 @@ export default {
 		return {
 			title: this.share.title,
 			path: this.share.path,
-			// imageUrl:
+			imageUrl: '',
+			desc: this.share.desc,
+			content:this.share.content,
+			success(res){
+				uni.showToast({
+						title:'分享成功'
+				})
+			},
+			fail(res){
+				uni.showToast({
+					title:'分享失败',
+					icon:'none'
+				})
+			}
 			// 分享功能做法：↓
 			//https://blog.csdn.net/qq_35432904/article/details/106330079
 		}
