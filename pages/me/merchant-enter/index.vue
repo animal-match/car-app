@@ -20,11 +20,19 @@
 					</u-form-item>
 				</view>
 				
-				<view class="district">
-					<u-button @click="openSheet()" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
+				<view>
 					<u-form-item label="请选择标签" :required="true" prop="id">
-						 <u-select v-model="showTags" :list="tagList" value-name="id" label-name="name" @confirm="tagConfirm"></u-select>
-					<text>{{form.name}}</text>
+						 <u-checkbox-group @change="checkboxGroupChange">
+							 <u-checkbox 
+									v-model="item.checked" 
+									v-for="(item, index) in tagList" :key="index" 
+									:name="item.id"
+									active-color="red"
+									size="30"
+								>
+								{{item.name}}
+							 </u-checkbox>
+						</u-checkbox-group>
 					</u-form-item>
 				</view>
 				
@@ -70,10 +78,9 @@
 				border: true, // 显示表单边框
 				currentTab: 0, // 当前tab的索引
 				showRegion: false, // 显示省市区选择器
-				tagList: [],
+				tagList: [], // 标签列表
 				imageTitle: [], // 产品名称和图片
 				videoTitle: [], // 产品名称和视频
-				showTags: false, // 显示标签选择菜单
 				tabList: [
 					{name: "厂商"},
 					{name: "经销商"}
@@ -158,21 +165,16 @@
 			uni.$on('addressInfo',this.addressInfos) // 接收地址
 			uni.$on('proDatas',this.productDatas) // 接收图片
 			uni.$on('proDatas2', this.productDatas2); // 接收视频
+			this.getTags();
 		},
 		onShow() {
-			this.getTags();
-			// this.toServer();
+			
 		},
 		methods: {
-			// 打开选择器
-			openSheet() {
-				this.showTags = true;
-			},
-			// 选择器确定按钮
-			tagConfirm(arr) {
-				console.log(arr);
-				this.form.id = arr[0].value;
-				this.form.name = arr[0].label;
+			// 选择的标签组
+			checkboxGroupChange(e) {
+				this.form.id = e.toString();
+				console.log(this.form.id,'y')
 			},
 			// 接收从地图传来的数据
 			addressInfos(e) {
@@ -203,7 +205,11 @@
 							})
 							return false;
 						}
-						this.tagList = res.data;
+						let result = res.data;
+						result.map((item)=> {
+							item.checked = false;
+						})
+						this.tagList = result;
 					}
 				})
 			},
@@ -241,8 +247,7 @@
 			submit() {
 				console.log('除了产品填了些什么',this.form)
 				let goods=this.imageTitle.concat(this.videoTitle);
-				// console.log('产品传了什么',goods);
-				// this.toServer(goods);
+
 				this.$refs.ruleForm.validate(valid => {
 					if(valid) {
 						console.log('所有校验通过')
@@ -254,23 +259,8 @@
 							return;
 						}
 						this.toServer(goods);
-						console.log('提交成功！！！')
 					}else{
-						console.log('验证失败')
-						this.$request({
-							url: "/api/category/getList",
-							method: "POST",
-							success: res => {
-								if(res.code==0) {
-									uni.showToast({
-										icon: "none",
-										title: res.msg
-									})
-									return false;
-								}
-								this.tagList = res.data;
-							}
-						})
+						console.log('失败')
 					}
 				})
 			},
@@ -312,6 +302,13 @@
 	.merchant-enter {
 		background-color: $uni-bg-color-grey;
 		min-height: 100vh;
+	}
+	::v-deep .u-checkbox__label {
+		font-size: 24rpx;
+		color: $uni-text-color-placeholder;
+	}
+	::v-deep .u-form-item--right__content__slot {
+	  padding: 20rpx 0;
 	}
 </style>
 <style lang="scss" scoped>

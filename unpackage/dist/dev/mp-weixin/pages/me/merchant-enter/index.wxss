@@ -28,6 +28,13 @@
   background-color: #f8f8f8;
   min-height: 100vh;
 }
+ .u-checkbox__label {
+  font-size: 24rpx;
+  color: #808080;
+}
+ .u-form-item--right__content__slot {
+  padding: 20rpx 0;
+}
 
 @charset "UTF-8";
 /**

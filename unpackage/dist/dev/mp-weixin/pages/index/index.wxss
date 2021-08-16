@@ -139,9 +139,8 @@
 }
 .container .information-require.data-v-57280228 {
   border-radius: 20rpx;
-  height: 220rpx;
   background-color: #ffffff;
-  padding: 27rpx 20rpx 44rpx 20rpx;
+  padding: 27rpx 20rpx 22rpx 20rpx;
   margin-bottom: 20rpx;
 }
 .container .information-require .first-line-other.data-v-57280228 {
