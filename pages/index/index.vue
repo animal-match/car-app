@@ -341,7 +341,7 @@
 			 * @param {string}
 			 **/
 			goDetails(id) {
-				let arr = this.totalinfo; // 只要传数组过去 就会有相关推荐列表
+				let arr = this.totalinfo.sort(()=>Math.random()-0.5);; // 只要传数组过去 就会有相关推荐列表
 				uni.navigateTo({
 					url: '/pages/require/details/index?id='+id + '&arr=' + JSON.stringify(arr)
 				})
