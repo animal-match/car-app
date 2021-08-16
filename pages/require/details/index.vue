@@ -32,7 +32,7 @@
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
 					<view class="left-block-other" >
-						<u-tag text="求购" mode="dark" />
+						<u-tag :text="item4.type=='supply'?'供应':'求购'" mode="dark" :type="item4.type=='supply'?'primary':'error'"/>
 						<view class="title-other ellipsis">
 							<view class="title ellipsis">{{item4.title || '-'}}</view>
 						</view>
@@ -74,13 +74,14 @@
 			}
 		},
 		onLoad(opt) {
+			console.log(opt,'详情页')
 			let arr = opt.arr?JSON.parse(opt.arr):[];
 			this.isShowComment = arr.length > 1;
 			console.log('展示推荐',this.isShowComment)
 			if(this.isShowComment===true) {
-				this.commentList = arr;
+				this.commentList = arr.slice(0,3);
 			}	
-					console.log('推荐',this.commentList);
+			console.log('推荐',this.commentList);
 			this.detailInfo(opt.id);
 		},
 		methods: {
@@ -172,9 +173,9 @@
 			margin: 0 30rpx;
 			.information-require {
 				border-radius: 20rpx;
-				height: 220rpx;
+				// height: 220rpx;
 				background-color: $uni-bg-color;
-				padding: 27rpx 20rpx 44rpx 20rpx;
+				padding: 27rpx 20rpx 22rpx 20rpx;
 				margin-bottom: 20rpx;
 				.first-line-other {
 					display: flex;

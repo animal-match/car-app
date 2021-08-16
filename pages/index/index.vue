@@ -99,12 +99,12 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in totalinfo" @click="goDetails(item4.id)" :key="index4" class="information-require">
+			<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" :key="index4" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
 				<view class="first-line-other">
 					<!-- 左侧 标签和标题 -->
 					<view class="left-block-other" >
-						<u-tag text="求购" mode="dark" />
+						<u-tag :text="item4.type=='supply'?'供应':'求购'" mode="dark" :type="item4.type=='supply'?'primary':'error'"/>
 						<view class="title-other ellipsis">
 							<view class="title ellipsis">{{item4.title || '-'}}</view>
 						</view>
@@ -261,7 +261,8 @@
 							})
 							return false
 						}
-						this.totalinfo = res.data.data.slice(0,2);
+						this.totalinfo = res.data.data//.slice(0,2);
+						
 					}
 				})
 			},
@@ -340,8 +341,9 @@
 			 * @param {string}
 			 **/
 			goDetails(id) {
+				let arr = this.totalinfo; // 只要传数组过去 就会有相关推荐列表
 				uni.navigateTo({
-					url: '/pages/require/details/index?id='+id
+					url: '/pages/require/details/index?id='+id + '&arr=' + JSON.stringify(arr)
 				})
 			},
 		}
@@ -437,9 +439,8 @@
 		}
 		.information-require {
 			border-radius: 20rpx;
-			height: 220rpx;
 			background-color: $uni-bg-color;
-			padding: 27rpx 20rpx 44rpx 20rpx;
+			padding: 27rpx 20rpx 22rpx 20rpx;
 			margin-bottom: 20rpx;
 			.first-line-other {
 				display: flex;

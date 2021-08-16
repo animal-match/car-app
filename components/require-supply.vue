@@ -109,12 +109,13 @@
 			goDetails(id) {
 				let arr;
 				if(this.pageInfo.pageSort==='requireSupply') {
-					  arr = this.infos.slice(0,2)
+					  arr = this.infos.slice(0,20).sort(()=>Math.random()-0.5);
 				} else {
 					  arr=[];
 				}
+				 // 只要传数组过去 就会有相关推荐列表（不能为空，为空就没相关推荐列表）
 				uni.navigateTo({
-					url: '/pages/require/details/index?id=' + id +'&arr='+JSON.stringify(arr)
+					url: '/pages/require/details/index?id=' + id +'&arr=' + JSON.stringify(arr)
 				})
 			},
 			/**
@@ -188,7 +189,7 @@
 		.information-require {
 			border-radius: 20rpx;
 			background-color: $uni-bg-color;
-			padding: 27rpx 20rpx 44rpx 20rpx;
+			padding: 27rpx 20rpx 22rpx 20rpx;
 			margin-bottom: 20rpx;
 			.first-line-other {
 				display: flex;
