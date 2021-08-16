@@ -14,7 +14,7 @@ export default {
 	onShareAppMessage(res) {
 		return {
 			title: this.share.title,
-			path: this.share.path,
+			path: this.share.path+'?pid='+this.$store.state.user.pid,
 			imageUrl: '',
 			desc: this.share.desc,
 			content:this.share.content,
@@ -30,7 +30,7 @@ export default {
 				})
 			}
 			// 分享功能做法：↓
-			//https://blog.csdn.net/qq_35432904/article/details/106330079
+			//	
 		}
 	}
 }
