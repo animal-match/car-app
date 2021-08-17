@@ -288,7 +288,7 @@
 					case 'supply':
 						uni.setStorageSync(
 							'tabBarIndex',
-							 1,
+							 'fromHomePage1',
 						);
 						uni.switchTab({
 							url: '/pages/require/index',
@@ -297,7 +297,7 @@
 					case 'require':
 						uni.setStorageSync(
 							'tabBarIndex',
-							 2,
+							'fromHomePage2',
 						);
 					  uni.switchTab({
 					  	url: '/pages/require/index',
