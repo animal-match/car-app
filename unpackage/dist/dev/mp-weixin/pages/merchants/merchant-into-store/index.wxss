@@ -138,4 +138,8 @@
   margin-bottom: 15rpx;
   color: #999;
 }
+.merchant-into-store .bottom-container .image-box .video.data-v-088d3d62 {
+  width: 300rpx;
+  height: 200rpx;
+}
 

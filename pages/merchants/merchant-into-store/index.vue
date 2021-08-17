@@ -42,14 +42,21 @@
 		<!-- 底部部分 产品图 -->
 		<view class="production">产品</view>
 		<view class="bottom-container">
-			<view v-for="(_item,_index) in productions" :key="_index" class="image-box">
-				<view style="display: flex; flex-direction: column;">
-					<u-image @click="previewImage(_index)" class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
+			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.image">
+				<view style="display: flex; flex-direction: column;" :key="_index">
+					<u-image class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
+					<text class="production-text ellipsis">{{_item.title}}</text>
+				</view>
+			</view>
+			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.video">
+				<view style="display: flex; flex-direction: column; width: 310rpx;" :key="_index">
+					<video :src="_item.video" class="video"></video>
 					<text class="production-text ellipsis">{{_item.title}}</text>
 				</view>
 			</view>
 			<u-gap height="40"></u-gap>
 		</view>
+		
 		<!-- 弹出框 查看电话去升级-->
 		<u-modal v-model="phoneNoShow" width="70%" :content="phoneTips" show-confirm-button show-cancel-button confirm-text="去升级" title="重要提示" confirm-color="#CA0303" @confirm="upDate"></u-modal>
 		<!-- 弹出框 查看地址去支付 -->
@@ -306,14 +313,6 @@
 				  	url: 'sendMessage?id='+this.idValue
 				  })
 			 },
-			 // 预览图片
-			 previewImage: function(e) {
-				 console.log(e)
-				 uni.previewImage({
-						current: this.productions[e].image,
-						urls: this.productions
-				})
-			},
 		}
 	}
 </script>
@@ -415,6 +414,10 @@
 					font-size: 24rpx;
 					margin-bottom: 15rpx;
 					color: $uni-text-color-grey;
+				}
+				.video {
+					width: 300rpx;
+					height: 200rpx;
 				}
 			}
 		}

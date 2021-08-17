@@ -91,17 +91,16 @@
 					videoShow: this.VideoList[0],
 					video: this.videoUrl,
 				}
-				if(!!productDatas.imageShow) {
-					uni.$emit('proDatas', productDatas); // 图片和标题 发过去进行显示
-				}
-				if(!!productDatas2.videoShow) {
-					uni.$emit('proDatas2', productDatas2); // 视频和标题 发过去进行显示
-				}
-				
 				 uni.showToast({
 				 	icon: "success",
 					title: "已保存"
 				 })
+				 if(!!productDatas.imageShow) {
+				 	uni.$emit('proDatas', productDatas); // 图片和标题 发过去进行显示
+				 }
+				 if(!!productDatas2.videoShow) {
+				 	uni.$emit('proDatas2', productDatas2); // 视频和标题 发过去进行显示
+				 }
 				this.inputValue = '';
 				this.imageList = [];
 				this.VideoList = [];
