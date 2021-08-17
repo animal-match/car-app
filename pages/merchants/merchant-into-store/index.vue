@@ -61,6 +61,7 @@
 	export default {
 		data() {
 			return {
+				isCollection: 0, // 0未收藏 1已收藏
 				iconName: 'star', // star为空心 star-fill为实心
 				starStatus: false, // 收藏的激活状态
 				showMessageButton: false, // 显示留言按钮
@@ -185,6 +186,14 @@
 						this.goodsTags = res.data.category; // array 商品标签
 						this.productions = res.data.goods; // array 产品
 						this.storeInformation = res.data; // Object 详情数据
+						this.isCollection = res.data.is_likes; // 是否收藏该店
+						if(this.isCollection===1) {
+							this.starStatus = true;
+							this.iconName = 'star-fill';
+						}else {
+							this.iconName = 'star';
+							this.starStatus = false;
+						}
 					}
 				})
 			},

@@ -979,6 +979,11 @@ function initProperties(props) {var isBehavior = arguments.length > 1 && argumen
       type: Object,
       value: null };
 
+    // scopedSlotsCompiler auto
+    properties.scopedSlotsCompiler = {
+      type: String,
+      value: '' };
+
     properties.vueSlots = { // 小程序不能直接定义 $slots 的 props，所以通过 vueSlots 转换到 $slots
       type: null,
       value: [],
@@ -1374,11 +1379,14 @@ function initScopedSlotsParams() {
   };
 
   _vue.default.prototype.$setScopedSlotsParams = function (name, value) {
-    var vueId = this.$options.propsData.vueId;
-    var object = center[vueId] = center[vueId] || {};
-    object[name] = value;
-    if (parents[vueId]) {
-      parents[vueId].$forceUpdate();
+    var vueIds = this.$options.propsData.vueId;
+    if (vueIds) {
+      var vueId = vueIds.split(',')[0];
+      var object = center[vueId] = center[vueId] || {};
+      object[name] = value;
+      if (parents[vueId]) {
+        parents[vueId].$forceUpdate();
+      }
     }
   };
 
@@ -1784,6 +1792,7 @@ function createSubpackageApp(vm) {
   var app = getApp({
     allowDefault: true });
 
+  vm.$scope = app;
   var globalData = app.globalData;
   if (globalData) {
     Object.keys(appOptions.globalData).forEach(function (name) {
@@ -1799,17 +1808,17 @@ function createSubpackageApp(vm) {
   });
   if (isFn(appOptions.onShow) && wx.onAppShow) {
     wx.onAppShow(function () {for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
-      appOptions.onShow.apply(app, args);
+      vm.__call_hook('onShow', args);
     });
   }
   if (isFn(appOptions.onHide) && wx.onAppHide) {
     wx.onAppHide(function () {for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
-      appOptions.onHide.apply(app, args);
+      vm.__call_hook('onHide', args);
     });
   }
   if (isFn(appOptions.onLaunch)) {
     var args = wx.getLaunchOptionsSync && wx.getLaunchOptionsSync();
-    appOptions.onLaunch.call(app, args);
+    vm.__call_hook('onLaunch', args);
   }
   return vm;
 }
@@ -2051,9 +2060,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
-/*!*************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/index.js ***!
-  \*************************************************************/
+/*!*******************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2203,9 +2212,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 12:
-/*!************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/mixin/mixin.js ***!
-  \************************************************************************/
+/*!******************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/mixin/mixin.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2277,9 +2286,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 13:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/request/index.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/request/index.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2458,9 +2467,9 @@ new Request();exports.default = _default;
 /***/ }),
 
 /***/ 14:
-/*!*******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/deepMerge.js ***!
-  \*******************************************************************************/
+/*!*************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/deepMerge.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2499,9 +2508,9 @@ deepMerge;exports.default = _default;
 /***/ }),
 
 /***/ 15:
-/*!*******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/deepClone.js ***!
-  \*******************************************************************************/
+/*!*************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/deepClone.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2533,9 +2542,9 @@ deepClone;exports.default = _default;
 /***/ }),
 
 /***/ 16:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/test.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/test.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2775,9 +2784,9 @@ function code(value) {var len = arguments.length > 1 && arguments[1] !== undefin
 /***/ }),
 
 /***/ 17:
-/*!*********************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/queryParams.js ***!
-  \*********************************************************************************/
+/*!***************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/queryParams.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2844,17 +2853,17 @@ queryParams;exports.default = _default;
 /***/ }),
 
 /***/ 18:
-/*!***************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/route.js ***!
-  \***************************************************************************/
+/*!*********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/route.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;} /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * 并且带有路由拦截功能
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */var
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * 路由跳转方法，该方法相对于直接使用uni.xxx的好处是使用更加简单快捷
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         * 并且带有路由拦截功能
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         */var
 
 Router = /*#__PURE__*/function () {
   function Router() {_classCallCheck(this, Router);
@@ -8455,7 +8464,8 @@ function _diff(current, pre, path, result) {
                 var currentType = type(currentValue);
                 var preType = type(preValue);
                 if (currentType != ARRAYTYPE && currentType != OBJECTTYPE) {
-                    if (currentValue != pre[key]) {
+                    // NOTE 此处将 != 修改为 !==。涉及地方太多恐怕测试不到，如果出现数据对比问题，将其修改回来。
+                    if (currentValue !== pre[key]) {
                         setResult(result, (path == '' ? '' : path + ".") + key, currentValue);
                     }
                 } else if (currentType == ARRAYTYPE) {
@@ -9817,9 +9827,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 22:
-/*!********************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/timeFormat.js ***!
-  \********************************************************************************/
+/*!**************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/timeFormat.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9879,9 +9889,9 @@ timeFormat;exports.default = _default;
 /***/ }),
 
 /***/ 23:
-/*!******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/timeFrom.js ***!
-  \******************************************************************************/
+/*!************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/timeFrom.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9937,9 +9947,9 @@ timeFrom;exports.default = _default;
 /***/ }),
 
 /***/ 24:
-/*!***********************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/colorGradient.js ***!
-  \***********************************************************************************/
+/*!*****************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/colorGradient.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10081,9 +10091,9 @@ function colorToRgba(color) {var alpha = arguments.length > 1 && arguments[1] !=
 /***/ }),
 
 /***/ 25:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/guid.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/guid.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10132,10 +10142,58 @@ guid;exports.default = _default;
 
 /***/ }),
 
-/***/ 259:
-/*!*************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/util/emitter.js ***!
-  \*************************************************************************/
+/***/ 26:
+/*!*********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/color.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 为了让用户能够自定义主题，会逐步弃用此文件，各颜色通过css提供
+// 为了给某些特殊场景使用和向后兼容，无需删除此文件(2020-06-20)
+var color = {
+  primary: "#2979ff",
+  primaryDark: "#2b85e4",
+  primaryDisabled: "#a0cfff",
+  primaryLight: "#ecf5ff",
+  bgColor: "#f3f4f6",
+
+  info: "#909399",
+  infoDark: "#82848a",
+  infoDisabled: "#c8c9cc",
+  infoLight: "#f4f4f5",
+
+  warning: "#ff9900",
+  warningDark: "#f29100",
+  warningDisabled: "#fcbd71",
+  warningLight: "#fdf6ec",
+
+  error: "#fa3534",
+  errorDark: "#dd6161",
+  errorDisabled: "#fab6b6",
+  errorLight: "#fef0f0",
+
+  success: "#19be6b",
+  successDark: "#18b566",
+  successDisabled: "#71d5a1",
+  successLight: "#dbf1e1",
+
+  mainColor: "#303133",
+  contentColor: "#606266",
+  tipsColor: "#909399",
+  lightColor: "#c0c4cc",
+  borderColor: "#e4e7ed" };var _default =
+
+
+color;exports.default = _default;
+
+/***/ }),
+
+/***/ 267:
+/*!*******************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/util/emitter.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10192,58 +10250,10 @@ function _broadcast(componentName, eventName, params) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 268:
 /*!***************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/color.js ***!
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/util/async-validator.js ***!
   \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 为了让用户能够自定义主题，会逐步弃用此文件，各颜色通过css提供
-// 为了给某些特殊场景使用和向后兼容，无需删除此文件(2020-06-20)
-var color = {
-  primary: "#2979ff",
-  primaryDark: "#2b85e4",
-  primaryDisabled: "#a0cfff",
-  primaryLight: "#ecf5ff",
-  bgColor: "#f3f4f6",
-
-  info: "#909399",
-  infoDark: "#82848a",
-  infoDisabled: "#c8c9cc",
-  infoLight: "#f4f4f5",
-
-  warning: "#ff9900",
-  warningDark: "#f29100",
-  warningDisabled: "#fcbd71",
-  warningLight: "#fdf6ec",
-
-  error: "#fa3534",
-  errorDark: "#dd6161",
-  errorDisabled: "#fab6b6",
-  errorLight: "#fef0f0",
-
-  success: "#19be6b",
-  successDark: "#18b566",
-  successDisabled: "#71d5a1",
-  successLight: "#dbf1e1",
-
-  mainColor: "#303133",
-  contentColor: "#606266",
-  tipsColor: "#909399",
-  lightColor: "#c0c4cc",
-  borderColor: "#e4e7ed" };var _default =
-
-
-color;exports.default = _default;
-
-/***/ }),
-
-/***/ 260:
-/*!*********************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/util/async-validator.js ***!
-  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11603,11 +11613,11 @@ Schema.warning = warning;
 Schema.messages = messages;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../../HBuilderX/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 261)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 269)))
 
 /***/ }),
 
-/***/ 261:
+/***/ 269:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11638,7 +11648,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 262);
+        if (!path) path = __webpack_require__(/*! path */ 270);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11652,7 +11662,53 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 262:
+/***/ 27:
+/*!*************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/type2icon.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * 根据主题type值,获取对应的图标
+                                                                                                      * @param String type 主题名称,primary|info|error|warning|success
+                                                                                                      * @param String fill 是否使用fill填充实体的图标  
+                                                                                                      */
+function type2icon() {var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'success';var fill = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  // 如果非预置值,默认为success
+  if (['primary', 'info', 'error', 'warning', 'success'].indexOf(type) == -1) type = 'success';
+  var iconName = '';
+  // 目前(2019-12-12),info和primary使用同一个图标
+  switch (type) {
+    case 'primary':
+      iconName = 'info-circle';
+      break;
+    case 'info':
+      iconName = 'info-circle';
+      break;
+    case 'error':
+      iconName = 'close-circle';
+      break;
+    case 'warning':
+      iconName = 'error-circle';
+      break;
+    case 'success':
+      iconName = 'checkmark-circle';
+      break;
+    default:
+      iconName = 'checkmark-circle';}
+
+  // 是否是实体类型,加上-fill,在icon组件库中,实体的类名是后面加-fill的
+  if (fill) iconName += '-fill';
+  return iconName;
+}var _default =
+
+type2icon;exports.default = _default;
+
+/***/ }),
+
+/***/ 270:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11962,60 +12018,14 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 261)))
-
-/***/ }),
-
-/***/ 27:
-/*!*******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/type2icon.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
-                                                                                                      * 根据主题type值,获取对应的图标
-                                                                                                      * @param String type 主题名称,primary|info|error|warning|success
-                                                                                                      * @param String fill 是否使用fill填充实体的图标  
-                                                                                                      */
-function type2icon() {var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'success';var fill = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  // 如果非预置值,默认为success
-  if (['primary', 'info', 'error', 'warning', 'success'].indexOf(type) == -1) type = 'success';
-  var iconName = '';
-  // 目前(2019-12-12),info和primary使用同一个图标
-  switch (type) {
-    case 'primary':
-      iconName = 'info-circle';
-      break;
-    case 'info':
-      iconName = 'info-circle';
-      break;
-    case 'error':
-      iconName = 'close-circle';
-      break;
-    case 'warning':
-      iconName = 'error-circle';
-      break;
-    case 'success':
-      iconName = 'checkmark-circle';
-      break;
-    default:
-      iconName = 'checkmark-circle';}
-
-  // 是否是实体类型,加上-fill,在icon组件库中,实体的类名是后面加-fill的
-  if (fill) iconName += '-fill';
-  return iconName;
-}var _default =
-
-type2icon;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 269)))
 
 /***/ }),
 
 /***/ 28:
-/*!*********************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/randomArray.js ***!
-  \*********************************************************************************/
+/*!***************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/randomArray.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12031,9 +12041,9 @@ randomArray;exports.default = _default;
 /***/ }),
 
 /***/ 29:
-/*!*****************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/addUnit.js ***!
-  \*****************************************************************************/
+/*!***********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/addUnit.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12081,9 +12091,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!****************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/random.js ***!
-  \****************************************************************************/
+/*!**********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/random.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12102,9 +12112,9 @@ random;exports.default = _default;
 /***/ }),
 
 /***/ 31:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/trim.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/trim.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12128,9 +12138,9 @@ trim;exports.default = _default;
 /***/ }),
 
 /***/ 32:
-/*!***************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/toast.js ***!
-  \***************************************************************************/
+/*!*********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/toast.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12149,9 +12159,9 @@ toast;exports.default = _default;
 /***/ }),
 
 /***/ 33:
-/*!*******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/getParent.js ***!
-  \*******************************************************************************/
+/*!*************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/getParent.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12207,9 +12217,9 @@ function getParent(name, keys) {
 /***/ }),
 
 /***/ 34:
-/*!*****************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/$parent.js ***!
-  \*****************************************************************************/
+/*!***********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/$parent.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12236,9 +12246,9 @@ function $parent() {var name = arguments.length > 0 && arguments[0] !== undefine
 /***/ }),
 
 /***/ 35:
-/*!*************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/sys.js ***!
-  \*************************************************************************/
+/*!*******************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/sys.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12255,9 +12265,9 @@ function sys() {
 /***/ }),
 
 /***/ 36:
-/*!******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/debounce.js ***!
-  \******************************************************************************/
+/*!************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/debounce.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12295,9 +12305,9 @@ debounce;exports.default = _default;
 /***/ }),
 
 /***/ 37:
-/*!******************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/function/throttle.js ***!
-  \******************************************************************************/
+/*!************************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/function/throttle.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12338,9 +12348,9 @@ throttle;exports.default = _default;
 /***/ }),
 
 /***/ 38:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/config/config.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/config/config.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12362,9 +12372,9 @@ var version = '1.8.3';var _default =
 /***/ }),
 
 /***/ 39:
-/*!**************************************************************************!*\
-  !*** D:/works/myApp/car-app/node_modules/uview-ui/libs/config/zIndex.js ***!
-  \**************************************************************************/
+/*!********************************************************************!*\
+  !*** D:/Uniapp/carApp/node_modules/uview-ui/libs/config/zIndex.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12392,9 +12402,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 4:
-/*!*****************************************!*\
-  !*** D:/works/myApp/car-app/pages.json ***!
-  \*****************************************/
+/*!***********************************!*\
+  !*** D:/Uniapp/carApp/pages.json ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -12403,9 +12413,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 40:
-/*!***************************************************!*\
-  !*** D:/works/myApp/car-app/utils/httpRequest.js ***!
-  \***************************************************/
+/*!*********************************************!*\
+  !*** D:/Uniapp/carApp/utils/httpRequest.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12470,9 +12480,9 @@ module.exports = function (params) {
 /***/ }),
 
 /***/ 41:
-/*!****************************************************!*\
-  !*** D:/works/myApp/car-app/static/css/global.css ***!
-  \****************************************************/
+/*!**********************************************!*\
+  !*** D:/Uniapp/carApp/static/css/global.css ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12483,9 +12493,9 @@ module.exports = function (params) {
 /***/ }),
 
 /***/ 42:
-/*!*********************************************!*\
-  !*** D:/works/myApp/car-app/store/index.js ***!
-  \*********************************************/
+/*!***************************************!*\
+  !*** D:/Uniapp/carApp/store/index.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13657,9 +13667,9 @@ var index = {
 /***/ }),
 
 /***/ 44:
-/*!**************************************************!*\
-  !*** D:/works/myApp/car-app/utils/timeFormat.js ***!
-  \**************************************************/
+/*!********************************************!*\
+  !*** D:/Uniapp/carApp/utils/timeFormat.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13687,9 +13697,9 @@ function timeStampFilter(timeStamp) {
 /***/ }),
 
 /***/ 45:
-/*!*********************************************!*\
-  !*** D:/works/myApp/car-app/utils/share.js ***!
-  \*********************************************/
+/*!***************************************!*\
+  !*** D:/Uniapp/carApp/utils/share.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

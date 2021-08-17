@@ -13,7 +13,7 @@
 					</view>
 				</view>
 				<view class="right-block">
-					<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.id)">进店</u-button>
+					<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.store.id)">进店</u-button>
 				</view>
 			</view>
 			<!-- 第二行 图片组 -->
@@ -30,13 +30,28 @@
 		data() {
 			return {
 				collectionList: [],
+				page: {
+					start: 1,
+					totalPages: 0,
+				},
 			}
 		},
 		onShow() {
 			this.getCollectionList();
 		},
+		onReachBottom() {
+			if(this.page.start < this.page.totalPages) {
+				this.page.start+=1;
+				this.getCollectionList();
+			}
+		},
 		methods: {
+			/**
+			 * @desc 获取收藏列表
+			 * @param
+			 **/
 			getCollectionList() {
+				this.collectionList = [];
 				this.$request({
 					url: "/api/likes/getList",
 					method: "POST",
@@ -48,8 +63,20 @@
 							})
 							return false;
 						}
-						this.collectionList = res.data.data;
+						let arr = res.data.data;
+						this.collectionList = this.collectionList.concat(arr);
+						this.page.totalPages = res.data.last_page;
 					}
+				})
+			},
+			/**
+			 * @desc 跳转商家详情页
+			 * @param
+			 **/
+			handleClick(id) {
+				console.log('dianle',id)
+				uni.navigateTo({
+					url: '/pages/merchants/merchant-into-store/index?id='+id
 				})
 			},
 		}

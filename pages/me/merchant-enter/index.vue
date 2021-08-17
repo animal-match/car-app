@@ -53,7 +53,7 @@
 			<view class="fileList">
 				<view class="image-box" v-for="(item,index) in imageTitle" :key="index">
 					<u-image :src="item.imageShow" width="200" height="150" class="pics"></u-image>
-					<view class="ellipsis">{{item.title}}</view>
+					<view class="ellipsis text-grey">{{item.title}}</view>
 				</view>
 			</view>
 			
@@ -358,6 +358,9 @@
 				margin-top: 20rpx;
 				view {
 					width: 200rpx !important;
+				}
+				.text-grey {
+					color: $uni-text-color-grey;
 				}
 				.pics {
 					margin: 0 15rpx 15rpx 0 !important;

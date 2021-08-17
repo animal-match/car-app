@@ -74,6 +74,13 @@
 					})
 					return 
 				}
+				if(this.imageList.length==0) {
+					uni.showToast({
+						icon: "none",
+						title: "请上传产品图片或视频"
+					})
+					return 
+				}
 				let productDatas = {
 					title: this.inputValue,
 					imageShow: this.imageList[0], // 用来在商家入驻产品上传页面时显示图片

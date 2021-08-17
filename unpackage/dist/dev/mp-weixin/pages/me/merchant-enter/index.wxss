@@ -126,6 +126,9 @@
 .upLoad-container .fileList .image-box view.data-v-221edcf8 {
   width: 200rpx !important;
 }
+.upLoad-container .fileList .image-box .text-grey.data-v-221edcf8 {
+  color: #999;
+}
 .upLoad-container .fileList .image-box .pics.data-v-221edcf8 {
   margin: 0 15rpx 15rpx 0 !important;
 }
