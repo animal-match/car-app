@@ -22,7 +22,21 @@
 			<u-button @click="submit" class="submit-btn" type="error" shape="circle" :loading="supplyloading">提交内容</u-button>
 		</view>
 		
-		<!-- 求购发布 -->
+		<!-- 最新求购发布 -->
+		<view v-show="currentTab===2" class="supply-publish">
+			<u-form :model="form_2" ref="ruleFormMore" label-position="top">
+				<u-form-item label="请填写你的求购标题" :required="true" prop="title">
+					<u-input v-model="form_2.title" maxlength="30"/>
+				</u-form-item>
+				<u-form-item label="请填写你的求购内容" :required="true" prop="content" :border-bottom="false">
+					<u-input v-model="form_2.content" maxlength="200" type="textarea" height="300" :border="true" placeholder="24管控制器，国标1200瓦电机，双梁等"/>
+				</u-form-item>
+			</u-form>
+			<u-gap height="200"></u-gap>
+			<u-button @click="submitNew" class="submit-btn" type="error" shape="circle" :loading="requireloading">提交内容</u-button>
+		</view>
+		<!-- 第一版求购发布 -->
+		<!--
 		<view v-show="currentTab===2"  class="require-publish">
 			<view class="form">
 				<u-form :model="formMore" ref="ruleFormMore" label-position="top">
@@ -52,6 +66,7 @@
 			</view>
 			<u-gap height="40"></u-gap>
 		</view>
+    -->
 		<u-action-sheet :list="actionSheetList" v-model="showSheet" @click="actionSheetCallback"></u-action-sheet>
 	</view>
 </template>
@@ -111,6 +126,11 @@
 					title: '', // 供应标题
 					content: '', // 供应内容
 				},
+				form_2: {
+					title: '', // 求购标题
+					content: '', // 求购内容
+				},
+				/*
 				formMore: {
 					title: '', // 求购标题
 					brand: '', // 求购品牌
@@ -119,6 +139,7 @@
 					condition: '', // 求购车辆成色
 					phone: '', // 电话号码
 				},
+				*/
 				// 供应页面验证规则
 				rules: {
 					title: [
@@ -136,7 +157,25 @@
 						}
 					]
 				},
+				// 供应页面验证规则新
+				rulesMore: {
+					title: [
+						{
+							required: true,
+							message: '请填写求购标题',
+							trigger: ['change','blur'],
+						}
+					],
+					content: [
+						{
+							required: true,
+							message: '请填写求购内容',
+							trigger: 'change'
+						}
+					]
+				},
 				// 求购页面验证规则
+				/*
 				rulesMore: {
 					title: [{
 						required: true,
@@ -167,7 +206,8 @@
 							trigger: ['change','blur'],
 						}
 					]
-				}
+				},
+				*/
 			}
 		},
 		onReachBottom() {
@@ -213,9 +253,9 @@
 			 * @desc 上拉选择器
 			 * @param 
 			 **/
-			actionSheetCallback(i) {
-				this.formMore.condition = this.actionSheetList[i].text
-			},
+			// actionSheetCallback(i) {
+			// 	this.formMore.condition = this.actionSheetList[i].text
+			// },
 			/**
 			 * @desc 供应发布提交
 			 * @param
@@ -231,7 +271,7 @@
 						content: this.form.content,
 					},
 					success: res => {
-						if(res.code===0) {
+						if(res.code!=1) {
 							 uni.showToast({
 								 icon: "none",
 								 title: res.msg,
@@ -249,9 +289,42 @@
 				})
 			},
 			/**
+			 * @desc 求购发布提交新
+			 * @param
+			 **/
+			productPublicNew() {
+				this.requireloading = true;
+				this.$request({
+					url: "/api/supply/release",
+					method: "POST",
+					data: {
+						type: 'demand',
+						title: this.form_2.title,
+						content: this.form_2.content,
+					},
+					success: res => {
+						if(res.code!=1) {
+							 uni.showToast({
+								 icon: "none",
+								 title: res.msg,
+								 duration: 3000
+							 })
+							 this.requireloading = false;
+							 return false;
+						}
+						uni.showToast({
+							icon: "success",
+							title: "发布成功"
+						})
+						this.requireloading = false;
+					}
+				})
+			},
+			/**
 			 * @desc 求购发布提交
 			 * @param 
 			 **/
+			 /*
 			productPublicMore() {
 				this.requireloading = true;
 				this.$request({
@@ -284,6 +357,7 @@
 					}
 				})
 			},
+			*/
 			/**
 			 * @desc 供应发布提交按钮
 			 * @param
@@ -306,6 +380,24 @@
 			 * @desc 求购发布提交按钮
 			 * @param
 			 **/
+			submitNew() {
+				this.$refs.ruleFormMore.validate( valid => {
+					if(valid) {
+						console.log('所有校验通过2')
+						this.productPublicNew();
+						this.$nextTick(function(){
+							for(let key in this.form) {
+								this.form[key] = '';
+							}
+						})
+					}
+				})
+			},
+			/**
+			 * @desc 求购发布提交按钮
+			 * @param
+			 **/
+			 /*
 			submitMore() {
 				// 验证是否通过校验
 				this.$refs.ruleFormMore.validate(valid => {
@@ -323,6 +415,7 @@
 				})
 				this.requireloading = false;
 			},
+			*/
 			/**
 			 * @desc 获取供求信息数据
 			 * @param
