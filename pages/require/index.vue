@@ -9,7 +9,7 @@
 		<require-supply ref="requireSupply" @refresh-page="refreshPage" :infos="infos" :page-info="page" v-if="currentTab===0"></require-supply>
 		
 		<!-- 供应发布 -->
-		<view class="supply-publish">
+		<view class="supply-publish" v-show="currentTab!==0">
 			<u-form :model="form" ref="ruleForm" label-position="top">
 				<u-form-item :label="currentTab==1?'请填写你的供应标题':'请填写你的求购标题'" :required="true" prop="title">
 					<u-input v-model="form.title" maxlength="30"/>
@@ -31,9 +31,9 @@
 					<u-image v-if="imageList.length>0" src="/static/user-center-images/close.png" width="40" height="40" @click="delect(index)"  class="close-btn"></u-image>
 				</view>
 			</view>
-		</view>
-		<view class="supply-publish-btn">
-			<u-button @click="submit" class="submit-btn" type="error" shape="circle" :loading="supplyloading">提交内容</u-button>
+			<view class="supply-publish-btn">
+				<u-button @click="submit" class="submit-btn" type="error" shape="circle" :loading="supplyloading">提交内容</u-button>
+			</view>
 		</view>
 		<u-gap height="40"></u-gap>
 
@@ -501,9 +501,7 @@
 		// 	border-radius: 20rpx;
 		// 	padding: 0 30rpx;
 		// }
-		.supply-publish-btn {
-			margin: 0 30rpx;
-		}
+		
 		.supply-publish {
 			margin: 30rpx 30rpx 150rpx 30rpx;
 			background: $uni-bg-color;
@@ -537,6 +535,10 @@
 					left: 180rpx;
 					z-index: 99;
 				}
+			}
+			.supply-publish-btn {
+				position: relative;
+				top: 200rpx;
 			}
 		}
 		// .require-publish {

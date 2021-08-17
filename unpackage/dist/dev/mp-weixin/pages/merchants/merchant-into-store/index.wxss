@@ -51,9 +51,16 @@
   padding: 31rpx 0 24rpx;
 }
 .merchant-into-store .top-container .name-tags-button .name-and-tags .merchant-name.data-v-088d3d62 {
+  max-width: 350rpx;
   font-size: 30rpx;
   font-weight: bolder;
-  margin-bottom: 20rpx;
+  margin-right: 20rpx;
+}
+.merchant-into-store .top-container .name-tags-button .name-and-tags .yellow.data-v-088d3d62 {
+  color: #f0ad4e;
+}
+.merchant-into-store .top-container .name-tags-button .name-and-tags .tags.data-v-088d3d62 {
+  margin-top: 20rpx;
 }
 .merchant-into-store .top-container .name-tags-button .name-and-tags .tags .tag-name.data-v-088d3d62 {
   padding: 5rpx 14rpx;

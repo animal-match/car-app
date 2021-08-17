@@ -98,6 +98,9 @@ try {
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 219))
     },
+    uIcon: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 272))
+    },
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 226))
     },
@@ -106,9 +109,6 @@ try {
     },
     uGap: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 205))
-    },
-    uIcon: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-icon/u-icon */ "node-modules/uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! uview-ui/components/u-icon/u-icon.vue */ 272))
     },
     uModal: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 286))
@@ -224,10 +224,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      iconName: 'star', // star为空心 star-fill为实心
+      starStatus: false, // 收藏的激活状态
       showMessageButton: false, // 显示留言按钮
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
@@ -260,15 +265,53 @@ var _default =
   },
   methods: {
     /**
-              * @desc 获取商家手机地址
+              * @desc 收藏店铺点击事件
               * @param 
               **/
-    getPhoneAddr: function getPhoneAddr() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
-                  _this.$request({
+    collecting: function collecting() {
+      this.starStatus = !this.starStatus; // 切换收藏状态
+      if (this.starStatus === true) {
+        this.iconName = 'star-fill';
+        this.collectStore(); // 收藏
+      } else {
+        this.iconName = 'star';
+        this.collectStore(); // 取消收藏
+      }
+    },
+    /**
+        * @desc 收藏店铺接口
+        * @param 
+        **/
+    collectStore: function collectStore() {var _this = this;
+      this.$request({
+        url: this.starStatus === true ? "/api/likes/add" : "/api/likes/delete",
+        method: "POST",
+        data: { store_id: this.idValue },
+        success: function success(res) {
+          if (res.code != 1) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg });
+
+            return false;
+          }
+          uni.showToast({
+            icon: _this.starStatus === true ? "success" : "none",
+            title: _this.starStatus === true ? "收藏店铺成功" : "已取消收藏" });
+
+        } });
+
+    },
+    /**
+        * @desc 获取商家手机地址
+        * @param 
+        **/
+    getPhoneAddr: function getPhoneAddr() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  _this2.$request({
                     url: "/api/store/getAddress",
                     method: "POST",
                     data: {
-                      store_id: _this.idValue },
+                      store_id: _this2.idValue },
 
                     success: function success(res) {
                       if (res.code === 0) {
@@ -280,19 +323,19 @@ var _default =
                         return false;
                       }
                       console.log('手机', res.data);
-                      _this.store.phoneNo = res.data.phone;
-                      _this.store.address = res.data.address;
-                      _this.store.longitude = res.data.long;
-                      _this.store.latitude = res.data.lat;
+                      _this2.store.phoneNo = res.data.phone;
+                      _this2.store.address = res.data.address;
+                      _this2.store.longitude = res.data.long;
+                      _this2.store.latitude = res.data.lat;
                       return 'success';
                     } }));case 2:case "end":return _context.stop();}}}, _callee);}))();
 
     },
     /**
         * @desc 商家详情数据
-        * @param 
+        * @param {Number}
         **/
-    storeInfo: function storeInfo(idValue) {var _this2 = this;
+    storeInfo: function storeInfo(idValue) {var _this3 = this;
       this.$request({
         url: "/api/store/detail",
         method: "POST",
@@ -309,9 +352,9 @@ var _default =
             return false;
           }
           console.log('详情', res.data);
-          _this2.goodsTags = res.data.category; // array 商品标签
-          _this2.productions = res.data.goods; // array 产品
-          _this2.storeInformation = res.data; // Object 详情数据
+          _this3.goodsTags = res.data.category; // array 商品标签
+          _this3.productions = res.data.goods; // array 产品
+          _this3.storeInformation = res.data; // Object 详情数据
         } });
 
     },

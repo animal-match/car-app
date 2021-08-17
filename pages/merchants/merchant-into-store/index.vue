@@ -7,7 +7,10 @@
 			<view class="name-tags-button">
 				<!-- 左侧 厂家名称和标签 -->
 				<view class="name-and-tags">
-					<view class="merchant-name">{{storeInformation.store_name || '-'}}</view>
+					<view style="display: flex;">
+						<view class="merchant-name ellipsis">{{storeInformation.store_name || '-'}}</view>
+						<u-icon size="40" :name="iconName" class="yellow" @click="collecting"></u-icon>
+					</view>
 					<view class="tags">
 						<text class="tag-name" v-for="(item,index) in goodsTags" :key="index">{{item}}</text>
 					</view>
@@ -39,7 +42,7 @@
 		<!-- 底部部分 产品图 -->
 		<view class="production">产品</view>
 		<view class="bottom-container">
-			<view v-for="(_item,_index) in productions" :key="index" class="image-box">
+			<view v-for="(_item,_index) in productions" :key="_index" class="image-box">
 				<view style="display: flex; flex-direction: column;">
 					<u-image @click="previewImage(_index)" class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
 					<text class="production-text ellipsis">{{_item.title}}</text>
@@ -58,6 +61,8 @@
 	export default {
 		data() {
 			return {
+				iconName: 'star', // star为空心 star-fill为实心
+				starStatus: false, // 收藏的激活状态
 				showMessageButton: false, // 显示留言按钮
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
@@ -90,6 +95,44 @@
 		},
 		methods: {
 			/**
+			 * @desc 收藏店铺点击事件
+			 * @param 
+			 **/
+			collecting() {
+				this.starStatus = !this.starStatus; // 切换收藏状态
+				if(this.starStatus===true) {
+					this.iconName = 'star-fill';
+					this.collectStore(); // 收藏
+				}else{
+					this.iconName = 'star';
+					this.collectStore(); // 取消收藏
+				}
+			},
+			/**
+			 * @desc 收藏店铺接口
+			 * @param 
+			 **/
+			 collectStore() {
+				 this.$request({
+					 url: this.starStatus===true ? "/api/likes/add" : "/api/likes/delete",
+					 method: "POST",
+					 data: {store_id : this.idValue},
+					 success: res => {
+						 if(res.code!=1) {
+							 uni.showToast({
+							 	icon: "none",
+								title: res.msg
+							 })
+							 return false;
+						 }
+						 uni.showToast({
+						 	icon: this.starStatus===true?"success":"none",
+						 	title: this.starStatus===true?"收藏店铺成功":"已取消收藏"
+						 })
+					 }
+				 })
+			 },
+			/**
 			 * @desc 获取商家手机地址
 			 * @param 
 			 **/
@@ -120,7 +163,7 @@
 			},
 			/**
 			 * @desc 商家详情数据
-			 * @param 
+			 * @param {Number}
 			 **/
 			storeInfo(idValue) {
 				this.$request({
@@ -282,11 +325,17 @@
 					flex-direction: column;
 					padding: 31rpx 0 24rpx;
 					.merchant-name {
+						max-width: 350rpx;
 						font-size: 30rpx;
 						font-weight: bolder;
-						margin-bottom: 20rpx;
+						margin-right: 20rpx;
 					}
+					.yellow {
+						color: $uni-color-warning;
+					}
+
 					.tags {
+						margin-top: 20rpx;
 						.tag-name {
 							padding: 5rpx 14rpx;
 							font-size: 24rpx;

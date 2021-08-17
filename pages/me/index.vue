@@ -72,6 +72,11 @@
 						id: 4,
 						moduleName: '分销商',
 						url: '/static/user-center-images/sale.png'
+					},
+					{
+						id: 5,
+						moduleName: '商家收藏',
+						url: '/static/user-center-images/star.png'
 					}
 				],
 			}
@@ -183,6 +188,12 @@
 							url: '/pages/me/distributor/index'
 						})
 						break;
+					case 5:
+					  // 跳转商家收藏列表
+						uni.navigateTo({
+							url: '/pages/me/collection/index'
+						})
+					  break;
 				}
 			}
 		}

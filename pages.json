@@ -94,6 +94,12 @@
 			}
 		},
 		{
+			"path": "pages/me/collection/index",
+			"style": {
+				"navigationBarTitleText": "商家收藏"
+			}
+		},
+		{
 			"path": "pages/me/distributor/fetch/index",
 			"style": {
 				"navigationBarTitleText": "提现"
