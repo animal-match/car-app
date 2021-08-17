@@ -64,7 +64,7 @@
 				categoryList: [], // 分类列表
 				activeItem: 1, // 当前激活的色块item.id
 				currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
-				id: 3, // 选择的分类数据 配件的id为3默认
+				id: 1, // 选择的分类数据 配件的id为1默认
 				tabList: [{
 						name: "厂商"
 					},
@@ -105,6 +105,9 @@
 						 }
 						 this.categoryList = res.data;
 						 console.log(this.categoryList,'分类列表')
+						 this.id = this.categoryList[0].id || 1;
+						 console.log('看有没有拿到id', this.categoryList[0].id,'id是多少',this.id)
+						 this.getStoreList();
 					 }
 				 })
 			 },
@@ -147,8 +150,10 @@
 			 * @param {number}
 			 **/
 			change(index) {
+				this.activeItem = 1;
 				this.form.searchKey = '';
 				this.currentTab = index;
+				// this.categoryList = [];
 				this.getCategory();
 				// this.informations = [];
 				this.getStoreList();
@@ -162,6 +167,7 @@
 				this.form.searchKey = '';
 				this.activeItem = index+1; // 当前激活的分类
 				this.id = id; // 通过id查询改分类下的商铺
+				console.log('id是几何',this.id)
 				this.getStoreList();
 			},
 			/**
