@@ -74,7 +74,8 @@
 					})
 					return 
 				}
-				if(this.imageList.length==0) {
+
+				if(this.imageList.length==0 && this.VideoList.length==0) {
 					uni.showToast({
 						icon: "none",
 						title: "请上传产品图片或视频"
@@ -173,7 +174,8 @@
 							name: 'file',
 							success: (uploadFileRes) => {
 								console.log('上传视频!!',uploadFileRes);
-								this.videoUrl = uploadFileRes.data.fullurl;
+								let data = JSON.parse(uploadFileRes.data);
+								this.videoUrl = data.data.fullurl;
 								console.log('视频地址',this.videoUrl);
 							}
 						})

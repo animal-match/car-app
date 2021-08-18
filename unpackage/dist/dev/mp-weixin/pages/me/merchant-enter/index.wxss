@@ -59,14 +59,8 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.switch-table.data-v-221edcf8 {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
 .container.data-v-221edcf8 {
-  margin: 30rpx;
+  margin: 0 30rpx 30rpx 30rpx;
   background-color: #fff;
   border-radius: 20rpx;
   padding: 42rpx 30rpx 54rpx;
@@ -96,6 +90,7 @@
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  margin-bottom: 20rpx;
 }
 .upLoad-container .uploader .title.data-v-221edcf8, .upLoad-container .uploader .add-btn.data-v-221edcf8 {
   padding: 0 15rpx 0;
@@ -109,7 +104,7 @@
   display: flex;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
-  padding: 0 15rpx 0;
+  padding: 0 15rpx 20rpx;
 }
 .upLoad-container .fileList .image-box.data-v-221edcf8 {
   display: -webkit-box;
@@ -138,7 +133,7 @@
   display: flex;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
-  padding: 0 15rpx 0;
+  padding: 0 15rpx 20rpx;
 }
 .upLoad-container .fileList2 .video-box.data-v-221edcf8 {
   display: -webkit-box;
@@ -159,6 +154,30 @@
   margin: 0 15rpx 15rpx 0 !important;
   width: 300rpx;
   height: 200rpx;
+}
+.upLoad-container .upload-logo.data-v-221edcf8 {
+  margin: 20rpx 15rpx 20rpx 15rpx;
+}
+.upLoad-container .upload-logo .layout-flex.data-v-221edcf8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.upLoad-container .upload-logo .layout-flex .red.data-v-221edcf8 {
+  color: red;
+}
+.upLoad-container .upload-logo .logo.data-v-221edcf8 {
+  position: relative;
+  min-height: 40rpx;
+}
+.upLoad-container .upload-logo .logo .close-btn.data-v-221edcf8 {
+  position: absolute;
+  top: -20rpx;
+  left: 180rpx;
 }
 .submit-btn.data-v-221edcf8 {
   margin: 0 30rpx;
