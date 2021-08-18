@@ -402,7 +402,7 @@
 			},
 			// 提交接口
 			toServer(goods) {
-				console.log('访问接口',this.form.selected)
+				console.log('访问接口',this.form.selected.latitude)
 				this.$request({
 					url: "/api/store/apply",
 					method: "POST",
@@ -411,8 +411,8 @@
 							store_name: this.form.merchantName,// 店铺名
 							information: this.form.merchantIntro,// 介绍
 							type: parseInt(this.form.storeType),// 0厂家 1经销商
-							// lat: Number(this.form.selected.latitude),// 经度
-							// long: Number(this.from.selected.longitude),// 纬度
+							lat: Number(this.form.selected.latitude),// 经度
+							long: Number(this.form.selected.longitude),// 纬度
 							phone: this.form.phoneNo,// 电话
 							store_category_id: this.form.id,// 标签分类
 							goods: JSON.stringify(goods)//goods// 产品
