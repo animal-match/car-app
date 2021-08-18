@@ -225,6 +225,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -247,9 +251,19 @@ var _default =
   },
   methods: {
     /**
-              * @desc 获取详情页数据
+              * @desc 预览图片
               * @param
               **/
+    preview: function preview() {
+      uni.previewImage({
+        current: this.detail.image,
+        urls: [this.detail.image] });
+
+    },
+    /**
+        * @desc 获取详情页数据
+        * @param
+        **/
     detailInfo: function detailInfo(id) {var _this = this;
       this.$request({
         url: "/api/supply/detail?id=" + id,

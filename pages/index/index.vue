@@ -38,9 +38,9 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick(_item.id)" class="information-block" v-for="(_item,_index) in merchant_0" :key="_index">
+			<view @click="handleClick(_item.id)" class="information-block" v-for="(_item,_index) in merchant_0">
 				<!-- 第一行 Logo 标题 按钮 -->
-				<view class="first-line">
+				<view class="first-line" :key="_index">
 					<!-- 左侧 Logo和标题 -->
 					<view class="left-block">
 						<u-image :src="_item.log" width="80rpx" height="80rpx" shape="circle"></u-image>
@@ -68,9 +68,9 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick(item2.id)" class="information-block" v-for="(item2,index2) in merchant_1" :key="index2">
+			<view @click="handleClick(item2.id)" class="information-block" v-for="(item2,index2) in merchant_1">
 				<!-- 第一行 Logo 标题 按钮 -->
-				<view class="first-line">
+				<view class="first-line" :key="index2">
 					<!-- 左侧 Logo和标题 -->
 					<view class="left-block">
 						<u-image :src="item2.log" width="80rpx" height="80rpx" shape="circle"></u-image>
@@ -99,9 +99,9 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" :key="index4" class="information-require">
+			<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" class="information-require">
 				<!-- 第一行 标签 标题 按城市-->
-				<view class="first-line-other">
+				<view class="first-line-other" :key="index4">
 					<!-- 左侧 标签和标题 -->
 					<view class="left-block-other" >
 						<u-tag :text="item4.type=='supply'?'供应':'求购'" mode="dark" :type="item4.type=='supply'?'primary':'error'"/>

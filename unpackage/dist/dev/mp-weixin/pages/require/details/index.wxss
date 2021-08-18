@@ -49,7 +49,7 @@
   padding: 30rpx 0;
   border-top: 2rpx solid #f8f8f8;
   border-bottom: 2rpx solid #f8f8f8;
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
 }
 .details .container-top .user .use-info.data-v-064a011c {
   display: -webkit-box;

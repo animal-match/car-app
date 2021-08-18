@@ -18,6 +18,10 @@
 				</view>
 				<view class="city">{{detail.city || '-'}}</view>
 			</view>
+			<view class="image">
+				<u-image v-if="detail.image" :src="detail.image" width="300" height="200" @click="preview">
+				</u-image>
+			</view>
 			<view class="article">
 				{{detail.content}}
 			</view>
@@ -86,6 +90,16 @@
 		},
 		methods: {
 			/**
+			 * @desc 预览图片
+			 * @param
+			 **/
+			preview() {
+				uni.previewImage({
+					current: this.detail.image,
+					urls: [this.detail.image],
+				});
+			},
+			/**
 			 * @desc 获取详情页数据
 			 * @param
 			 **/
@@ -141,7 +155,7 @@
 				padding: 30rpx 0;
 				border-top: 2rpx solid $uni-bg-color-grey;
 				border-bottom: 2rpx solid $uni-bg-color-grey;
-				margin-bottom: 40rpx;
+				margin-bottom: 20rpx;
 				.use-info {
 					display: flex;
 					.nickname {
