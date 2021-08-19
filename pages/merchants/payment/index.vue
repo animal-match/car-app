@@ -5,7 +5,7 @@
 		<u-gap height="20"></u-gap>
 		<view class="payment-box">
 			<view class="common-style">需支付金额(元)</view>
-			<view class="payment-price">￥120.00</view>
+			<view class="payment-price">￥{{payment}}</view>
 		</view>
 		<view class="common-style payment-way">请选择支付方式</view>
 		<view class="bankcard-box">
@@ -49,35 +49,53 @@
 				paylist: [
 					{name: ''}
 				],
+				type: '', // 商家类型
+				payment: null, // 支付金额
 			}
 		},
-		onLoad() {
-			this.checkPrice();
+		onLoad(options) {
+			// this.checkPrice();
+			this.type = this.$store.state.user.type;
+			console.log(this.type,'商家类型')
+			this.payment = options.money?options.money:null
+			if(!options.money){ // 如果传来的金额不存在，说明要从个人中心进去冲会员
+				this.payment = this.type === 0 ? this.$store.state.config.d_vip_money : this.$store.state.config.s_vip_money
+			}
+		},
+		computed: {
+			// payment() {
+			// 	if(this.type === 0) 
+			// 	  return this.$store.state.config.d_vip_money // 厂商会员的价格
+			// 	else if(this.type === 1)
+			// 	  return this.$store.state.config.s_vip_money // 经销商会员价格
+			// 	else 
+			// 	  return '-'
+			// },
 		},
 		methods: {
 			/**
 			 * @desc 查看价格
 			 * @param
 			 **/
-			 checkPrice() {
-				 this.$request({
-					 url: "/api/pay/prepay",
-					 method: "POST",
-					 data: {
-						 type: 1
-					 },
-					 success: res => {
-						 if(res.code===0) {
-							 uni.showToast({
-							 	icon: "none",
-								title: res.msg
-							 })
-							 return false;
-						 }
-						 console.log('价格',res);
-					 }
-				 })
-			 },
+			 // checkPrice() {
+				//  this.$request({
+				// 	 url: "/api/pay/prepay",
+				// 	 method: "POST",
+				// 	 data: {
+				// 		 type: 1
+				// 	 },
+				// 	 success: res => {
+				// 		 if(res.code===0) {
+				// 			 uni.showToast({
+				// 			 	icon: "none",
+				// 				title: res.msg
+				// 			 })
+				// 			 return false;
+				// 		 }
+				// 		 console.log('价格',res);
+				// 	 }
+				//  })
+			 // },
 			/**
 			 * @desc 选择支付方式
 			 * @param

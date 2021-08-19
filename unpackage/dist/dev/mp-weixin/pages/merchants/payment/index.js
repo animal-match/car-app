@@ -157,41 +157,59 @@ var _default =
     return {
       radioValue: '', // 单选选中的值
       paylist: [
-      { name: '' }] };
+      { name: '' }],
 
-
+      type: '', // 商家类型
+      payment: null // 支付金额
+    };
   },
-  onLoad: function onLoad() {
-    this.checkPrice();
+  onLoad: function onLoad(options) {
+    // this.checkPrice();
+    this.type = this.$store.state.user.type;
+    console.log(this.type, '商家类型');
+    this.payment = options.money ? options.money : null;
+    if (!options.money) {// 如果传来的金额不存在，说明要从个人中心进去冲会员
+      this.payment = this.type === 0 ? this.$store.state.config.d_vip_money : this.$store.state.config.s_vip_money;
+    }
+  },
+  computed: {
+    // payment() {
+    // 	if(this.type === 0) 
+    // 	  return this.$store.state.config.d_vip_money // 厂商会员的价格
+    // 	else if(this.type === 1)
+    // 	  return this.$store.state.config.s_vip_money // 经销商会员价格
+    // 	else 
+    // 	  return '-'
+    // },
   },
   methods: {
     /**
               * @desc 查看价格
               * @param
               **/
-    checkPrice: function checkPrice() {
-      this.$request({
-        url: "/api/pay/prepay",
-        method: "POST",
-        data: {
-          type: 1 },
-
-        success: function success(res) {
-          if (res.code === 0) {
-            uni.showToast({
-              icon: "none",
-              title: res.msg });
-
-            return false;
-          }
-          console.log('价格', res);
-        } });
-
-    },
+    // checkPrice() {
+    //  this.$request({
+    // 	 url: "/api/pay/prepay",
+    // 	 method: "POST",
+    // 	 data: {
+    // 		 type: 1
+    // 	 },
+    // 	 success: res => {
+    // 		 if(res.code===0) {
+    // 			 uni.showToast({
+    // 			 	icon: "none",
+    // 				title: res.msg
+    // 			 })
+    // 			 return false;
+    // 		 }
+    // 		 console.log('价格',res);
+    // 	 }
+    //  })
+    // },
     /**
-        * @desc 选择支付方式
-        * @param
-        **/
+     * @desc 选择支付方式
+     * @param
+     **/
     radioChange: function radioChange(e) {
       console.log(e, 'eee');
       this.radioValue = e;

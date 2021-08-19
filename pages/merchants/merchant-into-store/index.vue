@@ -31,7 +31,7 @@
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
 			<text v-if="!!isvip || userLoginId==idValue || store.address.length>0" class="address ellipsis">地址：{{store.address || '*************'}}</text>
 			<text v-else class="address ellipsis">地址：*************</text>
-			<u-button v-if="storeInformation.type===1" type="error" size="mini" @click="sendMessage">留言</u-button>
+			<u-button v-if="showMessageBtn&&storeType==1" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(store.longitude,store.latitude,store.address)">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
@@ -42,13 +42,13 @@
 		<!-- 底部部分 产品图 -->
 		<view class="production">产品</view>
 		<view class="bottom-container">
-			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.image">
+			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.image&&_item.image.length>0">
 				<view style="display: flex; flex-direction: column;" :key="_index">
 					<u-image class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
 					<text class="production-text ellipsis">{{_item.title}}</text>
 				</view>
 			</view>
-			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.video">
+			<view v-for="(_item,_index) in productions" class="image-box" v-show="!!_item.video&&_item.video.length>0">
 				<view style="display: flex; flex-direction: column; width: 310rpx;" :key="_index">
 					<video :src="_item.video" class="video"></video>
 					<text class="production-text ellipsis">{{_item.title}}</text>
@@ -58,9 +58,9 @@
 		</view>
 		
 		<!-- 弹出框 查看电话去升级-->
-		<u-modal v-model="phoneNoShow" width="70%" :content="phoneTips" show-confirm-button show-cancel-button confirm-text="去升级" title="重要提示" confirm-color="#CA0303" @confirm="upDate"></u-modal>
+		<u-modal v-model="phoneNoShow" width="70%" :content="`非会员查看地址电话需支付${phoneTips}元费用`" show-confirm-button show-cancel-button confirm-text="去升级" title="重要提示" confirm-color="#CA0303" @confirm="upDate"></u-modal>
 		<!-- 弹出框 查看地址去支付 -->
-		<u-modal v-model="addressShow" width="80%" :content="adressTips" show-confirm-button show-cancel-button confirm-text="去支付" title="重要提示" confirm-color="#CA0303" @confirm="payment"></u-modal>
+		<u-modal v-model="addressShow" width="80%" :content="`厂家查看经销商地址需支付${adressTips}元费用`" show-confirm-button show-cancel-button confirm-text="去支付" title="重要提示" confirm-color="#CA0303" @confirm="payment"></u-modal>
 	</view>
 </template>
 
@@ -74,14 +74,15 @@
 				starStatus: false, // 收藏的激活状态
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
-				phoneTips: '非会员查看地址电话需支付120元费用',
-				adressTips: '非会员查看地址电话需支付120元费用',
+				phoneTips: '',
+				adressTips: '',
 				isvip: false, // 是否是会员
 				idValue: '', // 商家id
 				userLoginId: '', // 用户登录的id
 				goodsTags: [], // 标签
 				productions: [], // 产品
 				storeInformation: {} ,// 商家详情数据
+				showMessageBtn: false,
 				store: { // 商家手机地址
 					longitude: '',
 					latitude: '',
@@ -96,9 +97,13 @@
 			this.getPhoneAddr();
 		},
 		onShow() {
+			 this.showMessageBtn = this.$store.state.config.message == 1?true:false;
+			 console.log('按钮显示',this.$store.state.config.message)
 			 this.userLoginId = this.$store.state.user.userId; // 用户登录id
 			 console.log('用户登录id',this.userLoginId,typeof this.userLoginId)
 			 this.isvip = uni.getStorageSync("isVip") // 判断用户是否为会员
+			 this.phoneTips = this.$store.state.user.type==0?this.$store.state.config.d_vip_money:this.$store.state.config.s_vip_money;
+			 this.adressTips = this.$store.state.config.d_vip_money;
 		},
 		methods: {
 			/**
@@ -193,6 +198,7 @@
 						this.productions = res.data.goods; // array 产品
 						this.storeInformation = res.data; // Object 详情数据
 						this.storeType = res.data.type; // 商家类型：0 厂家 1经销商
+						console.log('类型',this.storeType)
 						this.isCollection = res.data.is_likes; // 是否收藏该店
 						if(this.isCollection===1) {
 							this.starStatus = true;
@@ -283,7 +289,7 @@
 			upDate() {
 				console.log('跳转支付页面')
 				uni.navigateTo({
-					url: '../payment/index'
+					url: '../payment/index?money='+this.phoneTips
 				})
 			},
 			/**
@@ -292,7 +298,7 @@
 			 **/
 			 payment() {
 				 uni.navigateTo({
-				 	url: "/pages/merchants/payment/index"
+				 	url: "/pages/merchants/payment/index?money="+this.adressTips
 				 })
 			 },
 			 /**

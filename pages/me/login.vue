@@ -173,8 +173,7 @@
 						this.$store.commit('changeLoginState', true); // 登录状态为true
 						// 会员中心接口 获取用户头像，手机号码, vip状态
 						this.$request({
-							url: ",
-							",
+							url: "/api/user/index",
 							data: { token: this.token },
 							success: res => {
 								if(res.code===0) {
@@ -192,6 +191,7 @@
 									//avatar: res.data.user.avatar, // 头像
 									money: res.data.user.money ,// 帐户金额
 									pid: res.data.user.pid, // 下线Id
+									type: res.data.user.type, // 商家类型
 								}; // 保存用户信息到vuex
 								//uni.$emit('setUser', user);
 								this.$store.commit('setUserInfo',user);

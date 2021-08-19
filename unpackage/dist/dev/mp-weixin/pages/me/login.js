@@ -161,9 +161,227 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/works/myApp/car-app/pages/me/login.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js):\nSyntaxError: Unterminated string constant (176:12)\n    at Object._raise (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:746:17)\n    at Object.raiseWithData (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:739:17)\n    at Object.raise (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:733:17)\n    at Object.readString (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8423:20)\n    at Object.getTokenFromCode (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8071:14)\n    at Object.getTokenFromCode (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:7002:20)\n    at Object.nextToken (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:7598:12)\n    at Object.next (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:7526:10)\n    at Object.eat (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:7531:12)\n    at Object.parseObjectProperty (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10585:14)\n    at Object.parseObjPropValue (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10611:101)\n    at Object.parseObjPropValue (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:6767:11)\n    at Object.parseObjectMember (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10535:10)\n    at Object.parseObj (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10448:25)\n    at Object.parseExprAtom (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:10055:28)\n    at Object.parseExprSubscripts (D:\\HBuilderX\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9656:23)");
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default =
+{
+  data: function data() {
+    return {
+      showModal: false, // 显示弹出框
+      showToast: false, // 微信弹窗
+      content: '请先同意以下条款！',
+      loginToast: '登录失败', // 微信登录失败提示
+      isChecked: false, // 是否勾选协议
+      name: 'ckeckBox',
+      openid: '',
+      code: '',
+      pid: '' // 上级id
+    };
+  },
+  onLoad: function onLoad(option) {
+    this.pid = option.pid || '';
+  },
+  methods: {
+    radioChange: function radioChange(e) {
+      if (e.value === true) {
+        this.isChecked = true;
+      } else {
+        this.isChecked = false;
+      }
+      console.log('EEE', this.isChecked);
+    },
+    // 登录微信
+    login: function login() {var _this2 = this;
+      if (this.isChecked === true) {
+        console.log('调用微信登录接口');
+        // 获取供应商
+        uni.getProvider({
+          service: 'oauth', // 服务类型: oauth 授权登录 payment 支付 share 分享
+          success: function success(res) {
+            var _this = _this2;
+            // success 返回参数说明 service(服务类型)  provider(得到的服务供应商)
+            if (~res.provider.indexOf('weixin')) {
+              uni.login({
+                provider: 'weixin',
+                success: function success(loginRes) {
+                  console.log(loginRes, '登录res');
+                  _this2.code = loginRes.code; // 登录code
+                } });
+
+            };
+            if (uni.getUserProfile) {
+              // 获取用户信息
+              uni.getUserProfile({
+                // provider: 'weixin',
+                desc: "您的登录信息将用于平台展示",
+                success: function success(loginRes) {
+                  console.log('打印登录信息', loginRes);
+                  var user = {
+                    nickName: loginRes.userInfo.nickName,
+                    avatar: loginRes.userInfo.avatarUrl };
+
+                  uni.$emit('setUser', user);
+                  _this2.$store.commit('setUserInfo', user);
+                  var info = {
+                    encryptedData: loginRes.encryptedData,
+                    signature: loginRes.signature,
+                    iv: loginRes.iv,
+                    refresh: true, // 重新获取或刷新最新的用户信息
+                    pid: _this2.pid // 	上级用户id
+                  };
+                  _this2.getSessionKey(_this2.code, info);
+                },
+                fail: function fail(err) {
+                  console.log(err, '是不一样');
+                  uni.showToast({
+                    icon: 'none',
+                    title: '获取用户信息失败' });
+
+                } });
+
+            }
+
+          },
+          fail: function fail(res) {
+            console.log('失败', res);
+            _this2.showToast = true;
+            return false;
+          } });
+
+      } else {
+        this.showModal = true;
+      }
+    },
+
+    // 跳到隐私条款页面
+    serviceItem: function serviceItem() {
+      console.log('跳到隐私条款页面');
+    },
+    // 获取sessionKey
+    getSessionKey: function getSessionKey(code, info) {var _this3 = this;
+      this.$request({
+        url: "/api/user/getWxMiniProgramSessionKey",
+        method: "GET",
+        data: {
+          code: code },
+
+        success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
+          var key = res.data.session_key;
+          _this3.openid = res.data.openid;
+          _this3.userLogin(info, key); // 服务器后台登录操作
+        },
+        fail: function fail(err) {
+          console.log('每有得到session', err);
+        } });
+
+    },
+    // 登录接口
+    userLogin: function userLogin(data, sessionKey) {var _this4 = this;
+      this.$request({
+        url: "/api/user/wxMiniProgramOauth",
+        method: "POST",
+        data: _objectSpread({
+          session_key: sessionKey },
+        data),
+
+        success: function success(res) {
+          if (res.code === 0) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg,
+              duration: 3000 });
+
+            return false;
+          }
+          _this4.token = res.data.token; // 获取token
+          uni.setStorageSync("token", _this4.token); // 保存token到缓存中
+          _this4.$store.commit('changeLoginState', true); // 登录状态为true
+          // 会员中心接口 获取用户头像，手机号码, vip状态
+          _this4.$request({
+            url: "/api/user/index",
+            data: { token: _this4.token },
+            success: function success(res) {
+              if (res.code === 0) {
+                uni.showToast({
+                  icon: "none",
+                  title: res.msg,
+                  duration: 3000 });
+
+                return false;
+              }
+              console.log('用户中心', res);
+              var user = {
+                id: res.data.user.id, // 用户id
+                //nickName: res.data.user.nickname, // 昵称
+                //avatar: res.data.user.avatar, // 头像
+                money: res.data.user.money, // 帐户金额
+                pid: res.data.user.pid, // 下线Id
+                type: res.data.user.type // 商家类型
+              }; // 保存用户信息到vuex
+              //uni.$emit('setUser', user);
+              _this4.$store.commit('setUserInfo', user);
+              var isVip = res.data.user.is_vip; // 0 非会员 1会员
+              // 把会员状态存入缓存
+              uni.setStorage({
+                key: 'isVip',
+                data: isVip });
+
+            } });
+
+          uni.switchTab({
+            url: '/pages/me/index' });
+
+        },
+        fail: function fail(res) {
+          uni.showToast({
+            icon: "none",
+            title: "登录失败" });
+
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

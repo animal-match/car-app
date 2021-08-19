@@ -244,14 +244,15 @@ var _default =
       starStatus: false, // 收藏的激活状态
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
-      phoneTips: '非会员查看地址电话需支付120元费用',
-      adressTips: '非会员查看地址电话需支付120元费用',
+      phoneTips: '',
+      adressTips: '',
       isvip: false, // 是否是会员
       idValue: '', // 商家id
       userLoginId: '', // 用户登录的id
       goodsTags: [], // 标签
       productions: [], // 产品
       storeInformation: {}, // 商家详情数据
+      showMessageBtn: false,
       store: { // 商家手机地址
         longitude: '',
         latitude: '',
@@ -266,9 +267,13 @@ var _default =
     this.getPhoneAddr();
   },
   onShow: function onShow() {
+    this.showMessageBtn = this.$store.state.config.message == 1 ? true : false;
+    console.log('按钮显示', this.$store.state.config.message);
     this.userLoginId = this.$store.state.user.userId; // 用户登录id
     console.log('用户登录id', this.userLoginId, typeof this.userLoginId);
     this.isvip = uni.getStorageSync("isVip"); // 判断用户是否为会员
+    this.phoneTips = this.$store.state.user.type == 0 ? this.$store.state.config.d_vip_money : this.$store.state.config.s_vip_money;
+    this.adressTips = this.$store.state.config.d_vip_money;
   },
   methods: {
     /**
@@ -363,6 +368,7 @@ var _default =
           _this3.productions = res.data.goods; // array 产品
           _this3.storeInformation = res.data; // Object 详情数据
           _this3.storeType = res.data.type; // 商家类型：0 厂家 1经销商
+          console.log('类型', _this3.storeType);
           _this3.isCollection = res.data.is_likes; // 是否收藏该店
           if (_this3.isCollection === 1) {
             _this3.starStatus = true;
@@ -453,7 +459,7 @@ var _default =
     upDate: function upDate() {
       console.log('跳转支付页面');
       uni.navigateTo({
-        url: '../payment/index' });
+        url: '../payment/index?money=' + this.phoneTips });
 
     },
     /**
@@ -462,7 +468,7 @@ var _default =
         **/
     payment: function payment() {
       uni.navigateTo({
-        url: "/pages/merchants/payment/index" });
+        url: "/pages/merchants/payment/index?money=" + this.adressTips });
 
     },
     /**
