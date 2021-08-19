@@ -238,10 +238,10 @@ var _default =
 {
   data: function data() {
     return {
+      storeType: 0, // 商家类型：0 厂家 1经销商
       isCollection: 0, // 0未收藏 1已收藏
       iconName: 'star', // star为空心 star-fill为实心
       starStatus: false, // 收藏的激活状态
-      showMessageButton: false, // 显示留言按钮
       addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
       phoneTips: '非会员查看地址电话需支付120元费用',
@@ -269,7 +269,6 @@ var _default =
     this.userLoginId = this.$store.state.user.userId; // 用户登录id
     console.log('用户登录id', this.userLoginId, typeof this.userLoginId);
     this.isvip = uni.getStorageSync("isVip"); // 判断用户是否为会员
-    if (!!this.isvip) this.showMessageButton = true;
   },
   methods: {
     /**
@@ -363,6 +362,7 @@ var _default =
           _this3.goodsTags = res.data.category; // array 商品标签
           _this3.productions = res.data.goods; // array 产品
           _this3.storeInformation = res.data; // Object 详情数据
+          _this3.storeType = res.data.type; // 商家类型：0 厂家 1经销商
           _this3.isCollection = res.data.is_likes; // 是否收藏该店
           if (_this3.isCollection === 1) {
             _this3.starStatus = true;
@@ -479,8 +479,9 @@ var _default =
         * @param 
         **/
     sendMessage: function sendMessage() {
+      // idValue 店铺id, storeType 商家类型
       uni.navigateTo({
-        url: 'sendMessage?id=' + this.idValue });
+        url: 'sendMessage?id=' + this.idValue + '&type=' + this.storeType });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

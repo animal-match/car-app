@@ -135,6 +135,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = typeof _vm.$$v === "string" ? _vm.$$v.trim() : null
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -230,6 +239,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 var clickTimes = 0;var _default =
 {
@@ -241,6 +251,7 @@ var clickTimes = 0;var _default =
 
       userLoginId: '', // 用户登录Id 用于判断是商家还是用户身份userloginid===storeId则是商家
       storeId: '', // 商家id
+      storeType: 0, // 商家类型 0厂商 1经销商
       messageList: [], // 留言列表
       activeItem: 1, // 展开选中的其中一个列表
       replyItem: 1, // 回复的对象
@@ -257,8 +268,9 @@ var clickTimes = 0;var _default =
 
   },
   onLoad: function onLoad(opt) {
-    this.storeId = opt.id;
-    console.log('商家id', opt.id, typeof opt.id);
+    this.storeId = opt.id; // 本商家id
+    this.storeType = opt.type; // 本商家类型
+    console.log('商家id', opt.id, opt.type, typeof opt.id);
   },
   onShow: function onShow() {
     var userLoginId = this.$store.state.user.userId; // 用户登录Id

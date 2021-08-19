@@ -1,6 +1,7 @@
 <template>
 	<!-- 留言板 -->
 	<view class="send-message">
+		<!-- 当用户Id不等于商店Id时（店铺不是他自己的）,就显示留言按钮 -->
 		<u-gap height="20" v-if="userLoginId!=storeId"></u-gap>
 		<!-- 上层 留言框 -->
 		<view class="container-top" v-if="true">
@@ -9,7 +10,7 @@
 				<view class="input">
 					<u-form :model="form">
 						<u-form-item :border-bottom="false">
-							<u-input placeholder="请输入留言内容" type="text" v-model="form.message" :border="true" />
+							<u-input placeholder="请输入留言内容" type="text" v-model.trim="form.message" :border="true" />
 						</u-form-item>
 					</u-form>
 				</view>
@@ -71,6 +72,7 @@
 				},
 				userLoginId: '', // 用户登录Id 用于判断是商家还是用户身份userloginid===storeId则是商家
 				storeId: '', // 商家id
+				storeType: 0, // 商家类型 0厂商 1经销商
 				messageList: [], // 留言列表
 				activeItem: 1, // 展开选中的其中一个列表
 				replyItem: 1, // 回复的对象
@@ -87,8 +89,9 @@
 			}
 		},
 		onLoad(opt) {
-			this.storeId = opt.id;
-			console.log('商家id',opt.id, typeof opt.id)
+			this.storeId = opt.id; // 本商家id
+			this.storeType = opt.type; // 本商家类型
+			console.log('商家id',opt.id,opt.type, typeof opt.id)
 		},
 		onShow() {
 			const userLoginId = this.$store.state.user.userId; // 用户登录Id

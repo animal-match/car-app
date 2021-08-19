@@ -348,9 +348,7 @@ var _default =
       totalinfo: [] // 供求信息
     };
   },
-  onLoad: function onLoad(option) {
-    var pid = console.log(options.pid) || '';
-  },
+
   onShow: function onShow() {
     this.getBanner();
     this.getList();

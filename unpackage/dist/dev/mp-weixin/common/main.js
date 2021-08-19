@@ -20,6 +20,7 @@ var _share = _interopRequireDefault(__webpack_require__(/*! ./utils/share.js */ 
 Object.keys(custom).forEach(function (key) {
   _vue.default.filter(key, custom[key]);
 });
+_vue.default.prototype.$baseUrl = "https://yanxu.n867.cn/index.php";
 _vue.default.mixin(_share.default);
 _vue.default.component('require-supply', requireSupply);
 _vue.default.prototype.$store = _index.default;

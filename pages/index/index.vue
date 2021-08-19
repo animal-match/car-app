@@ -148,9 +148,7 @@
 				totalinfo: [] // 供求信息
 			}
 		},
-		onLoad(option) {
-			let pid = console.log(options.pid) || '';
-		},
+
 		onShow() {
 			this.getBanner();
 			this.getList();

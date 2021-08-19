@@ -42,7 +42,11 @@
 				name: 'ckeckBox',
 				openid: '',
 				code: '',
+				pid: '', // 上级id
 			}
+		},
+		onLoad(option) {
+			this.pid = option.pid || '';
 		},
 		methods: {
 			radioChange(e) {
@@ -90,7 +94,7 @@
 											signature: loginRes.signature,
 											iv: loginRes.iv,
 											refresh: true,  // 重新获取或刷新最新的用户信息
-											pid: '', // 	上级用户id
+											pid: this.pid, // 	上级用户id
 										}
 										this.getSessionKey(this.code,info);
 									},
@@ -169,7 +173,8 @@
 						this.$store.commit('changeLoginState', true); // 登录状态为true
 						// 会员中心接口 获取用户头像，手机号码, vip状态
 						this.$request({
-							url: "/api/user/index",
+							url: ",
+							",
 							data: { token: this.token },
 							success: res => {
 								if(res.code===0) {

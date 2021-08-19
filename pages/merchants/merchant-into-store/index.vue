@@ -29,9 +29,9 @@
 		<!-- 中间部分 联系电话 定位 -->
 		<view class="center-container">
 			<u-image src="/static/user-center-images/addr.png" width="23" height="36"></u-image>
-			<text v-if="!!isvip || userLoginId==idValue || store.address.length>0" class="address ellipsis">地址：{{store.address}}</text>
+			<text v-if="!!isvip || userLoginId==idValue || store.address.length>0" class="address ellipsis">地址：{{store.address || '*************'}}</text>
 			<text v-else class="address ellipsis">地址：*************</text>
-			<u-button v-if="showMessageButton || userLoginId==idValue" type="error" size="mini" @click="sendMessage">留言</u-button>
+			<u-button v-if="storeInformation.type===1" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(store.longitude,store.latitude,store.address)">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
@@ -68,10 +68,10 @@
 	export default {
 		data() {
 			return {
+				storeType: 0, // 商家类型：0 厂家 1经销商
 				isCollection: 0, // 0未收藏 1已收藏
 				iconName: 'star', // star为空心 star-fill为实心
 				starStatus: false, // 收藏的激活状态
-				showMessageButton: false, // 显示留言按钮
 				addressShow: false, // 显示地址弹窗
 				phoneNoShow: false, // 显示电话号码弹窗
 				phoneTips: '非会员查看地址电话需支付120元费用',
@@ -99,7 +99,6 @@
 			 this.userLoginId = this.$store.state.user.userId; // 用户登录id
 			 console.log('用户登录id',this.userLoginId,typeof this.userLoginId)
 			 this.isvip = uni.getStorageSync("isVip") // 判断用户是否为会员
-			 if(!!this.isvip) this.showMessageButton = true;
 		},
 		methods: {
 			/**
@@ -193,6 +192,7 @@
 						this.goodsTags = res.data.category; // array 商品标签
 						this.productions = res.data.goods; // array 产品
 						this.storeInformation = res.data; // Object 详情数据
+						this.storeType = res.data.type; // 商家类型：0 厂家 1经销商
 						this.isCollection = res.data.is_likes; // 是否收藏该店
 						if(this.isCollection===1) {
 							this.starStatus = true;
@@ -309,8 +309,9 @@
 			  * @param 
 			  **/
 			 sendMessage() {
+				 // idValue 店铺id, storeType 商家类型
 				  uni.navigateTo({
-				  	url: 'sendMessage?id='+this.idValue
+				  	url: 'sendMessage?id='+this.idValue+'&type='+this.storeType
 				  })
 			 },
 		}
