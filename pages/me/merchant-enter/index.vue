@@ -407,7 +407,9 @@
 					url: "/api/store/apply",
 					method: "POST",
 					data: {
-						  address: this.form.address,
+						  log: this.logoUrl, // 商标
+							image: this.majorUrl, // 主图（封面）
+						  address: this.form.address,// 地址
 							store_name: this.form.merchantName,// 店铺名
 							information: this.form.merchantIntro,// 介绍
 							type: parseInt(this.form.storeType),// 0厂家 1经销商
@@ -415,7 +417,7 @@
 							long: Number(this.form.selected.longitude),// 纬度
 							phone: this.form.phoneNo,// 电话
 							store_category_id: this.form.id,// 标签分类
-							goods: JSON.stringify(goods)//goods// 产品
+							goods: JSON.stringify(goods)// 产品
 					},
 					success: res=> {
 						if(res.code != 1) {
