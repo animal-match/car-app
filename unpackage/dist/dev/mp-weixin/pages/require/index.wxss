@@ -81,6 +81,6 @@
 }
 .require .supply-publish .supply-publish-btn.data-v-5f8717ff {
   position: relative;
-  top: 200rpx;
+  top: 150rpx;
 }
 

@@ -240,8 +240,11 @@
 							success: (uploadFileRes) => {
 								console.log(uploadFileRes.data,'res!!');
 								let data = JSON.parse(uploadFileRes.data);
-								this.imageUrl = data.data.fullurl;
-								console.log('图片地址',this.imageUrl);
+								if(!!data.data.fullurl) {
+									console.log('选好图片了',data.data)
+									this.imageUrl = data.data.fullurl;
+									console.log('图片地址',this.imageUrl);
+								}
 							}
 						})
 					}
@@ -322,38 +325,46 @@
 			productPublic() {
 				let sort = this.currentTab==1?'supply':'demand';
 				this.supplyloading = true;
-				this.$request({
-					url: "/api/supply/release",
-					method: "POST",
-					data: {
-						type: sort,
-						title: this.form.title,
-						content: this.form.content,
-						image: this.imageUrl
-					},
-					success: res => {
-						if(res.code!=1) {
-							 uni.showToast({
-								 icon: "none",
-								 title: res.msg,
-								 duration: 3000
-							 })
-							 this.supplyloading = false;
-							 return false;
+				if(!!this.imageUrl) {
+					this.$request({
+						url: "/api/supply/release",
+						method: "POST",
+						data: {
+							type: sort,
+							title: this.form.title,
+							content: this.form.content,
+							image: this.imageUrl
+						},
+						success: res => {
+							if(res.code!=1) {
+								 uni.showToast({
+									 icon: "none",
+									 title: res.msg,
+									 duration: 3000
+								 })
+								 this.supplyloading = false;
+								 return false;
+							}
+							uni.showToast({
+								icon: "success",
+								title: "发布成功"
+							})
+							// 发布成功清空数据
+							for(let key in this.form) {
+								this.form[key] = '';
+							}
+							this.VideoOfImagesShow = true;
+							this.imageUrl = '';
+							this.imageList = [];
+							this.supplyloading = false;
 						}
-						uni.showToast({
-							icon: "success",
-							title: "发布成功"
-						})
-						// 发布成功清空数据
-						for(let key in this.form) {
-							this.form[key] = '';
-						}
-						this.imageUrl = '';
-						this.imageList = [];
-						this.supplyloading = false;
-					}
-				})
+					})
+				} else {
+					uni.showToast({
+						icon: "none",
+						title: "正在上传图片..."
+					})
+				}
 			},
 
 			/**
@@ -538,7 +549,7 @@
 			}
 			.supply-publish-btn {
 				position: relative;
-				top: 200rpx;
+				top: 150rpx;
 			}
 		}
 		// .require-publish {
