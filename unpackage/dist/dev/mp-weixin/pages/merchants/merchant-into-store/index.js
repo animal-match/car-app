@@ -234,6 +234,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -242,10 +245,9 @@ var _default =
       isCollection: 0, // 0未收藏 1已收藏
       iconName: 'star', // star为空心 star-fill为实心
       starStatus: false, // 收藏的激活状态
-      addressShow: false, // 显示地址弹窗
       phoneNoShow: false, // 显示电话号码弹窗
       phoneTips: '',
-      adressTips: '',
+      adressTips: '', // 厂家查看经销商 one_money
       isvip: false, // 是否是会员
       idValue: '', // 商家id
       userLoginId: '', // 用户登录的id
@@ -257,9 +259,10 @@ var _default =
         longitude: '',
         latitude: '',
         phoneNo: '',
-        address: '' } };
+        address: '' },
 
-
+      myStoreType: null // 登录人的商家类型
+    };
   },
   onLoad: function onLoad(opt) {
     this.idValue = opt.id;
@@ -270,11 +273,22 @@ var _default =
     this.showMessageBtn = this.$store.state.config.message == 1 ? true : false;
     console.log('按钮显示', this.$store.state.config.message);
     this.userLoginId = this.$store.state.user.userId; // 用户登录id
-    console.log('用户登录id', this.userLoginId, typeof this.userLoginId);
     this.isvip = uni.getStorageSync("isVip"); // 判断用户是否为会员
-    this.phoneTips = this.$store.state.user.type == 0 ? this.$store.state.config.d_vip_money : this.$store.state.config.s_vip_money;
-    this.adressTips = this.$store.state.config.d_vip_money;
+    this.adressTips = this.$store.state.config.one_money; // 厂家查看经销商需支付10元
+    this.myStoreType = this.$store.state.user.type; // 查看这个页面的用户(登录人)的商家类型
+    console.log('登录人的商家类型', this.myStoreType);
   },
+  computed: {
+    // 查看手机号显示的弹窗
+    phoneContent: function phoneContent() {
+      if (this.myStoreType === 0 && this.storeType === 1) {
+        return "\u5382\u5BB6\u67E5\u770B\u7ECF\u9500\u5546\u7535\u8BDD\u6216\u5730\u5740\u9700\u652F\u4ED8".concat(this.adressTips, "\u5143\u8D39\u7528");
+      }
+      if (this.myStoreType === 1 && this.storeType === 0) {
+        return "\u975E\u4F1A\u5458\u67E5\u770B\u7535\u8BDD\u6216\u5730\u5740\u9700\u6210\u4E3A\u4F1A\u5458";
+      }
+    } },
+
   methods: {
     /**
               * @desc 收藏店铺点击事件
@@ -326,7 +340,7 @@ var _default =
                       store_id: _this2.idValue },
 
                     success: function success(res) {
-                      if (res.code === 0) {
+                      if (res.code != 1) {
                         uni.showToast({
                           icon: "none",
                           title: res.msg,
@@ -334,7 +348,7 @@ var _default =
 
                         return false;
                       }
-                      console.log('手机', res.data);
+                      console.log('拿到了电话地址等信息', res.data);
                       _this2.store.phoneNo = res.data.phone;
                       _this2.store.address = res.data.address;
                       _this2.store.longitude = res.data.long;
@@ -363,12 +377,10 @@ var _default =
 
             return false;
           }
-          console.log('详情', res.data);
           _this3.goodsTags = res.data.category; // array 商品标签
           _this3.productions = res.data.goods; // array 产品
           _this3.storeInformation = res.data; // Object 详情数据
           _this3.storeType = res.data.type; // 商家类型：0 厂家 1经销商
-          console.log('类型', _this3.storeType);
           _this3.isCollection = res.data.is_likes; // 是否收藏该店
           if (_this3.isCollection === 1) {
             _this3.starStatus = true;
@@ -380,14 +392,35 @@ var _default =
         } });
 
     },
-    // /api/store/getAddress
+
     /**
-     * @desc 展示经销商电话
-     * @param 
-     **/
+        * @desc 展示经销商电话
+        * @param 
+        **/
     showPhone: function showPhone(phoneNo) {
-      this.getPhoneAddr();
-      if (!!this.isvip || this.userLoginId == this.idValue) {
+      // 如果登录人的商家类型为空(不为0或1) 则弹窗提示 您还未入住商家
+      var isTrue;
+      if (this.myStoreType === 0 || this.myStoreType === 1) {
+        isTrue = false;
+      } else {
+        isTrue = true;
+      }
+      if (isTrue) {
+        uni.showToast({
+          icon: "none",
+          title: "您还未入住商家" });
+
+        return;
+      }
+      if (this.myStoreType === this.storeType) {
+        uni.showToast({
+          icon: "none",
+          title: "同类型商家不能查看" });
+
+        return;
+      }
+      // 如果是拿到了电话信息，就可以显示电话号码
+      if (!!phoneNo || this.userLoginId == this.idValue) {
         // 如果是会员，必须留言超过三条并且都被回复，就可以显示打电话功能 （商家自己也能看到自己的电话）
         uni.makePhoneCall({
           phoneNumber: phoneNo,
@@ -395,6 +428,7 @@ var _default =
           } });
 
       } else {
+        // 如果没有得到电话地址信息，厂家可能没付过钱或者 经销商可能不是会员，然后打开弹窗
         // 否则打开去升级弹窗
         this.phoneNoShow = true;
       }
@@ -404,9 +438,32 @@ var _default =
         * @param 
         **/
     showAddress: function showAddress(longitude, latitude, address) {
-      this.getPhoneAddr();
-      // 如果是会员，必须留言超过三条并且都被回复，就可以显示导航功能 (商家自己也能看到自己的定位)
-      if (!!this.isvip || this.userLoginId == this.idValue) {
+      // 如果没有获取到登录人的商家信息 提示没入住商家
+      console.log('商家类型2：', this.myStoreType);
+      var isTrue;
+      if (this.myStoreType === 0 || this.myStoreType === 1) {
+        isTrue = false;
+      } else {
+        isTrue = true;
+      }
+      if (isTrue) {
+        uni.showToast({
+          icon: "none",
+          title: "您还未入住商家" });
+
+        return;
+      }
+      // 如果是同类型商家 提示不能相互查看
+      if (this.myStoreType === this.storeType) {
+        uni.showToast({
+          icon: "none",
+          title: "同类型商家不能查看" });
+
+        return;
+      }
+
+      // 如果是拿到了地址信息，就可以显示导航功能 (商家自己也能看到自己的定位)
+      if (!!longitude || !!latitude || !!address || this.userLoginId == this.idValue) {
         // 获取定位信息
         uni.getLocation({
           type: 'wgs84', //返回可以用于uni.openLocation的经纬度
@@ -448,27 +505,26 @@ var _default =
           } });
 
       } else {
-        // 如果不是会员，就打开去升级弹窗
-        this.addressShow = true;
+        // 如果没有得到电话地址信息，厂家可能没付过钱或者 经销商可能不是会员，然后打开弹窗
+        this.phoneNoShow = true;
       }
     },
-    /**
-        * @desc 点击 去升级按钮
-        * @param 
-        **/
-    upDate: function upDate() {
-      console.log('跳转支付页面');
-      uni.navigateTo({
-        url: '../payment/index?money=' + this.phoneTips });
 
-    },
     /**
         * @desc 点击 去支付按钮
         * @param 
         **/
     payment: function payment() {
+      var cash;
+      // 厂家查看经销商需支付单次费用
+      if (this.myStoreType === 0 && this.storeType === 1) {
+        cash = this.adressTips; // 支付10元
+      } else {
+        // 经销商查看厂家需成为会员
+        cash = this.$store.state.config.s_vip_money; // 从vuex获取经销商会员的价格
+      }
       uni.navigateTo({
-        url: "/pages/merchants/payment/index?money=" + this.adressTips });
+        url: "/pages/merchants/payment/index?money=" + cash });
 
     },
     /**

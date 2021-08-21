@@ -48,7 +48,7 @@
 					url: "/api/supply/index",
 					method: "POST",
 					data: {
-						user_id: 2,
+						user_id: parseInt(this.$store.state.user.userId),
 						type: this.type, // supply, demand
 						list_rows: 10,// 条数
 						page: this.page.start,// 页数

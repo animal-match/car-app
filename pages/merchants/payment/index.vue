@@ -129,13 +129,13 @@
 								// let resobj=JSON.parse(res.data.data)
 								// 							let payInfo={
 								// 								appid: resobj.appid, // 小程序ID
-								// 								nonceStr: resobj.nonce_str, // 随机字符串
+								// 								nonceStr: resobj.nonceStr, // 随机字符串
 								// 								package:"Sign=WXPay", // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=xx。
 								// 								partnerid: resobj.mch_id,
 								// 								prepayid: resobj.prepay_id,
-								// 								timeStamp: resobj.time_stamp, // 时间戳
-								// 								signType: resobj.sign, // 签名算法
-								//                paySign: 0, // 签名
+								// 								timeStamp: resobj.timeStamp, // 时间戳
+								// 								signType: resobj.signType, // 签名算法
+								//                paySign: resobj.paySign, // 签名
 								// 							}
 								// 							uni.requestPayment({
 								// 								provider: 'wxpay',

@@ -364,6 +364,7 @@
 						icon: "none",
 						title: "正在上传图片..."
 					})
+					this.supplyloading = false;
 				}
 			},
 
