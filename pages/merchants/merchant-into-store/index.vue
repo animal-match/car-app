@@ -354,7 +354,7 @@
 					 cash = this.$store.state.config.s_vip_money; // 从vuex获取经销商会员的价格
 				 }
 				 uni.navigateTo({
-				 	url: "/pages/merchants/payment/index?money="+cash
+				 	url: "/pages/merchants/payment/index?money="+cash+"&storeId="+this.idValue
 				 })
 			 },
 			 /**

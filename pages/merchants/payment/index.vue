@@ -5,7 +5,7 @@
 		<u-gap height="20"></u-gap>
 		<view class="payment-box">
 			<view class="common-style">需支付金额(元)</view>
-			<view class="payment-price">￥{{payment}}</view>
+			<view class="payment-price">￥{{payment || 0}}</view>
 		</view>
 		<view class="common-style payment-way">请选择支付方式</view>
 		<view class="bankcard-box">
@@ -51,57 +51,42 @@
 				],
 				type: '', // 商家类型
 				payment: null, // 支付金额
+				storeId: '', // 厂家要查看的商家ID
+				sortType: 1, // 要支付的类型 1 开通会员 2查看经销商
 			}
 		},
 		onLoad(options) {
-			// this.checkPrice();
-			this.type = this.$store.state.user.type;
-			console.log(this.type,'商家类型')
-			this.payment = options.money?options.money:null
-			if(!options.money){ // 如果传来的金额不存在，说明要从个人中心进去冲会员
-				this.payment = this.type === 0 ? this.$store.state.config.d_vip_money : this.$store.state.config.s_vip_money
+			this.type = this.$store.state.user.type; // 登录人的商家类型
+			console.log('有没有options',options)
+			// 如果options不是空对象 就会传来金额
+			if(Object.keys(options).length > 0) {
+				this.payment = options.money;
+				if(!!options.storeId) {
+					this.storeId = options.storeId;
+					this.sortType = 2; // 要查看经销商
+				}
+			} else {
+				// 如果options是空对象 说明他要开通会员
+				if(this.type===0) {
+					this.payment = this.$store.state.config.d_vip_money;
+				} else if(this.type===1){
+					this.payment = this.$store.state.config.s_vip_money;
+				} else {
+					uni.showToast({
+						icon: "none",
+						title: "请登录后操作"
+					})
+					return
+				}
 			}
 		},
-		computed: {
-			// payment() {
-			// 	if(this.type === 0) 
-			// 	  return this.$store.state.config.d_vip_money // 厂商会员的价格
-			// 	else if(this.type === 1)
-			// 	  return this.$store.state.config.s_vip_money // 经销商会员价格
-			// 	else 
-			// 	  return '-'
-			// },
-		},
+
 		methods: {
-			/**
-			 * @desc 查看价格
-			 * @param
-			 **/
-			 // checkPrice() {
-				//  this.$request({
-				// 	 url: "/api/pay/prepay",
-				// 	 method: "POST",
-				// 	 data: {
-				// 		 type: 1
-				// 	 },
-				// 	 success: res => {
-				// 		 if(res.code===0) {
-				// 			 uni.showToast({
-				// 			 	icon: "none",
-				// 				title: res.msg
-				// 			 })
-				// 			 return false;
-				// 		 }
-				// 		 console.log('价格',res);
-				// 	 }
-				//  })
-			 // },
 			/**
 			 * @desc 选择支付方式
 			 * @param
 			 **/
 			radioChange(e) {
-				console.log(e,'eee')
 				this.radioValue = e;
 			},
 			/**
@@ -119,7 +104,10 @@
 						this.$request({
 							url: "/api/pay/prepay",
 							method: "POST",
-							data: {type: 1}, // 成为会员1
+							data: {
+								type: this.sortType,
+								store_id: this.sortType===2 ? this.storeId : null
+							}, // 成为会员1
 							success: res => {
 								if(res.code!=1) {
 									uni.showToast({title: res.msg,icon:'none'})
