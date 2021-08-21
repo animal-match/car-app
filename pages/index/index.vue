@@ -155,29 +155,8 @@
 			this.getMoreList();
 			this.static(); // 厂家和经销商数量
 			this.getRequireSupply();
-			this.getConfiguration();// 全局配置接口
 		},
 		methods: {
-			/**
-			 * @desc 项目的全局配置
-			 * @param
-			 **/
-			getConfiguration() {
-				this.$request({
-					url: "/api/index/getConfig",
-					success: res => {
-						if(res.code!=1) {
-							uni.showToast({
-								icon: "none",
-								title: res.msg
-							})
-							return false;
-						}
-						this.$store.commit('saveConfigs', res.data) // 存储配置信息
-						console.log('vuex',this.$store.state.config)
-					}
-				})
-			},
 			/**
 			 * @desc 轮播图
 			 * @param

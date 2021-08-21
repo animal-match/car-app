@@ -103,10 +103,24 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 {
-  onLaunch: function onLaunch() {
-    console.log('App Launch');
+  onLaunch: function onLaunch() {var _this = this;
+    console.log('App Launchs');
+    this.$request({
+      url: "/api/index/getConfig",
+      success: function success(res) {
+        if (res.code != 1) {
+          uni.showToast({
+            icon: "none",
+            title: res.msg });
+
+          return false;
+        }
+        _this.$store.commit('saveConfigs', res.data); // 存储配置信息
+        console.log('vuex', _this.$store.state.config);
+      } });
+
   },
   onShow: function onShow() {
     console.log('App Show');
@@ -114,6 +128,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   onHide: function onHide() {
     console.log('App Hide');
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 8 */
