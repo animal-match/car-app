@@ -219,36 +219,53 @@
 		methods: {
 			//上传图片
 			chooseImages(){
-				uni.chooseImage({
-					count:1, //默认是1张
-					sizeType:['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album', 'camera'], //从相册选择
-					success:res=>{
-						this.imageList = this.imageList.concat(res.tempFilePaths);
-						console.log(this.imageList,'你选择的图片')
-						if(this.imageList.length >= 1){
-							this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
-						}
-						uni.uploadFile({
-							url: "https://yanxu.n867.cn/index.php/api/common/upload",
-							header: { 
-								"content-type": "application/x-www-form-urlencoded",
-								"token" : uni.getStorageSync("token"),
-							},
-							filePath: res.tempFilePaths[0],
-							name: 'file',
-							success: (uploadFileRes) => {
-								console.log(uploadFileRes.data,'res!!');
-								let data = JSON.parse(uploadFileRes.data);
-								if(!!data.data.fullurl) {
-									console.log('选好图片了',data.data)
-									this.imageUrl = data.data.fullurl;
-									console.log('图片地址',this.imageUrl);
-								}
-							}
-						})
-					}
-				})
+				let user = uni.getStorageSync("token");
+				console.log(user,'获取token')
+				if(user){
+				  uni.chooseImage({
+				  	count:1, //默认是1张
+				  	sizeType:['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				  	sourceType: ['album', 'camera'], //从相册选择
+				  	success:res=>{
+				  		this.imageList = this.imageList.concat(res.tempFilePaths);
+				  		console.log(this.imageList,'你选择的图片')
+				  		if(this.imageList.length >= 1){
+				  			this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
+				  		}
+				  		uni.uploadFile({
+				  			url: "https://yanxu.n867.cn/index.php/api/common/upload",
+				  			header: { 
+				  				"content-type": "application/x-www-form-urlencoded",
+				  				"token" : uni.getStorageSync("token"),
+				  			},
+				  			filePath: res.tempFilePaths[0],
+				  			name: 'file',
+				  			success: (uploadFileRes) => {
+				  				console.log(uploadFileRes,'res!!');
+				  				let image = JSON.parse(uploadFileRes.data);
+				  				if(!!image) {
+				  					this.imageUrl = image.data.fullurl;
+				  					console.log('图片地址',this.imageUrl);
+				  				}else{
+				  					this.imageUrl = '';
+				  					this.imageList = [];
+				  				}
+				  			},
+				  			fail: err => {
+				  				uni.showToast({
+				  					icon: "none",
+				  					title: "图片加载失败..."
+				  				})
+				  			}
+				  		})
+				  	}
+				  })	
+				} else {
+					uni.showToast({
+						icon: "none",
+						title: "请登录后操作"
+					})
+				}
 			},
 			/**
 			 * @desc 预览图片
@@ -287,6 +304,7 @@
 				this.page.start = 1;
 				this.getDemandsList();
 			},
+
 			/**
 			 * @desc 切换选项卡
 			 * @param {number}
@@ -325,7 +343,7 @@
 			productPublic() {
 				let sort = this.currentTab==1?'supply':'demand';
 				this.supplyloading = true;
-				if(!!this.imageUrl) {
+				if(!!this.imageUrl&&this.imageUrl.length>0) {
 					this.$request({
 						url: "/api/supply/release",
 						method: "POST",
@@ -411,7 +429,6 @@
 			 * @param
 			 **/
 			submit() {
-				// 验证是否通过校验
 				this.$refs.ruleForm.validate(valid => {
 					if(valid) {
 						console.log('所有校验通过')

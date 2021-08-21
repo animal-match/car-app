@@ -398,36 +398,53 @@ var _default =
   methods: {
     //上传图片
     chooseImages: function chooseImages() {var _this = this;
-      uni.chooseImage({
-        count: 1, //默认是1张
-        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], //从相册选择
-        success: function success(res) {
-          _this.imageList = _this.imageList.concat(res.tempFilePaths);
-          console.log(_this.imageList, '你选择的图片');
-          if (_this.imageList.length >= 1) {
-            _this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
-          }
-          uni.uploadFile({
-            url: "https://yanxu.n867.cn/index.php/api/common/upload",
-            header: {
-              "content-type": "application/x-www-form-urlencoded",
-              "token": uni.getStorageSync("token") },
+      var user = uni.getStorageSync("token");
+      console.log(user, '获取token');
+      if (user) {
+        uni.chooseImage({
+          count: 1, //默认是1张
+          sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], //从相册选择
+          success: function success(res) {
+            _this.imageList = _this.imageList.concat(res.tempFilePaths);
+            console.log(_this.imageList, '你选择的图片');
+            if (_this.imageList.length >= 1) {
+              _this.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
+            }
+            uni.uploadFile({
+              url: "https://yanxu.n867.cn/index.php/api/common/upload",
+              header: {
+                "content-type": "application/x-www-form-urlencoded",
+                "token": uni.getStorageSync("token") },
 
-            filePath: res.tempFilePaths[0],
-            name: 'file',
-            success: function success(uploadFileRes) {
-              console.log(uploadFileRes.data, 'res!!');
-              var data = JSON.parse(uploadFileRes.data);
-              if (!!data.data.fullurl) {
-                console.log('选好图片了', data.data);
-                _this.imageUrl = data.data.fullurl;
-                console.log('图片地址', _this.imageUrl);
-              }
-            } });
+              filePath: res.tempFilePaths[0],
+              name: 'file',
+              success: function success(uploadFileRes) {
+                console.log(uploadFileRes, 'res!!');
+                var image = JSON.parse(uploadFileRes.data);
+                if (!!image) {
+                  _this.imageUrl = image.data.fullurl;
+                  console.log('图片地址', _this.imageUrl);
+                } else {
+                  _this.imageUrl = '';
+                  _this.imageList = [];
+                }
+              },
+              fail: function fail(err) {
+                uni.showToast({
+                  icon: "none",
+                  title: "图片加载失败..." });
 
-        } });
+              } });
 
+          } });
+
+      } else {
+        uni.showToast({
+          icon: "none",
+          title: "请登录后操作" });
+
+      }
     },
     /**
         * @desc 预览图片
@@ -466,6 +483,7 @@ var _default =
       this.page.start = 1;
       this.getDemandsList();
     },
+
     /**
         * @desc 切换选项卡
         * @param {number}
@@ -504,7 +522,7 @@ var _default =
     productPublic: function productPublic() {var _this3 = this;
       var sort = this.currentTab == 1 ? 'supply' : 'demand';
       this.supplyloading = true;
-      if (!!this.imageUrl) {
+      if (!!this.imageUrl && this.imageUrl.length > 0) {
         this.$request({
           url: "/api/supply/release",
           method: "POST",
@@ -590,7 +608,6 @@ var _default =
                 * @param
                 **/
     submit: function submit() {var _this4 = this;
-      // 验证是否通过校验
       this.$refs.ruleForm.validate(function (valid) {
         if (valid) {
           console.log('所有校验通过');
