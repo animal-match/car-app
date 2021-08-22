@@ -415,38 +415,46 @@ var _default =
     },
     // 选择Logo图
     chooseImages: function chooseImages(type) {var _this2 = this;
-      uni.chooseImage({
-        count: 1, //默认是1张
-        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], //从相册选择
-        success: function success(res) {
-          var data = res.tempFilePaths;
-          console.log(data, '你选择的图片');
-          if (data.length >= 1 && type === "logo") {
-            _this2.showLogoBtn = false; //图片上传数量和count一样时，让点击拍照按钮消失
-          } else {
-            _this2.showMajorBtn = false;
-          }
-          uni.uploadFile({
-            url: "https://yanxu.n867.cn/index.php/api/common/upload",
-            header: {
-              "content-type": "application/x-www-form-urlencoded",
-              "token": uni.getStorageSync("token") },
+      var token = uni.getStorageSync("token");
+      if (token) {
+        uni.chooseImage({
+          count: 1, //默认是1张
+          sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], //从相册选择
+          success: function success(res) {
+            var data = res.tempFilePaths;
+            console.log(data, '你选择的图片');
+            if (data.length >= 1 && type === "logo") {
+              _this2.showLogoBtn = false; //图片上传数量和count一样时，让点击拍照按钮消失
+            } else {
+              _this2.showMajorBtn = false;
+            }
+            uni.uploadFile({
+              url: "https://yanxu.n867.cn/index.php/api/common/upload",
+              header: {
+                "content-type": "application/x-www-form-urlencoded",
+                "token": uni.getStorageSync("token") },
 
-            filePath: res.tempFilePaths[0],
-            name: 'file',
-            success: function success(uploadFileRes) {
-              console.log(uploadFileRes.data, 'res!!');
-              var image = JSON.parse(uploadFileRes.data);
-              if (type === "logo")
-              _this2.logoUrl = image.data.fullurl; // 提交时传给服务器的图片路径
-              else
-                _this2.majorUrl = image.data.fullurl; // 提交时传给服务器的图片路径
-              console.log('logo地址', _this2.logoUrl, _this2.majorUrl);
-            } });
+              filePath: res.tempFilePaths[0],
+              name: 'file',
+              success: function success(uploadFileRes) {
+                console.log(uploadFileRes.data, 'res!!');
+                var image = JSON.parse(uploadFileRes.data);
+                if (type === "logo")
+                _this2.logoUrl = image.data.fullurl; // 提交时传给服务器的图片路径
+                else
+                  _this2.majorUrl = image.data.fullurl; // 提交时传给服务器的图片路径
+                console.log('logo地址', _this2.logoUrl, _this2.majorUrl);
+              } });
 
-        } });
+          } });
 
+      } else {
+        uni.showToast({
+          icon: "none",
+          title: "请登录后操作" });
+
+      }
     },
     // 预览logo图片
     previewImage: function previewImage(type) {
