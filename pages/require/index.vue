@@ -235,7 +235,7 @@
 				  		uni.uploadFile({
 				  			url: "https://yanxu.n867.cn/index.php/api/common/upload",
 				  			header: { 
-				  				"content-type": "application/x-www-form-urlencoded",
+				  				"content-type": "multipart/form-data",
 				  				"token" : uni.getStorageSync("token"),
 				  			},
 				  			filePath: res.tempFilePaths[0],
@@ -251,7 +251,7 @@
 				  					icon: "none",
 				  					title: "上传图片失败..."
 				  				})
-				  			}
+				  			} 
 				  		})
 				  	}
 				  })	
