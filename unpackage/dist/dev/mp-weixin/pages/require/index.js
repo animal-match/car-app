@@ -422,13 +422,8 @@ var _default =
               success: function success(uploadFileRes) {
                 console.log(uploadFileRes, 'res!!');
                 var image = JSON.parse(uploadFileRes.data);
-                if (!!image) {
-                  _this.imageUrl = image.data.fullurl;
-                  console.log('图片地址', _this.imageUrl);
-                } else {
-                  _this.imageUrl = '';
-                  _this.imageList = [];
-                }
+                _this.imageUrl = image.data.fullurl;
+                console.log('图片地址', _this.imageUrl);
               },
               fail: function fail(err) {
                 uni.showToast({
@@ -522,6 +517,7 @@ var _default =
     productPublic: function productPublic() {var _this3 = this;
       var sort = this.currentTab == 1 ? 'supply' : 'demand';
       this.supplyloading = true;
+      console.log('发布之前验证image', this.imageUrl);
       if (!!this.imageUrl && this.imageUrl.length > 0) {
         this.$request({
           url: "/api/supply/release",

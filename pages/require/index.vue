@@ -243,13 +243,8 @@
 				  			success: (uploadFileRes) => {
 				  				console.log(uploadFileRes,'res!!');
 				  				let image = JSON.parse(uploadFileRes.data);
-				  				if(!!image) {
-				  					this.imageUrl = image.data.fullurl;
-				  					console.log('图片地址',this.imageUrl);
-				  				}else{
-				  					this.imageUrl = '';
-				  					this.imageList = [];
-				  				}
+				  				this.imageUrl = image.data.fullurl;
+				  				console.log('图片地址',this.imageUrl);
 				  			},
 				  			fail: err => {
 				  				uni.showToast({
@@ -343,6 +338,7 @@
 			productPublic() {
 				let sort = this.currentTab==1?'supply':'demand';
 				this.supplyloading = true;
+				console.log('发布之前验证image',this.imageUrl);
 				if(!!this.imageUrl&&this.imageUrl.length>0) {
 					this.$request({
 						url: "/api/supply/release",
