@@ -262,24 +262,27 @@ var _default =
       _this.userName = res.nickName;
       _this.avatar = res.avatar;
     });
+    uni.$on('vipStatus', function (val) {
+      _this.isVip = val;
+    });
+    console.log('vip', this.isVip);
   },
-  onShow: function onShow() {var _this2 = this;
+  onShow: function onShow() {
     console.log('检查登录状态', this.$store.state.isLogin);
     this.isLogin = this.$store.state.isLogin;
-    uni.getStorage({
-      key: 'isVip',
-      success: function success(res) {
-        _this2.isVip = res.data;
-      } });
-
-    console.log('vip', this.isVip);
+    // uni.getStorage({
+    // 	key: 'isVip',
+    // 	success: (res)=> {
+    // 		this.isVip = res.data;
+    // 	}
+    // })
   },
   methods: {
     /** 
               * @description 退出登录
               * @param {}
               **/
-    logout: function logout() {var _this3 = this;
+    logout: function logout() {var _this2 = this;
       var token = uni.getStorageSync("token");
       this.$request({
         url: '/api/user/logout',
@@ -293,14 +296,14 @@ var _default =
 
             return false;
           }
-          _this3.isLogin = false; // 更改本页登录状态
-          _this3.userName = "",
-          _this3.avatar = "",
-          _this3.isVip = 0,
-          _this3.$store.commit('changeLoginState', false); // 登录状态改为false
-          _this3.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
+          _this2.isLogin = false; // 更改本页登录状态
+          _this2.userName = "",
+          _this2.avatar = "",
+          _this2.isVip = 0,
+          _this2.$store.commit('changeLoginState', false); // 登录状态改为false
+          _this2.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
           uni.clearStorage();
-          _this3.showLogout = true;
+          _this2.showLogout = true;
         } });
 
     },

@@ -2,6 +2,7 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launchs')
+			uni.clearStorage();
 			this.$request({
 				url: "/api/index/getConfig",
 				success: res => {

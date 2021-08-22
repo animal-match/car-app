@@ -96,17 +96,20 @@
 				this.userName = res.nickName;
 				this.avatar = res.avatar;
 			})
+			uni.$on('vipStatus', val => {
+				this.isVip = val
+			})
+			console.log('vip',this.isVip);
 		},
 		onShow() {
 			console.log('检查登录状态',this.$store.state.isLogin);
 			this.isLogin = this.$store.state.isLogin;
-			uni.getStorage({
-				key: 'isVip',
-				success: (res)=> {
-					this.isVip = res.data;
-				}
-			})
-			console.log('vip',this.isVip);
+			// uni.getStorage({
+			// 	key: 'isVip',
+			// 	success: (res)=> {
+			// 		this.isVip = res.data;
+			// 	}
+			// })
 		},
 		methods: {
 			/** 

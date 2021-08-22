@@ -107,6 +107,7 @@ __webpack_require__.r(__webpack_exports__);
 {
   onLaunch: function onLaunch() {var _this = this;
     console.log('App Launchs');
+    uni.clearStorage();
     this.$request({
       url: "/api/index/getConfig",
       success: function success(res) {

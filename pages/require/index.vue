@@ -254,7 +254,7 @@
 				  			fail: err => {
 				  				uni.showToast({
 				  					icon: "none",
-				  					title: "图片加载失败..."
+				  					title: "上传图片失败..."
 				  				})
 				  			}
 				  		})
