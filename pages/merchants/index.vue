@@ -74,13 +74,32 @@
 				],
 			}
 		},
+		onHide() {
+			delete this.$store.state.pageIndex;
+			console.log('监听页面隐藏')
+		},
 		onShow() {
-			this.activeItem = 1;
-			const value = uni.getStorageSync('pageIndex') || 0;
-			this.currentTab = value;
-			uni.removeStorageSync('pageIndex')
+			const val = this.$store.state.pageIndex;
+			if(typeof val !== "undefined") {
+				uni.clearStorageSync("tabBarData")
+				uni.clearStorageSync("tabBarIndex")
+				this.currentTab = val;
+				this.activeItem = 1;
+				this.id = val === 0 ? 1 : 8;
+			}
+			let data = uni.getStorageSync("tabBarData");
+			if(Object.keys(data).length > 0) {
+				this.activeItem = data.activeItem;
+				this.id = data.id;
+			}
+			let index = uni.getStorageSync("tabBarIndex");
+			if(!!index) {
+				this.currentTab = index;
+			}			
 			this.getCategory(); // 获取分类
 			this.getStoreList(); // 获取商家列表
+			uni.clearStorageSync("tabBarData")
+			uni.clearStorageSync("tabBarIndex")
 		},
 		methods: {
 			/**
@@ -104,9 +123,9 @@
 						 	 return false;
 						 }
 						 this.categoryList = res.data;
-						 console.log(this.categoryList,'分类列表')
-						 this.id = this.categoryList[0].id || 1;
-						 console.log('看有没有拿到id', this.categoryList[0].id,'id是多少',this.id)
+						 //console.log(this.categoryList,'分类列表')
+						 //this.id = this.categoryList[0].id || 1;
+						 //console.log('看有没有拿到id', this.categoryList[0].id,'id是多少',this.id)
 						 this.getStoreList();
 					 }
 				 })
@@ -153,10 +172,14 @@
 				this.activeItem = 1;
 				this.form.searchKey = '';
 				this.currentTab = index;
-				// this.categoryList = [];
+				if(index===0){
+					this.id = 1
+				}else{
+					this.id = 8
+				}
 				this.getCategory();
-				// this.informations = [];
 				this.getStoreList();
+				uni.setStorageSync("tabBarIndex", index);
 			},
 			/**
 			 * @desc 左侧导航切换
@@ -169,6 +192,11 @@
 				this.id = id; // 通过id查询改分类下的商铺
 				console.log('id是几何',this.id)
 				this.getStoreList();
+				let tabData = {
+					activeItem: this.activeItem,
+					id: this.id
+				}
+				uni.setStorageSync("tabBarData", tabData);
 			},
 			/**
 			 * @desc 右侧列表滚动条触底事件
