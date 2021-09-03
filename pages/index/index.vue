@@ -324,13 +324,15 @@
 				console.log(pageName)
 				switch(pageName) {
 					case 'manufacturers':
-						uni.setStorageSync('pageIndex',0);
+						// uni.setStorageSync('pageIndex',0);
+						this.$store.state.pageIndex = 0
 						uni.switchTab({
 							url: '../merchants/index'
 						})
 					break;
 					case 'dealer':
-					  uni.setStorageSync('pageIndex',1);
+					  // uni.setStorageSync('pageIndex',1);
+						this.$store.state.pageIndex = 1
 						uni.switchTab({
 							url: '../merchants/index'
 						})

@@ -202,11 +202,7 @@
 			}
 		},
 		onShow() {
-			if(this.currentTab==0) {
-				this.init();
-			}
 			this.fromPage = uni.getStorageSync('tabBarIndex');
-
 			if(this.fromPage==="fromHomePage1") {
 				this.currentTab = 1;
 			}else if(this.fromPage==="fromHomePage2") {
@@ -214,7 +210,11 @@
 			}else {
 				this.currentTab = 0;
 			}
-
+		},
+		onLoad() {
+			if(this.currentTab==0) {
+				this.init();
+			}
 		},
 		methods: {
 			//上传图片
@@ -299,6 +299,7 @@
 				this.infos = [];
 				this.page.start = 1;
 				this.getDemandsList();
+				console.log('被初始化刷新')
 			},
 
 			/**
@@ -487,7 +488,6 @@
 						}
 						let arr = res.data.data;
 						this.infos = this.infos.concat(arr);
-						console.log("页面请求", res);
 						this.page.totalPages = res.data.last_page;
 					}
 				})

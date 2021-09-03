@@ -4,6 +4,7 @@
     "ignore": []
   },
   "setting": {
+<<<<<<< HEAD
     "urlCheck": true,
     "es6": true,
     "enhance": false,
@@ -36,6 +37,9 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "showES6CompileOption": false
+=======
+    "urlCheck": false
+>>>>>>> 372b9429915ef53111dd97091b5d6a79aad37ed2
   },
   "compileType": "miniprogram",
   "libVersion": "",
@@ -43,15 +47,19 @@
   "projectname": "carApp",
   "condition": {
     "search": {
+      "current": -1,
       "list": []
     },
     "conversation": {
+      "current": -1,
       "list": []
     },
     "game": {
+      "current": -1,
       "list": []
     },
     "miniprogram": {
+      "current": -1,
       "list": []
     }
   }

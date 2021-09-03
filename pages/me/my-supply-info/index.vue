@@ -25,7 +25,7 @@
 				this.getDemandsList();
 			}
 		},
-		onShow() {
+		onLoad() {
 			this.init();
 		},
 		methods: {

@@ -155,7 +155,7 @@ var _default =
       this.getDemandsList();
     }
   },
-  onShow: function onShow() {
+  onLoad: function onLoad() {
     this.init();
   },
   methods: {

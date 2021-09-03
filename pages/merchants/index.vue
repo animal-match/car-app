@@ -17,7 +17,7 @@
 			<!-- 左侧为导航 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="left-nav-bar">
 				<ul>
-					<li class="list" v-for="(item,index) in categoryList" :class="activeItem===index+1?'list':'white-list'"
+					<li v-for="(item,index) in categoryList" :class="activeItem===index+1?'list':'white-list'" class="ellipsis"
 						@click="switchTab(index,item.id)" :key="item.id">{{item.name}}</li>
 				</ul>
 			</scroll-view>
@@ -55,6 +55,7 @@
 	export default {
 		data() {
 			return {
+				firstComeId: 0, // 第一次进入页面传的id
 				scrollTop: 0, // 距离顶部多少时设置滚动条
 				informations: [], // 商家信息
 				type: 'text',
@@ -74,13 +75,33 @@
 				],
 			}
 		},
+		onHide() {
+			delete this.$store.state.pageIndex;
+			
+			console.log('监听页面隐藏')
+		},
 		onShow() {
-			this.activeItem = 1;
-			const value = uni.getStorageSync('pageIndex') || 0;
-			this.currentTab = value;
-			uni.removeStorageSync('pageIndex')
+			const val = this.$store.state.pageIndex;
+			if(typeof val !== "undefined") {
+				console.log('不是Undefined')
+				uni.clearStorageSync("tabBarData")
+				uni.clearStorageSync("tabBarIndex")
+				this.currentTab = val;
+				this.activeItem = 1;
+			}
+			let data = uni.getStorageSync("tabBarData");
+			if(Object.keys(data).length > 0) {
+				this.activeItem = data.activeItem;
+				this.id = data.id;
+			}
+			let index = uni.getStorageSync("tabBarIndex");
+			if(!!index) {
+				this.currentTab = index;
+			}			
 			this.getCategory(); // 获取分类
 			this.getStoreList(); // 获取商家列表
+			uni.clearStorageSync("tabBarData")
+			uni.clearStorageSync("tabBarIndex")
 		},
 		methods: {
 			/**
@@ -104,9 +125,10 @@
 						 	 return false;
 						 }
 						 this.categoryList = res.data;
-						 console.log(this.categoryList,'分类列表')
-						 this.id = this.categoryList[0].id || 1;
-						 console.log('看有没有拿到id', this.categoryList[0].id,'id是多少',this.id)
+						 console.log('八八',res.data)
+						 // this.id = res.data[0].id;
+						 this.firstComeId = res.data[0].id; // 第一次进入页面请求的Id
+						 //console.log(this.categoryList,'分类列表')
 						 this.getStoreList();
 					 }
 				 })
@@ -153,10 +175,9 @@
 				this.activeItem = 1;
 				this.form.searchKey = '';
 				this.currentTab = index;
-				// this.categoryList = [];
 				this.getCategory();
-				// this.informations = [];
 				this.getStoreList();
+				uni.setStorageSync("tabBarIndex", index);
 			},
 			/**
 			 * @desc 左侧导航切换
@@ -169,6 +190,11 @@
 				this.id = id; // 通过id查询改分类下的商铺
 				console.log('id是几何',this.id)
 				this.getStoreList();
+				let tabData = {
+					activeItem: this.activeItem,
+					id: this.id
+				}
+				uni.setStorageSync("tabBarData", tabData);
 			},
 			/**
 			 * @desc 右侧列表滚动条触底事件
@@ -193,7 +219,7 @@
 <style lang="scss">
 	.merchant {
 		background-color: $uni-bg-color-grey;
-		min-height: 100vh;
+		height: 100vh;
 	}
 </style>
 <style lang="scss" scoped>
@@ -213,11 +239,9 @@
 
 	.nav-and-list {
 		display: flex;
-
+		height: 100vh;
 		.left-nav-bar {
 			width: 30%;
-			// 左侧菜单高度
-			height: 1055rpx;
 			overflow-y: auto;
 			background-color: $uni-text-color-inverse;
 
@@ -233,6 +257,9 @@
 					border-bottom-right-radius: 20rpx;
 					border-top: 2rpx solid $uni-bg-color-grey;
 				}
+				.list:last-child, .white-list:last-child {
+					border-bottom: 2rpx solid $uni-bg-color-grey;
+				}
 
 				.list {
 					background-color: $uni-baseColor;
@@ -247,10 +274,7 @@
 		}
 
 		.right-list-bar {
-			// 每一个盒子
 			width: 70%;
-			// 右侧列表高度
-			height: 1055rpx;
 			overflow-y: auto;
 
 			.information-block {
