@@ -230,6 +230,7 @@ var _default =
 {
   data: function data() {
     return {
+      firstComeId: 0, // 第一次进入页面传的id
       scrollTop: 0, // 距离顶部多少时设置滚动条
       informations: [], // 商家信息
       type: 'text',
@@ -251,16 +252,17 @@ var _default =
   },
   onHide: function onHide() {
     delete this.$store.state.pageIndex;
+
     console.log('监听页面隐藏');
   },
   onShow: function onShow() {
     var val = this.$store.state.pageIndex;
     if (typeof val !== "undefined") {
+      console.log('不是Undefined');
       uni.clearStorageSync("tabBarData");
       uni.clearStorageSync("tabBarIndex");
       this.currentTab = val;
       this.activeItem = 1;
-      this.id = val === 0 ? 1 : 8;
     }
     var data = uni.getStorageSync("tabBarData");
     if (Object.keys(data).length > 0) {
@@ -298,9 +300,10 @@ var _default =
             return false;
           }
           _this.categoryList = res.data;
+          console.log('八八', res.data);
+          // this.id = res.data[0].id;
+          _this.firstComeId = res.data[0].id; // 第一次进入页面请求的Id
           //console.log(this.categoryList,'分类列表')
-          //this.id = this.categoryList[0].id || 1;
-          //console.log('看有没有拿到id', this.categoryList[0].id,'id是多少',this.id)
           _this.getStoreList();
         } });
 
@@ -347,11 +350,6 @@ var _default =
       this.activeItem = 1;
       this.form.searchKey = '';
       this.currentTab = index;
-      if (index === 0) {
-        this.id = 1;
-      } else {
-        this.id = 8;
-      }
       this.getCategory();
       this.getStoreList();
       uni.setStorageSync("tabBarIndex", index);
