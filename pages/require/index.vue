@@ -247,6 +247,7 @@
 				  				console.log('图片地址',this.imageUrl);
 				  			},
 				  			fail: err => {
+									console.log('失败原因',err);
 				  				uni.showToast({
 				  					icon: "none",
 				  					title: "上传图片失败..."
