@@ -7,11 +7,12 @@ module.exports = (params) => {
 	let data = params.data || {};
 	// GET或POST请求方式
 	if(method) {
+		const token = uni.getStorageSync("token")
 		method = method.toUpperCase();
 		if(method==='POST') {
 			header = { 
 			  "content-type": "application/x-www-form-urlencoded",
-				"token" : uni.getStorageSync("token"),
+				"token" : token,
 			}
 		}
 	}

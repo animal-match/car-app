@@ -230,7 +230,6 @@ var _default =
 {
   data: function data() {
     return {
-      firstComeId: 0, // 第一次进入页面传的id
       scrollTop: 0, // 距离顶部多少时设置滚动条
       informations: [], // 商家信息
       type: 'text',
@@ -240,7 +239,9 @@ var _default =
       categoryList: [], // 分类列表
       activeItem: 1, // 当前激活的色块item.id
       currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
-      id: 1, // 选择的分类数据 配件的id为1默认
+      id: 0, // 选择的分类数据 配件的id为1默认
+      activeId: 0,
+      activeId_2: 0,
       tabList: [{
         name: "厂商" },
 
@@ -252,18 +253,23 @@ var _default =
   },
   onHide: function onHide() {
     delete this.$store.state.pageIndex;
-
     console.log('监听页面隐藏');
   },
   onShow: function onShow() {
     var val = this.$store.state.pageIndex;
+    this.activeId = this.$store.state.activeId; // 初始化app时获取的厂家第一个商店id
+    this.activeId_2 = this.$store.state.activeId_2; // 初始化app时获取的经销商商店id
+    this.id = this.currentTab === 0 ? this.activeId : this.activeId_2;
     if (typeof val !== "undefined") {
+      // 如果是从首页跳转过来就会进入该判断语句内
       console.log('不是Undefined');
-      uni.clearStorageSync("tabBarData");
-      uni.clearStorageSync("tabBarIndex");
+      uni.removeStorageSync('tabBarData');
+      uni.removeStorageSync('tabBarIndex');
       this.currentTab = val;
       this.activeItem = 1;
+      this.id = this.currentTab === 0 ? this.activeId : this.activeId_2;
     }
+    // 如果点击过 顶部导航tab或左侧导航tab会进入此判断 Start
     var data = uni.getStorageSync("tabBarData");
     if (Object.keys(data).length > 0) {
       this.activeItem = data.activeItem;
@@ -273,10 +279,13 @@ var _default =
     if (!!index) {
       this.currentTab = index;
     }
+    var obj = uni.getStorageSync("tabBarData");
+    if (!!obj) {
+      this.id = obj.id;
+    }
+    // 如果点击过 顶部导航tab或左侧导航tab会进入此判断 End
     this.getCategory(); // 获取分类
     this.getStoreList(); // 获取商家列表
-    uni.clearStorageSync("tabBarData");
-    uni.clearStorageSync("tabBarIndex");
   },
   methods: {
     /**
@@ -300,10 +309,6 @@ var _default =
             return false;
           }
           _this.categoryList = res.data;
-          console.log('八八', res.data);
-          // this.id = res.data[0].id;
-          _this.firstComeId = res.data[0].id; // 第一次进入页面请求的Id
-          //console.log(this.categoryList,'分类列表')
           _this.getStoreList();
         } });
 
@@ -348,6 +353,12 @@ var _default =
         **/
     change: function change(index) {
       this.activeItem = 1;
+      this.id = index === 0 ? this.activeId : this.activeId_2;
+      var tabData = {
+        activeItem: this.activeItem,
+        id: this.id };
+
+      uni.setStorageSync("tabBarData", tabData);
       this.form.searchKey = '';
       this.currentTab = index;
       this.getCategory();

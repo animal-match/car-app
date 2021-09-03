@@ -6,7 +6,7 @@
 			this.$request({
 				url: "/api/index/getConfig",
 				success: res => {
-					if(res.code!=1) {
+					if (res.code != 1) {
 						uni.showToast({
 							icon: "none",
 							title: res.msg
@@ -14,7 +14,47 @@
 						return false;
 					}
 					this.$store.commit('saveConfigs', res.data) // 存储配置信息
-					console.log('vuex',this.$store.state.config)
+					console.log('vuex', this.$store.state.config)
+				}
+			})
+			// 厂家的第一个id
+			this.$request({
+				url: "/api/category/getList",
+				method: "POST",
+				data: {
+					type: 0
+				},
+				success: res => {
+					if (res.code != 1) {
+						uni.showToast({
+							icon: "none",
+							title: res.msg,
+							duration: 3000
+						})
+						return false;
+					}
+					let dataId = res.data[0].id;
+					this.$store.state.activeId = dataId; // 商家页面初始化进入页面时获取厂家模块第一个导航的id编号
+				}
+			})
+			// 经销售的第一个id
+			this.$request({
+				url: "/api/category/getList",
+				method: "POST",
+				data: {
+					type: 1
+				},
+				success: res => {
+					if (res.code != 1) {
+						uni.showToast({
+							icon: "none",
+							title: res.msg,
+							duration: 3000
+						})
+						return false;
+					}
+					let dataId = res.data[0].id;
+					this.$store.state.activeId_2 = dataId; // 商家页面初始化进入页面时获取经销售模块第一个导航的id编号
 				}
 			})
 		},

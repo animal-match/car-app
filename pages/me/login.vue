@@ -168,6 +168,7 @@
 							 })
 							 return false;
 						}
+						
 						this.token = res.data.token; // 获取token
 						uni.setStorageSync("token",this.token); // 保存token到缓存中
 						this.$store.commit('changeLoginState', true); // 登录状态为true
