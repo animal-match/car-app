@@ -3,6 +3,7 @@
   "usingComponents": {
     "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
     "u-image": "/node-modules/uview-ui/components/u-image/u-image",
-    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button",
+    "empty": "/components/empty"
   }
 }

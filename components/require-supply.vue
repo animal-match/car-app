@@ -1,61 +1,68 @@
 <template>
 	<!-- 供求信息组件 -->
 	<view class="my-supply">
-		<view class="container">
-			<u-gap height="26"></u-gap>
-			<!-- tab切换 -->
-			<view class="switch-tab">
-				<view v-for="(item, index) in buttons" :key="index" :class="activeItem===index+1?'active-btn':'default-btn'" @click="switchTab(item.id)">{{item.name}}</view>
-			</view> 
-			
-			<u-gap height="26"></u-gap>
-			
-			<!-- 循环结构 主体内容-->
-			<view v-for="(_item,_index) in infos" :key="_index" class="information-require" @click="goDetails(_item.id)">
-				<!-- 第一行 标签 标题 按城市-->
-				<view class="first-line-other">
-					<!-- 左侧 标签和标题 -->
-					<view class="left-block-other" >
-						<u-tag :text="activeItem===1?'供应':'求购'" mode="dark" :type="activeItem===1?'primary':'error'"/>
-						<view class="title-other ellipsis">
-							<view class="title ellipsis">{{_item.title || '-'}}</view>
+		<view v-if="infos&&infos.length > 0">
+			<view class="container">
+				<u-gap height="26"></u-gap>
+				<!-- tab切换 -->
+				<view class="switch-tab">
+					<view v-for="(item, index) in buttons" :key="index" :class="activeItem===index+1?'active-btn':'default-btn'" @click="switchTab(item.id)">{{item.name}}</view>
+				</view> 
+				
+				<u-gap height="26"></u-gap>
+				
+				<!-- 循环结构 主体内容-->
+				<view v-for="(_item,_index) in infos" :key="_index" class="information-require" @click="goDetails(_item.id)">
+					<!-- 第一行 标签 标题 按城市-->
+					<view class="first-line-other">
+						<!-- 左侧 标签和标题 -->
+						<view class="left-block-other" >
+							<u-tag :text="activeItem===1?'供应':'求购'" mode="dark" :type="activeItem===1?'primary':'error'"/>
+							<view class="title-other ellipsis">
+								<view class="title ellipsis">{{_item.title || '-'}}</view>
+							</view>
+						</view>
+						<view class="right-block">
+							{{_item.city || '-'}}
 						</view>
 					</view>
-					<view class="right-block">
-						{{_item.city || '-'}}
+					<!-- 第二行 描述 -->
+					<view class="second-line-other multi-ellipsis">
+						{{_item.content || '-'}}
 					</view>
-				</view>
-				<!-- 第二行 描述 -->
-				<view class="second-line-other multi-ellipsis">
-					{{_item.content || '-'}}
-				</view>
-				<!-- 第三行 头像 昵称 时间 -->
-				<view class="third-line-other">
-					<!-- 左侧 头像 昵称 -->
-					<view class="left-nickname">
-						<u-image :src="_item.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
-						<view class="nickname">
-							{{_item.user.nickname || '-'}}
+					<!-- 第三行 头像 昵称 时间 -->
+					<view class="third-line-other">
+						<!-- 左侧 头像 昵称 -->
+						<view class="left-nickname">
+							<u-image :src="_item.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
+							<view class="nickname">
+								{{_item.user.nickname || '-'}}
+							</view>
+							<view :class="pageInfo.pageSort==='myRequireSupply'?'publish-date':'publish-date-normal'">{{_item.createtime || '-'}}</view>
 						</view>
-						<view :class="pageInfo.pageSort==='myRequireSupply'?'publish-date':'publish-date-normal'">{{_item.createtime || '-'}}</view>
-					</view>
-					<!-- 右侧 时间 -->
-					<view class="operation-btn" v-if="pageInfo.pageSort==='myRequireSupply'">
-						<u-button @click="goDetails(_item.id)" type="primary" size="mini" class="check">查看</u-button>
-						<u-button @click="deleteItem(_item.id)" type="error" size="mini" class="delete">删除</u-button>
+						<!-- 右侧 时间 -->
+						<view class="operation-btn" v-if="pageInfo.pageSort==='myRequireSupply'">
+							<u-button @click="goDetails(_item.id)" type="primary" size="mini" class="check">查看</u-button>
+							<u-button @click="deleteItem(_item.id)" type="error" size="mini" class="delete">删除</u-button>
+						</view>
 					</view>
 				</view>
+				<!-- 最外层大盒子End -->
+				<u-gap height="40"></u-gap>
 			</view>
-			<!-- 最外层大盒子End -->
+			<view v-if="pageInfo.start===pageInfo.totalPages" class="nomore">---没有更多了---</view>
 			<u-gap height="40"></u-gap>
+			<u-modal v-model="show" content="确定要删除吗？" width="50%" @confirm="deleteConfirm(userid)" :show-cancel-button="true"></u-modal>
 		</view>
-		<view v-if="pageInfo.start===pageInfo.totalPages" class="nomore">---没有更多了---</view>
-		<u-gap height="40"></u-gap>
-		<u-modal v-model="show" content="确定要删除吗？" width="50%" @confirm="deleteConfirm(userid)" :show-cancel-button="true"></u-modal>
+		<Empty v-else></Empty>
 	</view>
 </template>
 <script>
+	import Empty from './empty.vue'
 	export default {
+		components: {
+			Empty
+		},
 		props: {
 			infos: {
 				type: Array,

@@ -384,7 +384,6 @@
 	.merchant-into-store {
 		// 上半部分
 		.top-container {
-			height: 620rpx;
 			margin: 23rpx 30rpx;
 			.name-tags-button {
 				display: flex;

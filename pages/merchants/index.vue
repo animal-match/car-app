@@ -22,7 +22,7 @@
 				</ul>
 			</scroll-view>
 			<!-- 右侧为列表 -->
-			<scroll-view :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
+			<scroll-view v-if="informations&&informations.length>0" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
 				<!-- 最外层大盒子 Start-->
 				<view @click="goToStore(_item.id)" class="information-block" v-for="(_item,_index) in informations" :key="_index">
 					<!-- 第一行 Logo 标题 按钮 -->
@@ -47,12 +47,17 @@
 					</view>
 				</view>
 			</scroll-view>
+			<Empty v-else class="empty"></Empty>
 		</view>
 	</scroll-view>
 </template>
 
 <script>
+	import Empty from '../../components/empty.vue'
 	export default {
+		components: {
+			Empty
+		},
 		data() {
 			return {
 				scrollTop: 0, // 距离顶部多少时设置滚动条
@@ -234,6 +239,9 @@
 	}
 </style>
 <style lang="scss" scoped>
+	.empty {
+		width: 70%;
+	}
 	.switch-table,
 	.search {
 		position: sticky;
@@ -267,6 +275,7 @@
 					text-align: center;
 					border-bottom-right-radius: 20rpx;
 					border-top: 2rpx solid $uni-bg-color-grey;
+					border-right: 2rpx solid $uni-bg-color-grey;
 				}
 				.list:last-child, .white-list:last-child {
 					border-bottom: 2rpx solid $uni-bg-color-grey;

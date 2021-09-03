@@ -55,6 +55,9 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.empty.data-v-bdd919f6 {
+  width: 70%;
+}
 .switch-table.data-v-bdd919f6,
 .search.data-v-bdd919f6 {
   position: -webkit-sticky;
@@ -90,6 +93,7 @@
   text-align: center;
   border-bottom-right-radius: 20rpx;
   border-top: 2rpx solid #f8f8f8;
+  border-right: 2rpx solid #f8f8f8;
 }
 .nav-and-list .left-nav-bar ._ul .list.data-v-bdd919f6:last-child, .nav-and-list .left-nav-bar ._ul .white-list.data-v-bdd919f6:last-child {
   border-bottom: 2rpx solid #f8f8f8;

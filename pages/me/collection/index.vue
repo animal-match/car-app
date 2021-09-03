@@ -1,32 +1,39 @@
 <template>
 	<view class="collection">
-		<u-gap height="20"></u-gap>
-		<view @click="handleClick(_item.store.id)" class="information-block" v-for="(_item,_index) in collectionList" :key="_index">
-			<!-- 第一行 Logo 标题 按钮 -->
-			<view class="first-line">
-				<!-- 左侧 Logo和标题 -->
-				<view class="left-block">
-					<u-image :src="_item.store.log" width="80rpx" height="80rpx" shape="circle"></u-image>
-					<view class="title-and-text">
-						<view class="title ellipsis">{{_item.store.store_name}}</view>
-						<view class="text ellipsis">{{_item.store.information}}</view>
+		<view v-if="collectionList.length > 0">
+			<u-gap height="20"></u-gap>
+			<view @click="handleClick(_item.store.id)" class="information-block" v-for="(_item,_index) in collectionList" :key="_index">
+				<!-- 第一行 Logo 标题 按钮 -->
+				<view class="first-line">
+					<!-- 左侧 Logo和标题 -->
+					<view class="left-block">
+						<u-image :src="_item.store.log" width="80rpx" height="80rpx" shape="circle"></u-image>
+						<view class="title-and-text">
+							<view class="title ellipsis">{{_item.store.store_name}}</view>
+							<view class="text ellipsis">{{_item.store.information}}</view>
+						</view>
+					</view>
+					<view class="right-block">
+						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.store.id)">进店</u-button>
 					</view>
 				</view>
-				<view class="right-block">
-					<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.store.id)">进店</u-button>
+				<!-- 第二行 图片组 -->
+				<view class="second-line">
+					<u-image v-for="($item,$index) in _item.store.goods" :key="$index" class="image-list" :src="$item.image" width="160rpx"
+					 height="110rpx"></u-image>
 				</view>
 			</view>
-			<!-- 第二行 图片组 -->
-			<view class="second-line">
-				<u-image v-for="($item,$index) in _item.store.goods" :key="$index" class="image-list" :src="$item.image" width="160rpx"
-				 height="110rpx"></u-image>
-			</view>
 		</view>
+		<Empty v-else></Empty>
 	</view>
 </template>
 
 <script>
+	import Empty from '../../../components/empty.vue'
 	export default {
+		components: {
+			Empty
+		},
 		data() {
 			return {
 				collectionList: [],

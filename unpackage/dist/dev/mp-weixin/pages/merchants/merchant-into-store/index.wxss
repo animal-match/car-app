@@ -25,7 +25,6 @@
 /* 透明度 */
 /* 文章场景相关 */
 .merchant-into-store .top-container.data-v-088d3d62 {
-  height: 620rpx;
   margin: 23rpx 30rpx;
 }
 .merchant-into-store .top-container .name-tags-button.data-v-088d3d62 {

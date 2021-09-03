@@ -4,7 +4,8 @@
     "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",
     "u-image": "/node-modules/uview-ui/components/u-image/u-image",
     "u-button": "/node-modules/uview-ui/components/u-button/u-button",
-    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal"
+    "u-modal": "/node-modules/uview-ui/components/u-modal/u-modal",
+    "empty": "/components/empty"
   },
   "component": true
 }
