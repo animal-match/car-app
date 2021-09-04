@@ -69,7 +69,8 @@
   display: flex;
   height: 80rpx;
 }
-.container .switch-tab .active-btn.data-v-f1dade5c, .container .switch-tab .default-btn.data-v-f1dade5c {
+.container .switch-tab .active-btn.data-v-f1dade5c,
+.container .switch-tab .default-btn.data-v-f1dade5c {
   line-height: 80rpx;
   text-align: center;
   width: 50%;
@@ -137,7 +138,8 @@
   -webkit-align-items: center;
           align-items: center;
 }
-.container .information-require .third-line-other .left-nickname .nickname.data-v-f1dade5c, .container .information-require .third-line-other .left-nickname .publish-date.data-v-f1dade5c {
+.container .information-require .third-line-other .left-nickname .nickname.data-v-f1dade5c,
+.container .information-require .third-line-other .left-nickname .publish-date.data-v-f1dade5c {
   display: inline-block;
   color: #999;
   font-size: 20rpx;
