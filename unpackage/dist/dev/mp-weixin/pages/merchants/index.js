@@ -109,6 +109,12 @@ try {
     uInput: function() {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-input/u-input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-input/u-input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-input/u-input.vue */ 273))
     },
+    uDropdown: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-dropdown/u-dropdown */ "node-modules/uview-ui/components/u-dropdown/u-dropdown").then(__webpack_require__.bind(null, /*! uview-ui/components/u-dropdown/u-dropdown.vue */ 446))
+    },
+    uDropdownItem: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-dropdown-item/u-dropdown-item */ "node-modules/uview-ui/components/u-dropdown-item/u-dropdown-item").then(__webpack_require__.bind(null, /*! uview-ui/components/u-dropdown-item/u-dropdown-item.vue */ 453))
+    },
     uGap: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
     },
@@ -229,6 +235,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
 {
   components: {
     Empty: Empty },
@@ -247,6 +260,13 @@ __webpack_require__.r(__webpack_exports__);
       id: 0, // 选择的分类数据 配件的id为1默认
       activeId: 0,
       activeId_2: 0,
+      provinceCodeList: [], // 省列表
+      provinceCode: 0, // 要查询的省代码
+      cityCodeList: [], // 市列表
+      cityCode: 0, // 要查询的市代码
+      countyCodeList: [], // 区列表
+      countyCode: 0, // 要查询的区代码
+      data: {}, // 选好的省份对象，用于继续拼接城市数据
       tabList: [{
         name: "厂商" },
 
@@ -261,6 +281,7 @@ __webpack_require__.r(__webpack_exports__);
     console.log('监听页面隐藏');
   },
   onShow: function onShow() {
+    console.log("监听页面show");
     var val = this.$store.state.pageIndex;
     this.activeId = this.$store.state.activeId; // 初始化app时获取的厂家第一个商店id
     this.activeId_2 = this.$store.state.activeId_2; // 初始化app时获取的经销商商店id
@@ -290,14 +311,69 @@ __webpack_require__.r(__webpack_exports__);
     }
     // 如果点击过 顶部导航tab或左侧导航tab会进入此判断 End
     this.getCategory(); // 获取分类
-    this.getStoreList(); // 获取商家列表
+    this.getStoreList(this.provinceCode, this.cityCode, this.countyCode); // 获取商家列表
+  },
+  onLoad: function onLoad() {
+    console.log("监听页面load");
+    // 获取省市区数据
+    this.getAreaData();
   },
   methods: {
     /**
-              * @desc 获取分类
+              * @desc 选中某个省份以后 获取城市数据
               * @param
               **/
-    getCategory: function getCategory() {var _this = this;
+    provinceChange: function provinceChange(val) {
+      this.provinceCode = val;
+      this.getStoreList(val);
+      this.data = { province: val };
+      if (val) this.getAreaData(this.data);
+      this.countyCodeList = [];
+    },
+    // 选中某个城市以后 获取某个区县数据
+    cityChange: function cityChange(val) {
+      this.cityCode = val;
+      this.getStoreList(this.provinceCode, val);
+      this.data.city = val;
+      if (val) this.getAreaData(this.data, 'city');
+    },
+    // 给区县数据赋值
+    countyChange: function countyChange(val) {
+      this.countyCode = val;
+      this.getStoreList(this.provinceCode, this.cityCode, val);
+    },
+    /**
+        * @desc 获取省数据
+        * @param
+        **/
+    getAreaData: function getAreaData(code, flag) {var _this = this;
+      var req = {
+        url: "/api/store/area",
+        // data: {province:220},
+        success: function success(res) {
+          if (res.code != 1) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg });
+
+            return false;
+          }
+          if (!code)
+          _this.provinceCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+          if (code && flag !== 'city')
+          _this.cityCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+          if (code && flag === 'city')
+          _this.countyCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+        } };
+
+      if (code) req.data = code;
+      this.$request(req);
+    },
+    /**
+        * @desc 获取分类
+        * @param
+        **/
+    getCategory: function getCategory() {var _this2 = this;
       this.$request({
         url: "/api/category/getList",
         method: "POST",
@@ -313,8 +389,8 @@ __webpack_require__.r(__webpack_exports__);
 
             return false;
           }
-          _this.categoryList = res.data;
-          _this.getStoreList();
+          _this2.categoryList = res.data;
+          _this2.getStoreList();
         } });
 
     },
@@ -322,13 +398,16 @@ __webpack_require__.r(__webpack_exports__);
         * @desc 获取商家列表
         * @param
         **/
-    getStoreList: function getStoreList() {var _this2 = this;
+    getStoreList: function getStoreList(province, city, county) {var _this3 = this;
       this.$request({
         url: "/api/category/index",
         method: "POST",
         data: {
           id: this.id,
-          keyword: this.form.searchKey },
+          keyword: this.form.searchKey,
+          province_id: province ? province : '',
+          city_id: city ? city : '',
+          area_id: county ? county : '' },
 
         success: function success(res) {
           if (res.code === 0) {
@@ -340,7 +419,7 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }
           console.log(res.data, '商家列表');
-          _this2.informations = res.data;
+          _this3.informations = res.data;
         } });
 
     },
@@ -350,7 +429,10 @@ __webpack_require__.r(__webpack_exports__);
         **/
     search: function search() {
       // 点搜索后调用页面接口
-      this.getStoreList();
+      var province = this.provinceCode;
+      var city = this.cityCode;
+      var county = this.countyCode;
+      this.getStoreList(province, city, county);
     },
     /**
         * @desc 切换顶部选项卡
@@ -369,6 +451,16 @@ __webpack_require__.r(__webpack_exports__);
       this.getCategory();
       this.getStoreList();
       uni.setStorageSync("tabBarIndex", index);
+      this.clearArea();
+    },
+    clearArea: function clearArea() {
+      this.provinceCodeList = [];
+      this.provinceCode = 0;
+      this.cityCodeList = [];
+      this.cityCode = 0;
+      this.countyCodeList = [];
+      this.countyCode = 0;
+      this.getAreaData();
     },
     /**
         * @desc 左侧导航切换
@@ -386,6 +478,7 @@ __webpack_require__.r(__webpack_exports__);
         id: this.id };
 
       uni.setStorageSync("tabBarData", tabData);
+      this.clearArea();
     },
     /**
         * @desc 右侧列表滚动条触底事件

@@ -12,6 +12,13 @@
 				</u-form-item>
 			</u-form>
 		</view>
+		<view style="background: #fff">
+				<u-dropdown active-color="#CA0303" ref="uDropdown" height="60">
+					<u-dropdown-item v-model="provinceCode" title="省份" :options="provinceCodeList" @change="provinceChange"></u-dropdown-item>
+					<u-dropdown-item v-model="cityCode" title="城市" :options="cityCodeList" @change="cityChange"></u-dropdown-item>
+					<u-dropdown-item v-model="countyCode" title="区县" :options="countyCodeList" @change="countyChange"></u-dropdown-item>
+				</u-dropdown>
+			</view>
 		<u-gap height="20"></u-gap>
 		<view class="nav-and-list">
 			<!-- 左侧为导航 -->
@@ -72,6 +79,13 @@
 				id: 0, // 选择的分类数据 配件的id为1默认
 				activeId: 0,
 				activeId_2: 0,
+				provinceCodeList: [], // 省列表
+				provinceCode: 0, // 要查询的省代码
+				cityCodeList: [], // 市列表
+				cityCode: 0, // 要查询的市代码
+				countyCodeList: [], // 区列表
+				countyCode: 0, // 要查询的区代码
+				data: {}, // 选好的省份对象，用于继续拼接城市数据
 				tabList: [{
 						name: "厂商"
 					},
@@ -86,6 +100,7 @@
 			console.log('监听页面隐藏')
 		},
 		onShow() {
+			console.log("监听页面show")
 			const val = this.$store.state.pageIndex;
 			this.activeId = this.$store.state.activeId; // 初始化app时获取的厂家第一个商店id
 			this.activeId_2 = this.$store.state.activeId_2; // 初始化app时获取的经销商商店id
@@ -115,9 +130,64 @@
 			}
 			// 如果点击过 顶部导航tab或左侧导航tab会进入此判断 End
 			this.getCategory(); // 获取分类
-			this.getStoreList(); // 获取商家列表
+			this.getStoreList(this.provinceCode,this.cityCode,this.countyCode); // 获取商家列表
+		},
+		onLoad() {
+			console.log("监听页面load")
+			// 获取省市区数据
+			this.getAreaData();
 		},
 		methods: {
+			/**
+			 * @desc 选中某个省份以后 获取城市数据
+			 * @param
+			 **/
+			provinceChange(val) {
+				this.provinceCode = val;
+				this.getStoreList(val);
+				this.data = { province: val };
+				if(val) this.getAreaData(this.data);
+				this.countyCodeList = [];
+			},
+			// 选中某个城市以后 获取某个区县数据
+			cityChange(val) {
+				this.cityCode = val;
+				this.getStoreList(this.provinceCode,val);
+				this.data.city = val;
+				if(val) this.getAreaData(this.data,'city');
+			},
+			// 给区县数据赋值
+			countyChange(val) {
+				this.countyCode = val;
+				this.getStoreList(this.provinceCode,this.cityCode,val);
+			},
+			/**
+			 * @desc 获取省数据
+			 * @param
+			 **/
+			getAreaData(code, flag) {
+				let req = {
+					url: "/api/store/area",
+					// data: {province:220},
+					success: res => {
+						if(res.code != 1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg,
+							})
+							return false;
+						}
+						if(!code)
+							this.provinceCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+						if(code&&flag!=='city')
+						  this.cityCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+						if(code&&flag==='city')
+							this.countyCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+					}
+				}
+				if(code) req.data = code
+				this.$request(req);
+			},
 			/**
 			 * @desc 获取分类
 			 * @param
@@ -147,13 +217,16 @@
 			 * @desc 获取商家列表
 			 * @param
 			 **/
-			getStoreList() {
+			getStoreList(province, city, county) {
 				this.$request({
 					url: "/api/category/index",
 					method: "POST",
 					data: {
 						id: this.id,
-						keyword: this.form.searchKey
+						keyword: this.form.searchKey,
+						province_id: province ? province : '',
+						city_id: city ? city : '',
+						area_id: county ? county : '',
 					},
 					success: res=> {
 						if(res.code===0) {
@@ -175,7 +248,10 @@
 			 **/
 			search() {
 				// 点搜索后调用页面接口
-				this.getStoreList();
+				const province = this.provinceCode;
+				const city = this.cityCode;
+				const county = this.countyCode;
+				this.getStoreList(province, city, county);
 			},
 			/**
 			 * @desc 切换顶部选项卡
@@ -194,6 +270,16 @@
 				this.getCategory();
 				this.getStoreList();
 				uni.setStorageSync("tabBarIndex", index);
+				this.clearArea();
+			},
+			clearArea() {
+				this.provinceCodeList = [];
+				this.provinceCode = 0;
+				this.cityCodeList = [];
+				this.cityCode = 0;
+				this.countyCodeList = [];
+				this.countyCode = 0;
+				this.getAreaData();
 			},
 			/**
 			 * @desc 左侧导航切换
@@ -211,6 +297,7 @@
 					id: this.id
 				}
 				uni.setStorageSync("tabBarData", tabData);
+				this.clearArea();
 			},
 			/**
 			 * @desc 右侧列表滚动条触底事件
@@ -239,6 +326,10 @@
 	}
 </style>
 <style lang="scss" scoped>
+	::v-deep .u-dropdown-item {
+		height: calc(100vh - 9.5rem);
+		overflow: auto;
+	}
 	.empty {
 		width: 70%;
 	}

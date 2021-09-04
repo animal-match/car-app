@@ -55,6 +55,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.data-v-bdd919f6 .u-dropdown-item {
+  height: calc(100vh - 9.5rem);
+  overflow: auto;
+}
 .empty.data-v-bdd919f6 {
   width: 70%;
 }
