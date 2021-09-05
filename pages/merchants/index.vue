@@ -14,7 +14,10 @@
 		</view>
 		<view style="background: #fff">
 				<u-dropdown active-color="#CA0303" ref="uDropdown" height="60">
-					<u-dropdown-item v-model="provinceCode" title="省份" :options="provinceCodeList" @change="provinceChange"></u-dropdown-item>
+					<!--  v-model="provinceCode"  :options="provinceCodeList"-->
+					<u-dropdown-item v-model="provinceCode"  :options="provinceCodeList" title="省份" @change="provinceChange">
+					</u-dropdown-item>
+
 					<u-dropdown-item v-model="cityCode" title="城市" :options="cityCodeList" @change="cityChange"></u-dropdown-item>
 					<u-dropdown-item v-model="countyCode" title="区县" :options="countyCodeList" @change="countyChange"></u-dropdown-item>
 				</u-dropdown>
@@ -324,12 +327,16 @@
 		background-color: $uni-bg-color-grey;
 		height: 100vh;
 	}
+	// 省市区选择器 滚动条显示
+	::v-deep .u-dropdown-item {
+		.u-dropdown-item__options {
+			height: 520rpx;
+			overflow-y: visible;
+		}
+	}
+
 </style>
 <style lang="scss" scoped>
-	::v-deep .u-dropdown-item {
-		height: calc(100vh - 9.5rem);
-		overflow: auto;
-	}
 	.empty {
 		width: 70%;
 	}
