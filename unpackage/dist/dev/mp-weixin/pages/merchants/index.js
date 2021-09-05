@@ -315,6 +315,7 @@ __webpack_require__.r(__webpack_exports__);
     // 如果点击过 顶部导航tab或左侧导航tab会进入此判断 End
     this.getCategory(); // 获取分类
     this.getStoreList(this.provinceCode, this.cityCode, this.countyCode); // 获取商家列表
+    console.log('onshow的时候5');
   },
   onLoad: function onLoad() {
     console.log("监听页面load");
@@ -393,7 +394,8 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }
           _this2.categoryList = res.data;
-          _this2.getStoreList();
+          // this.getStoreList();
+          // console.log('获取分类1')
         } });
 
     },
@@ -406,6 +408,7 @@ __webpack_require__.r(__webpack_exports__);
         url: "/api/category/index",
         method: "POST",
         data: {
+          type: this.currentTab,
           id: this.id,
           keyword: this.form.searchKey,
           province_id: province ? province : '',
@@ -436,6 +439,7 @@ __webpack_require__.r(__webpack_exports__);
       var city = this.cityCode;
       var county = this.countyCode;
       this.getStoreList(province, city, county);
+      console.log('搜索2');
     },
     /**
         * @desc 切换顶部选项卡
@@ -453,6 +457,7 @@ __webpack_require__.r(__webpack_exports__);
       this.currentTab = index;
       this.getCategory();
       this.getStoreList();
+      console.log('切换顶部3');
       uni.setStorageSync("tabBarIndex", index);
       this.clearArea();
     },
@@ -476,6 +481,7 @@ __webpack_require__.r(__webpack_exports__);
       this.id = id; // 通过id查询改分类下的商铺
       console.log('id是几何', this.id);
       this.getStoreList();
+      console.log('切换左侧4');
       var tabData = {
         activeItem: this.activeItem,
         id: this.id };

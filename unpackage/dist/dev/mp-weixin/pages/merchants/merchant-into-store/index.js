@@ -267,7 +267,6 @@ var _default =
   onLoad: function onLoad(opt) {
     this.idValue = opt.id;
     this.storeInfo(opt.id);
-    this.getPhoneAddr();
   },
   onShow: function onShow() {
     this.showMessageBtn = this.$store.state.config.message == 1 ? true : false;
@@ -277,6 +276,7 @@ var _default =
     this.adressTips = this.$store.state.config.one_money; // 厂家查看经销商需支付10元
     this.myStoreType = this.$store.state.user.type; // 查看这个页面的用户(登录人)的商家类型
     console.log('登录人的商家类型', this.myStoreType);
+    this.getPhoneAddr();
   },
   computed: {
     // 查看手机号显示的弹窗
@@ -346,6 +346,12 @@ var _default =
                           title: res.msg,
                           duration: 3000 });
 
+                        console.log('还没有满足条件');
+                        // 付过单次费用
+                        if (res.msg === "需给商家留言三次并且被回复才能查看地址与电话") {
+                          _this2.phoneNoShow = false;
+                          console.log('关闭弹窗');
+                        }
                         return false;
                       }
                       console.log('拿到了电话地址等信息', res.data);
@@ -431,6 +437,11 @@ var _default =
         // 如果没有得到电话地址信息，厂家可能没付过钱或者 经销商可能不是会员，然后打开弹窗
         // 否则打开去升级弹窗
         this.phoneNoShow = true;
+        this.getPhoneAddr();
+        // const canLook = this.getPhoneAddr();
+        // if(canLook = false) {
+        // 	this.phoneNoShow = true;
+        // }
       }
     },
     /**
@@ -507,6 +518,7 @@ var _default =
       } else {
         // 如果没有得到电话地址信息，厂家可能没付过钱或者 经销商可能不是会员，然后打开弹窗
         this.phoneNoShow = true;
+        this.getPhoneAddr();
       }
     },
 
