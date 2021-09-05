@@ -9,7 +9,7 @@
 		</view>
 		<u-gap height="33"></u-gap>
 		<view class="pay-price common-style">
-			￥120.00
+			￥{{money}}
 		</view>
 		<u-gap height="300"></u-gap>
 		<u-button :custom-style="customStyle" shape="circle" @click="turnHome">返回首页</u-button>
@@ -20,13 +20,17 @@
 	export default {
 		data() {
 			return {
+				money: 0,
 				customStyle: {
 					color: '#CA0303',
 					background: '#FFF',
 					margin: '0 30rpx',
-					fontWeight: 'bolder'
+					fontWeight: 'bolder',
 				}
 			}
+		},
+		onLoad(opt) {
+			this.money = Number(opt.money) || 0;
 		},
 		methods: {
 			/**

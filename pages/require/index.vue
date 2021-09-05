@@ -199,6 +199,7 @@
 				console.log('页面触底了')
 				this.page.start+=1;
 				this.getDemandsList();
+				console.log('被调用4')
 			}
 		},
 		onShow() {
@@ -299,7 +300,7 @@
 				this.infos = [];
 				this.page.start = 1;
 				this.getDemandsList();
-				console.log('被初始化刷新')
+				console.log('被调用1')
 			},
 
 			/**
@@ -310,7 +311,7 @@
 				if(index===0) {
 					this.type = 'supply';
 					this.init();
-					this.getDemandsList();
+					console.log('被调用2')
 				}
 				for(let key in this.form) {
 					this.form[key] = '';
@@ -501,6 +502,7 @@
 				this.page.start = 1;
 				this.infos = [];
 				this.getDemandsList();
+				console.log('被调用3')
 			}
 		},
 		

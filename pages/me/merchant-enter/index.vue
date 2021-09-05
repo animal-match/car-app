@@ -20,8 +20,27 @@
 						<text>{{ address }}</text>	
 					</u-form-item>
 				</view>
-				
+				<view class="district">
+					<u-select v-model="showAreaList" mode="mutil-column-auto" :list="areaList" @confirm="areaConfirm"></u-select>
+					<u-button @click="chooseArea" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
+					<u-form-item label="请选择地区" :required="true" prop="area">
+						<text>{{ form.area }}</text>
+					</u-form-item>
+				</view>
+
 				<view>
+					<u-form-item label="请选择商家类型" :required="true">
+						<u-radio-group v-model="form.storeType" @change="radioChange">
+									<u-radio
+									  active-color="red"
+										v-for="(item, index) in RadioList" :key="index" 
+										:name="item.id"
+									>
+										{{item.name}}
+									</u-radio>
+								</u-radio-group>
+					</u-form-item>
+					
 					<u-form-item label="请选择标签" :required="true" prop="id" :border-bottom="false">
 						 <u-checkbox-group @change="checkboxGroupChange">
 							 <u-checkbox 
@@ -41,17 +60,6 @@
 					<u-input v-model="form.phoneNo" placeholder="请填写电话号码"/>
 				</u-form-item>
 				
-				<u-form-item label="请选择商家类型" :required="true">
-					<u-radio-group v-model="form.storeType" @change="radioChange">
-								<u-radio
-								  active-color="red"
-									v-for="(item, index) in RadioList" :key="index" 
-									:name="item.id"
-								>
-									{{item.name}}
-								</u-radio>
-							</u-radio-group>
-				</u-form-item>
 			</u-form>
 		</view>
 
@@ -111,12 +119,15 @@
 			<u-button @click="submit" type="error" shape="circle">提交</u-button>
 		</view>
 		<u-gap height="40"></u-gap>
+		<!-- <u-picker mode="region" v-model="showAreaList" @confirm="areaConfirm()"></u-picker> -->
 	</view>
 </template>
 <script>
 	export default {
 		data() {
 			return {
+				areaList: [], // 省市区地区选择级联列表
+				showAreaList: false, // 显示地区选择器
 				logoUrl: '', // 传给服务器的Logo商标地址
 				majorUrl: '', // 传给服务器的主图地址
 				showLogoBtn: true, // 显示上传logo按钮
@@ -136,6 +147,10 @@
 				// 	{name: "经销商"}
 				// ],
 				form: {
+					area: '', // 选好的地区
+					province_id: '',
+					city_id: '',
+					area_id: '',
 					storeType: '0', // 商家类型
 					merchantName: '', // 厂家名称
 					merchantIntro: '', // 商家介绍
@@ -198,6 +213,15 @@
 							trigger: ['change','blur'],
 						}
 					],
+					area: [
+						{
+							validator: (rule, value, callback) => {
+								return value.length > 0;
+							},
+							message: '请选择地区',
+							trigger: ['change','blur'],
+						}
+					],
 				},
 				action: '', // 后端服务器地址
 				fileList: [], // 显示预先设置的图片
@@ -217,14 +241,37 @@
 			uni.$on('proDatas',this.productDatas) // 接收图片
 			uni.$on('proDatas2', this.productDatas2); // 接收视频
 			this.getTags();
+			this.getArea();
 		},
 		onShow() {
-			
 		},
 		methods: {
+			// 省市区列表
+			getArea() {
+				let req = {
+					url: "/api/store/getArea",
+					method: "POST",
+					success: res => {
+						if(res.code != 1) {
+							uni.showToast({
+								icon: "none",
+								title: res.msg,
+							})
+							return false;
+						}
+						let arr = res.data;
+						let arrJosn = JSON.stringify(arr);
+						let decodeJson = JSON.parse(arrJosn);
+						this.areaList = decodeJson;
+						console.log('地区数据',this.areaList)
+					}
+				}
+				this.$request(req);
+			},
       // 单选
 			radioChange(e) {
 				this.form.storeType = e; // 选择厂家 经销商类型
+				this.getTags();
 			},
 			// 选择Logo图
 			chooseImages(type) {
@@ -326,6 +373,9 @@
 				this.$request({
 					url: "/api/category/getList",
 					method: "POST",
+					data: {
+						type: this.form.storeType
+					},
 					success: res => {
 						if(res.code==0) {
 							uni.showToast({
@@ -344,12 +394,31 @@
 			},
 			/**
 			 * @desc 选择地址
-			 * @param {number}
+			 * @param
 			 **/
 			chooseAddress() {
 				uni.navigateTo({
 					url: './map'
 				})
+			},
+			/**
+			 * @desc 选择地区
+			 * @param
+			 **/
+			chooseArea() {
+				this.showAreaList = true;
+			},
+			/**
+			 * @desc 确认地区
+			 * @param
+			 **/
+			areaConfirm(e) {
+				console.log("确认地区：",e);
+				this.form.province_id = e[0].value;
+				this.form.city_id = e[1].value;
+				this.form.area_id = e[2].value;
+				console.log('地区表单', this.form);
+				this.form.area = e[0].label +'/'+ e[1].label + '/' + e[2].label;
 			},
 			// 上传产品页面
 			jump() {
@@ -425,7 +494,10 @@
 							long: Number(this.form.selected.longitude),// 纬度
 							phone: this.form.phoneNo,// 电话
 							store_category_id: this.form.id,// 标签分类
-							goods: JSON.stringify(goods)// 产品
+							goods: JSON.stringify(goods),// 产品
+							province_id: this.form.province_id, // 省
+							city_id: this.form.city_id, // 市
+							area_id: this.form.area_id, // 区县
 					},
 					success: res=> {
 						if(res.code != 1) {

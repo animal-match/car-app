@@ -24,15 +24,11 @@
 			<!-- 右侧 单选框 -->
 			<view class="right-radio">
 				<u-radio-group v-model="radioValue">
-							<u-radio 
-								@change="radioChange" 
-								v-for="(item, index) in paylist" :key="index" 
-								:name="item.name"
-								active-color="#CA0303"
-							>
-								{{item.name}}
-							</u-radio>
-						</u-radio-group>
+					<u-radio @change="radioChange" v-for="(item, index) in paylist" :key="index" :name="item.name"
+						active-color="#CA0303">
+						{{item.name}}
+					</u-radio>
+				</u-radio-group>
 			</view>
 		</view>
 		<view class="payment-btn">
@@ -46,9 +42,9 @@
 		data() {
 			return {
 				radioValue: '', // 单选选中的值
-				paylist: [
-					{name: ''}
-				],
+				paylist: [{
+					name: ''
+				}],
 				type: '', // 商家类型
 				payment: null, // 支付金额
 				storeId: '', // 厂家要查看的商家ID
@@ -57,19 +53,19 @@
 		},
 		onLoad(options) {
 			this.type = this.$store.state.user.type; // 登录人的商家类型
-			console.log('有没有options',options)
+			console.log('有没有options', options)
 			// 如果options不是空对象 就会传来金额
-			if(Object.keys(options).length > 0) {
+			if (Object.keys(options).length > 0) {
 				this.payment = options.money;
-				if(!!options.storeId) {
+				if (!!options.storeId) {
 					this.storeId = options.storeId;
 					this.sortType = 2; // 要查看经销商
 				}
 			} else {
 				// 如果options是空对象 说明他要开通会员
-				if(this.type===0) {
+				if (this.type === 0) {
 					this.payment = this.$store.state.config.d_vip_money;
-				} else if(this.type===1){
+				} else if (this.type === 1) {
 					this.payment = this.$store.state.config.s_vip_money;
 				} else {
 					uni.showToast({
@@ -98,7 +94,10 @@
 					service: 'payment',
 					fail: res => {
 						uni.hideLoading();
-						uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
+						uni.showToast({
+							title: '支付失败，请稍后再试',
+							icon: 'none'
+						})
 					},
 					success: res => {
 						this.$request({
@@ -106,37 +105,45 @@
 							method: "POST",
 							data: {
 								type: this.sortType,
-								store_id: this.sortType===2 ? this.storeId : null
+								store_id: this.sortType === 2 ? this.storeId : ''
 							}, // 成为会员1
 							success: res => {
-								if(res.code!=1) {
-									uni.showToast({title: res.msg,icon:'none'})
+								if (res.code != 1) {
+									uni.showToast({
+										title: res.msg,
+										icon: 'none'
+									})
 									return false
 								}
-								console.log(res,'支付')
-								// let resobj=JSON.parse(res.data.data)
-								// 							let payInfo={
-								// 								appid: resobj.appid, // 小程序ID
-								// 								nonceStr: resobj.nonceStr, // 随机字符串
-								// 								package:"Sign=WXPay", // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=xx。
-								// 								partnerid: resobj.mch_id,
-								// 								prepayid: resobj.prepay_id,
-								// 								timeStamp: resobj.timeStamp, // 时间戳
-								// 								signType: resobj.signType, // 签名算法
-								//                paySign: resobj.paySign, // 签名
-								// 							}
-								// 							uni.requestPayment({
-								// 								provider: 'wxpay',
-								// 								orderInfo: payInfo, //微信订单数据（Object类型）
-								// 								success: res=>{
-								// 									uni.hideLoading();
-								// 							  },
-								// 								fail: err => {
-								// 									uni.hideLoading();
-								// 									uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
-								// 								}
-								// 							});
-															
+								let resobj = res.data;
+								console.log(resobj, 'obj')
+								let payInfo = {
+									appId: resobj.appId, // 小程序ID
+									timeStamp: resobj.timeStamp, // 时间戳
+									nonceStr: resobj.nonceStr, // 随机字符串
+									package: resobj.package,
+									signType: resobj.signType, // 签名算法
+									paySign: resobj.paySign, // 签名
+								}
+
+								uni.requestPayment({
+									...payInfo, //微信订单数据（Object类型）
+									success: res => {
+										uni.hideLoading();
+										const money = this.payment;
+										uni.navigateTo({
+											url: "./pay-success?money=" + money
+										})
+									},
+									fail: err => {
+										uni.hideLoading();
+										uni.showToast({
+											title: '支付失败，请稍后再试',
+											icon: 'none'
+										})
+									}
+								});
+
 							}
 						})
 					}
@@ -157,27 +164,33 @@
 		font-size: 24rpx;
 		color: $uni-text-color-grey;
 	}
+
 	.payment-box {
 		margin: 0rpx 30rpx 46rpx;
 		height: 304rpx;
 		background-color: $uni-text-color-inverse;
 		border-radius: 20rpx;
-		text-align:center;
+		text-align: center;
 		display: flex;
 		flex-direction: column;
-		display:-webkit-flex; 
-		justify-content: center;/*水平居中*/
-		align-items: center;/*垂直居中*/
-		-webkit-align-items:center; 
+		display: -webkit-flex;
+		justify-content: center;
+		/*水平居中*/
+		align-items: center;
+		/*垂直居中*/
+		-webkit-align-items: center;
+
 		.payment-price {
 			font-size: 60rpx;
 			color: $uni-text-color;
 			font-weight: bold;
 		}
 	}
+
 	.payment-way {
-		margin: 0 30rpx 43rpx; 
+		margin: 0 30rpx 43rpx;
 	}
+
 	.bankcard-box {
 		height: 120rpx;
 		border-radius: 20rpx;
@@ -187,10 +200,12 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
 		.left-card {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
 			.card-box {
 
 				background-color: #EEEEEE;
@@ -198,15 +213,18 @@
 				margin-right: 18rpx;
 				padding: 10rpx 20rpx;
 			}
+
 			ul {
 				display: inline-block;
 				list-style: none;
 				padding: 0;
+
 				li:first-child {
 					font-size: 28rpx;
 					font-weight: bold;
 					margin-bottom: 10rpx;
 				}
+
 				li:last-child {
 					font-size: 24rpx;
 					color: $uni-text-color-grey;
@@ -214,6 +232,7 @@
 			}
 		}
 	}
+
 	.payment-btn {
 		margin: 300rpx 30rpx 0;
 	}

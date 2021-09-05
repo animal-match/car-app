@@ -105,9 +105,6 @@ try {
     },
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
-    },
-    uModal: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 301))
     }
   }
 } catch (e) {
@@ -208,7 +205,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   data: function data() {
@@ -216,7 +212,6 @@ var _default =
       isVip: 0, // 是否黄金会员
       avatar: '', // 用户头像
       userName: '', // 用户昵称
-      showLogout: false, // 打开退出登录弹窗
       isLogin: false, // 用户是否登录
       phoneNumCode: '15828292076',
       modules: [{
@@ -262,27 +257,21 @@ var _default =
       _this.userName = res.nickName;
       _this.avatar = res.avatar;
     });
-    uni.$on('vipStatus', function (val) {
-      _this.isVip = val;
-    });
-    console.log('vip', this.isVip);
   },
-  onShow: function onShow() {
+  onShow: function onShow() {var _this2 = this;
     console.log('检查登录状态', this.$store.state.isLogin);
     this.isLogin = this.$store.state.isLogin;
-    // uni.getStorage({
-    // 	key: 'isVip',
-    // 	success: (res)=> {
-    // 		this.isVip = res.data;
-    // 	}
-    // })
+    uni.$on('vipStatus', function (val) {
+      _this2.isVip = val;
+    });
+    console.log('vip', this.isVip);
   },
   methods: {
     /** 
               * @description 退出登录
               * @param {}
               **/
-    logout: function logout() {var _this2 = this;
+    logout: function logout() {var _this3 = this;
       var token = uni.getStorageSync("token");
       this.$request({
         url: '/api/user/logout',
@@ -296,14 +285,17 @@ var _default =
 
             return false;
           }
-          _this2.isLogin = false; // 更改本页登录状态
-          _this2.userName = "",
-          _this2.avatar = "",
-          _this2.isVip = 0,
-          _this2.$store.commit('changeLoginState', false); // 登录状态改为false
-          _this2.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
+          _this3.isLogin = false; // 更改本页登录状态
+          _this3.userName = "",
+          _this3.avatar = "",
+          _this3.isVip = 0,
+          _this3.$store.commit('changeLoginState', false); // 登录状态改为false
+          _this3.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
           uni.clearStorage();
-          _this2.showLogout = true;
+          uni.showToast({
+            icon: "none",
+            title: "已退出登录" });
+
         } });
 
     },

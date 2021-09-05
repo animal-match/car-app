@@ -378,6 +378,7 @@ var _default =
       console.log('页面触底了');
       this.page.start += 1;
       this.getDemandsList();
+      console.log('被调用4');
     }
   },
   onShow: function onShow() {
@@ -478,7 +479,7 @@ var _default =
       this.infos = [];
       this.page.start = 1;
       this.getDemandsList();
-      console.log('被初始化刷新');
+      console.log('被调用1');
     },
 
     /**
@@ -489,7 +490,7 @@ var _default =
       if (index === 0) {
         this.type = 'supply';
         this.init();
-        this.getDemandsList();
+        console.log('被调用2');
       }
       for (var key in this.form) {
         this.form[key] = '';
@@ -680,6 +681,7 @@ var _default =
       this.page.start = 1;
       this.infos = [];
       this.getDemandsList();
+      console.log('被调用3');
     } },
 
 

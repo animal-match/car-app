@@ -57,8 +57,8 @@
             "sdkConfigs" : {
                 "oauth" : {
                     "weixin" : {
-                        "appid" : "wxfef943555090aa71",
-                        "appsecret" : "db8d1e1fecf2ea97dd146d3d1276de11",
+                        "appid" : "wxfad8176307c13b89",
+                        "appsecret" : "60802f2e2a280caf5bb379f3495a9157",
                         "UniversalLinks" : ""
                     },
                     "univerify" : {},
@@ -67,13 +67,13 @@
                 "payment" : {
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "wxfef943555090aa71",
+                        "appid" : "wxfad8176307c13b89",
                         "UniversalLinks" : ""
                     }
                 },
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxfef943555090aa71",
+                        "appid" : "wxfad8176307c13b89",
                         "UniversalLinks" : ""
                     }
                 }
@@ -84,7 +84,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxfef943555090aa71",
+        "appid" : "wxfad8176307c13b89",
         "setting" : {
             "urlCheck" : false
         },

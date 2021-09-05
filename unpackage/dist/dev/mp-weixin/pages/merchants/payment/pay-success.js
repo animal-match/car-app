@@ -181,6 +181,7 @@ var _default =
 {
   data: function data() {
     return {
+      money: 0,
       customStyle: {
         color: '#CA0303',
         background: '#FFF',
@@ -188,6 +189,9 @@ var _default =
         fontWeight: 'bolder' } };
 
 
+  },
+  onLoad: function onLoad(opt) {
+    this.money = Number(opt.money) || 0;
   },
   methods: {
     /**

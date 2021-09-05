@@ -39,7 +39,6 @@
 			<u-button v-if="isLogin===false" type="error" shape="circle" @click="login">去登录</u-button>
 			<u-button v-else type="error" shape="circle" @click="logout">退出</u-button>
 		</view>
-		<u-modal v-model="showLogout" content="退出成功" :mask-close-able="true" :show-confirm-button="false" width="50%"></u-modal>
 	</view>
 </template>
 
@@ -50,7 +49,6 @@
 				isVip: 0, // 是否黄金会员
 				avatar: '', // 用户头像
 				userName: '', // 用户昵称
-				showLogout: false, // 打开退出登录弹窗
 				isLogin: false, // 用户是否登录
 				phoneNumCode: '15828292076',
 				modules: [{
@@ -96,20 +94,14 @@
 				this.userName = res.nickName;
 				this.avatar = res.avatar;
 			})
-			uni.$on('vipStatus', val => {
-				this.isVip = val
-			})
-			console.log('vip',this.isVip);
 		},
 		onShow() {
 			console.log('检查登录状态',this.$store.state.isLogin);
 			this.isLogin = this.$store.state.isLogin;
-			// uni.getStorage({
-			// 	key: 'isVip',
-			// 	success: (res)=> {
-			// 		this.isVip = res.data;
-			// 	}
-			// })
+			uni.$on('vipStatus', val => {
+				this.isVip = val
+			})
+			console.log('vip',this.isVip);
 		},
 		methods: {
 			/** 
@@ -137,7 +129,10 @@
 						this.$store.commit('changeLoginState',false); // 登录状态改为false
 						this.$store.commit('clearUserInfo'); // 清空vuex存储的用户信息
 						uni.clearStorage();
-						this.showLogout = true;
+						uni.showToast({
+							icon: "none",
+							title: "已退出登录"
+						})
 					}
 				})
 			},

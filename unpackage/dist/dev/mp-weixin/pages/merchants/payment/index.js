@@ -45,10 +45,10 @@ try {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 227))
     },
     uRadioGroup: function() {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 308))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 322))
     },
     uRadio: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-radio/u-radio */ "node-modules/uview-ui/components/u-radio/u-radio").then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio/u-radio.vue */ 315))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-radio/u-radio */ "node-modules/uview-ui/components/u-radio/u-radio").then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio/u-radio.vue */ 329))
     },
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
@@ -108,11 +108,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
 //
 //
@@ -156,8 +152,8 @@ var _default =
   data: function data() {
     return {
       radioValue: '', // 单选选中的值
-      paylist: [
-      { name: '' }],
+      paylist: [{
+        name: '' }],
 
       type: '', // 商家类型
       payment: null, // 支付金额
@@ -208,7 +204,10 @@ var _default =
         service: 'payment',
         fail: function fail(res) {
           uni.hideLoading();
-          uni.showToast({ title: '支付失败，请稍后再试', icon: 'none' });
+          uni.showToast({
+            title: '支付失败，请稍后再试',
+            icon: 'none' });
+
         },
         success: function success(res) {
           _this.$request({
@@ -216,36 +215,44 @@ var _default =
             method: "POST",
             data: {
               type: _this.sortType,
-              store_id: _this.sortType === 2 ? _this.storeId : null },
+              store_id: _this.sortType === 2 ? _this.storeId : '' },
             // 成为会员1
             success: function success(res) {
               if (res.code != 1) {
-                uni.showToast({ title: res.msg, icon: 'none' });
+                uni.showToast({
+                  title: res.msg,
+                  icon: 'none' });
+
                 return false;
               }
-              console.log(res, '支付');
-              // let resobj=JSON.parse(res.data.data)
-              // 							let payInfo={
-              // 								appid: resobj.appid, // 小程序ID
-              // 								nonceStr: resobj.nonceStr, // 随机字符串
-              // 								package:"Sign=WXPay", // 统一下单接口返回的 prepay_id 参数值，提交格式如：prepay_id=xx。
-              // 								partnerid: resobj.mch_id,
-              // 								prepayid: resobj.prepay_id,
-              // 								timeStamp: resobj.timeStamp, // 时间戳
-              // 								signType: resobj.signType, // 签名算法
-              //                paySign: resobj.paySign, // 签名
-              // 							}
-              // 							uni.requestPayment({
-              // 								provider: 'wxpay',
-              // 								orderInfo: payInfo, //微信订单数据（Object类型）
-              // 								success: res=>{
-              // 									uni.hideLoading();
-              // 							  },
-              // 								fail: err => {
-              // 									uni.hideLoading();
-              // 									uni.showToast({title: '支付失败，请稍后再试',icon:'none'})
-              // 								}
-              // 							});
+              var resobj = res.data;
+              console.log(resobj, 'obj');
+              var payInfo = {
+                appId: resobj.appId, // 小程序ID
+                timeStamp: resobj.timeStamp, // 时间戳
+                nonceStr: resobj.nonceStr, // 随机字符串
+                package: resobj.package,
+                signType: resobj.signType, // 签名算法
+                paySign: resobj.paySign // 签名
+              };
+
+              uni.requestPayment(_objectSpread(_objectSpread({},
+              payInfo), {}, { //微信订单数据（Object类型）
+                success: function success(res) {
+                  uni.hideLoading();
+                  var money = _this.payment;
+                  uni.navigateTo({
+                    url: "./pay-success?money=" + money });
+
+                },
+                fail: function fail(err) {
+                  uni.hideLoading();
+                  uni.showToast({
+                    title: '支付失败，请稍后再试',
+                    icon: 'none' });
+
+                } }));
+
 
             } });
 

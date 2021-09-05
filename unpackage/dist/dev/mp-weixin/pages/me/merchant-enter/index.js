@@ -112,17 +112,20 @@ try {
     uButton: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
     },
-    uCheckboxGroup: function() {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox-group/u-checkbox-group.vue */ 329))
-    },
-    uCheckbox: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-checkbox/u-checkbox */ "node-modules/uview-ui/components/u-checkbox/u-checkbox").then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox/u-checkbox.vue */ 322))
+    uSelect: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-select/u-select */ "node-modules/uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! uview-ui/components/u-select/u-select.vue */ 343))
     },
     uRadioGroup: function() {
-      return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 308))
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 322))
     },
     uRadio: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-radio/u-radio */ "node-modules/uview-ui/components/u-radio/u-radio").then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio/u-radio.vue */ 315))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-radio/u-radio */ "node-modules/uview-ui/components/u-radio/u-radio").then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio/u-radio.vue */ 329))
+    },
+    uCheckboxGroup: function() {
+      return Promise.all(/*! import() | node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-checkbox-group/u-checkbox-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox-group/u-checkbox-group.vue */ 350))
+    },
+    uCheckbox: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-checkbox/u-checkbox */ "node-modules/uview-ui/components/u-checkbox/u-checkbox").then(__webpack_require__.bind(null, /*! uview-ui/components/u-checkbox/u-checkbox.vue */ 336))
     },
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 227))
@@ -300,10 +303,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {var _this = this;
     return {
+      areaList: [], // 省市区地区选择级联列表
+      showAreaList: false, // 显示地区选择器
       logoUrl: '', // 传给服务器的Logo商标地址
       majorUrl: '', // 传给服务器的主图地址
       showLogoBtn: true, // 显示上传logo按钮
@@ -323,6 +337,10 @@ var _default =
       // 	{name: "经销商"}
       // ],
       form: {
+        area: '', // 选好的地区
+        province_id: '',
+        city_id: '',
+        area_id: '',
         storeType: '0', // 商家类型
         merchantName: '', // 厂家名称
         merchantIntro: '', // 商家介绍
@@ -382,6 +400,15 @@ var _default =
             return value.length > 0;
           },
           message: '请选择地址',
+          trigger: ['change', 'blur'] }],
+
+
+        area: [
+        {
+          validator: function validator(rule, value, callback) {
+            return value.length > 0;
+          },
+          message: '请选择地区',
           trigger: ['change', 'blur'] }] },
 
 
@@ -404,17 +431,40 @@ var _default =
     uni.$on('proDatas', this.productDatas); // 接收图片
     uni.$on('proDatas2', this.productDatas2); // 接收视频
     this.getTags();
+    this.getArea();
   },
   onShow: function onShow() {
-
   },
   methods: {
+    // 省市区列表
+    getArea: function getArea() {var _this2 = this;
+      var req = {
+        url: "/api/store/getArea",
+        method: "POST",
+        success: function success(res) {
+          if (res.code != 1) {
+            uni.showToast({
+              icon: "none",
+              title: res.msg });
+
+            return false;
+          }
+          var arr = res.data;
+          var arrJosn = JSON.stringify(arr);
+          var decodeJson = JSON.parse(arrJosn);
+          _this2.areaList = decodeJson;
+          console.log('地区数据', _this2.areaList);
+        } };
+
+      this.$request(req);
+    },
     // 单选
     radioChange: function radioChange(e) {
       this.form.storeType = e; // 选择厂家 经销商类型
+      this.getTags();
     },
     // 选择Logo图
-    chooseImages: function chooseImages(type) {var _this2 = this;
+    chooseImages: function chooseImages(type) {var _this3 = this;
       var token = uni.getStorageSync("token");
       if (token) {
         uni.chooseImage({
@@ -425,9 +475,9 @@ var _default =
             var data = res.tempFilePaths;
             console.log(data, '你选择的图片');
             if (data.length >= 1 && type === "logo") {
-              _this2.showLogoBtn = false; //图片上传数量和count一样时，让点击拍照按钮消失
+              _this3.showLogoBtn = false; //图片上传数量和count一样时，让点击拍照按钮消失
             } else {
-              _this2.showMajorBtn = false;
+              _this3.showMajorBtn = false;
             }
             uni.uploadFile({
               url: "https://yanxu.n867.cn/index.php/api/common/upload",
@@ -441,10 +491,10 @@ var _default =
                 console.log(uploadFileRes.data, 'res!!');
                 var image = JSON.parse(uploadFileRes.data);
                 if (type === "logo")
-                _this2.logoUrl = image.data.fullurl; // 提交时传给服务器的图片路径
+                _this3.logoUrl = image.data.fullurl; // 提交时传给服务器的图片路径
                 else
-                  _this2.majorUrl = image.data.fullurl; // 提交时传给服务器的图片路径
-                console.log('logo地址', _this2.logoUrl, _this2.majorUrl);
+                  _this3.majorUrl = image.data.fullurl; // 提交时传给服务器的图片路径
+                console.log('logo地址', _this3.logoUrl, _this3.majorUrl);
               } });
 
           } });
@@ -472,17 +522,17 @@ var _default =
 
     },
     // 删除logo图片
-    delect: function delect(type) {var _this3 = this;
+    delect: function delect(type) {var _this4 = this;
       uni.showModal({
         title: "提示",
         content: "是否要删除该图片",
         success: function success(res) {
           if (res.confirm && type === "logo") {
-            _this3.logoUrl = "";
-            _this3.showLogoBtn = _this3.logoUrl.length == 0;
+            _this4.logoUrl = "";
+            _this4.showLogoBtn = _this4.logoUrl.length == 0;
           } else {
-            _this3.majorUrl = "";
-            _this3.showMajorBtn = _this3.majorUrl.length == 0;
+            _this4.majorUrl = "";
+            _this4.showMajorBtn = _this4.majorUrl.length == 0;
           }
         } });
 
@@ -509,10 +559,13 @@ var _default =
       console.log('产品名和视频', this.videoTitle);
     },
     // 获取标签接口
-    getTags: function getTags() {var _this4 = this;
+    getTags: function getTags() {var _this5 = this;
       this.$request({
         url: "/api/category/getList",
         method: "POST",
+        data: {
+          type: this.form.storeType },
+
         success: function success(res) {
           if (res.code == 0) {
             uni.showToast({
@@ -525,18 +578,37 @@ var _default =
           result.map(function (item) {
             item.checked = false;
           });
-          _this4.tagList = result;
+          _this5.tagList = result;
         } });
 
     },
     /**
         * @desc 选择地址
-        * @param {number}
+        * @param
         **/
     chooseAddress: function chooseAddress() {
       uni.navigateTo({
         url: './map' });
 
+    },
+    /**
+        * @desc 选择地区
+        * @param
+        **/
+    chooseArea: function chooseArea() {
+      this.showAreaList = true;
+    },
+    /**
+        * @desc 确认地区
+        * @param
+        **/
+    areaConfirm: function areaConfirm(e) {
+      console.log("确认地区：", e);
+      this.form.province_id = e[0].value;
+      this.form.city_id = e[1].value;
+      this.form.area_id = e[2].value;
+      console.log('地区表单', this.form);
+      this.form.area = e[0].label + '/' + e[1].label + '/' + e[2].label;
     },
     // 上传产品页面
     jump: function jump() {
@@ -560,13 +632,13 @@ var _default =
      * @desc 提交表单数据，提交图片
      * @param {Object}
      **/
-    submit: function submit() {var _this5 = this;
+    submit: function submit() {var _this6 = this;
       console.log('777', this.form);
       var goods = this.imageTitle.concat(this.videoTitle);
       this.$refs.ruleForm.validate(function (valid) {
         if (valid) {
           // 开始验证产品是否上传
-          if (_this5.imageTitle.length == 0 && _this5.videoTitle.length == 0) {// && this.videoTitle.length==0
+          if (_this6.imageTitle.length == 0 && _this6.videoTitle.length == 0) {// && this.videoTitle.length==0
             uni.showToast({
               icon: "none",
               title: "您还未上传产品" });
@@ -574,7 +646,7 @@ var _default =
             return;
           }
           // 验证商标是否上传
-          if (_this5.logoUrl.length == 0) {
+          if (_this6.logoUrl.length == 0) {
             uni.showToast({
               icon: "none",
               title: "您还未上传商标" });
@@ -582,14 +654,14 @@ var _default =
             return;
           }
           // 验证主图是否上传
-          if (_this5.majorUrl.length == 0) {
+          if (_this6.majorUrl.length == 0) {
             uni.showToast({
               icon: "none",
               title: "您还未上传店铺封面" });
 
             return;
           }
-          _this5.toServer(goods);
+          _this6.toServer(goods);
         } else {
           console.log('失败');
         }
@@ -612,7 +684,10 @@ var _default =
           long: Number(this.form.selected.longitude), // 纬度
           phone: this.form.phoneNo, // 电话
           store_category_id: this.form.id, // 标签分类
-          goods: JSON.stringify(goods) // 产品
+          goods: JSON.stringify(goods), // 产品
+          province_id: this.form.province_id, // 省
+          city_id: this.form.city_id, // 市
+          area_id: this.form.area_id // 区县
         },
         success: function success(res) {
           if (res.code != 1) {
