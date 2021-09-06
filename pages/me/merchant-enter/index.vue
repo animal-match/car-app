@@ -290,7 +290,7 @@
 								this.showMajorBtn = false;
 							}
 							uni.uploadFile({
-								url: "https://yanxu.n867.cn/index.php/api/common/upload",
+								url: "https://www.cdyanxu.com/api/common/upload",
 								header: { 
 									"content-type": "multipart/form-data",
 									"token" : uni.getStorageSync("token"),

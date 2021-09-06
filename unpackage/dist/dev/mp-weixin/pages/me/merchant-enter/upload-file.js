@@ -307,7 +307,7 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
             _this2.VideoOfImagesShow = false; //图片上传数量和count一样时，让点击拍照按钮消失
           }
           uni.uploadFile({
-            url: "https://yanxu.n867.cn/index.php/api/common/upload",
+            url: "https://www.cdyanxu.com/api/common/upload",
             header: {
               "content-type": "multipart/form-data",
               "token": uni.getStorageSync("token") },
@@ -338,7 +338,7 @@ var sourceType = [['camera'], ['album'], ['camera', 'album']];var _default =
             _this3.VideoOfImagesShow = false;
           }
           uni.uploadFile({
-            url: "https://yanxu.n867.cn/index.php/api/common/upload",
+            url: "https://www.cdyanxu.com/api/common/upload",
             header: {
               "content-type": "multipart/form-data",
               "token": uni.getStorageSync("token") },

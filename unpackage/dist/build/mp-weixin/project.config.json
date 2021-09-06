@@ -23,6 +23,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -30,19 +31,16 @@
     },
     "enableEngineNative": false,
     "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
-    "useApiHostProcess": false
+    "showES6CompileOption": false
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "wxfef943555090aa71",
-  "projectname": "carApp",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
+  "appid": "wxfad8176307c13b89",
+  "projectname": "新能源信息对接平台",
   "condition": {
     "search": {
       "list": []

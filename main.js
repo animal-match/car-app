@@ -11,7 +11,7 @@ import share from './utils/share.js'
 Object.keys(custom).forEach(key => {
 	Vue.filter(key, custom[key])
 })
-Vue.prototype.$baseUrl = "https://yanxu.n867.cn/index.php";
+Vue.prototype.$baseUrl = "https://www.cdyanxu.com";
 Vue.mixin(share);
 Vue.component('require-supply', requireSupply);
 Vue.prototype.$store = store;

@@ -1,6 +1,6 @@
 // 封装网络请求
 module.exports = (params) => {
-	const baseUrl = 'https://yanxu.n867.cn/index.php';
+	const baseUrl = 'https://www.cdyanxu.com';
 	let url = baseUrl + params.url;
 	let method = params.method;
 	let header = params.header || {};
