@@ -264,7 +264,6 @@ var _default =
     uni.$on('vipStatus', function (val) {
       _this2.isVip = val;
     });
-    console.log('vip', this.isVip);
   },
   methods: {
     /** 

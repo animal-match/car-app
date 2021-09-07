@@ -101,7 +101,6 @@
 			uni.$on('vipStatus', val => {
 				this.isVip = val
 			})
-			console.log('vip',this.isVip);
 		},
 		methods: {
 			/** 

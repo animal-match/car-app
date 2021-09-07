@@ -180,7 +180,8 @@ var _default =
       } else {
         uni.showToast({
           icon: "none",
-          title: "请登录后操作" });
+          title: "您还未入驻商家",
+          duration: 2000 });
 
         return;
       }

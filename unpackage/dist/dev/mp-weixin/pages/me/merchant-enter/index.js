@@ -312,10 +312,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {var _this = this;
     return {
+      alert: false, // 显示手机号格式错误提示
       areaList: [], // 省市区地区选择级联列表
       showAreaList: false, // 显示地区选择器
       logoUrl: '', // 传给服务器的Logo商标地址
@@ -387,10 +389,13 @@ var _default =
 
         {
           validator: function validator(rule, value, callback) {
+            // if(this.form.phoneNo.length>=11) {
+            // 	return this.$u.test.mobile(value);
+            // }
             return _this.$u.test.mobile(value);
           },
           message: '手机号码格式不正确',
-          trigger: ['change', 'blur'] }],
+          trigger: ['blur'] }],
 
 
         address: [
@@ -443,6 +448,17 @@ var _default =
     }
   },
   methods: {
+    // blur() {
+    // 	if(this.form.phoneNo.length == 11) {
+    // 		this.alert = false;
+    // 	}
+    // 	if(this.form.phoneNo.length > 11) {
+    // 		this.alert = false;
+    // 	}
+    // 	if(this.form.phoneNo.length < 11) {
+    // 		this.alert = true;
+    // 	}
+    // },
     // 省市区列表
     getArea: function getArea() {var _this2 = this;
       var req = {
