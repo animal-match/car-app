@@ -6,7 +6,7 @@
 				欢迎使用
 			</view>
 			<view class="login-text">
-				一条龙信息对接平台
+				新能源信息对接平台
 			</view>
 			<view class="background-image">
 				<image class="image" src="/static/user-center-images/distributor/login.png"></image>
@@ -21,7 +21,7 @@
 			<view class="ckeck">
 					<u-checkbox :label-disabled="true" v-model="isChecked" :name="name" active-color="#CA0303" shape="circle"
 					 @change="radioChange">
-						<text class="checkout-text" @click="serviceItem">同意一条龙信息对接平台的《服务条款》和《隐私协议》</text>
+						<text class="checkout-text" @click="serviceItem">同意新能源信息对接平台的《服务条款》和《隐私协议》</text>
 					</u-checkbox>
 			</view>
 		</view>
