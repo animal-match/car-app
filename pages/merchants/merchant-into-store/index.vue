@@ -44,7 +44,7 @@
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 底部部分 产品图 -->
 		<view class="production">产品</view>
-		<view class="bottom-container">
+		<view v-if="productions.length>0" class="bottom-container">
 			<view v-for="(_item,_index) in productions" class="image-box">
 				<view style="display: flex; flex-direction: column;" :key="_index">
 					<u-image v-if="_item.image.length>0" class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
@@ -59,6 +59,9 @@
 				</view>
 			</view> -->
 			<u-gap height="40"></u-gap>
+		</view>
+		<view class="empty-block">
+			<text>暂无产品</text>
 		</view>
 		
 		<!-- 弹出框 查看电话去升级-->
@@ -125,6 +128,14 @@
 			 * @param 
 			 **/
 			collecting() {
+				let user = uni.getStorageSync("token")
+				if(!user) {
+					uni.showToast({
+						icon: "none",
+						title: "请登录后操作"
+					})
+					return;
+				}
 				this.starStatus = !this.starStatus; // 切换收藏状态
 				if(this.starStatus===true) {
 					this.iconName = 'star-fill';
@@ -431,6 +442,7 @@
 			}
 			.informations {
 				padding: 23rpx 0;
+				min-height: 100rpx;
 				.intro {
 					margin-right: 10rpx !important;
 				}
@@ -469,6 +481,12 @@
 			font-size: 30rpx;
 			font-weight: bolder;
 			margin-bottom: 0 0 20rpx 20rpx;
+		}
+		.empty-block {
+			height: 300rpx;
+			line-height: 300rpx;
+			color: $uni-text-color-grey;
+			text-align: center;
 		}
 		.bottom-container {
 			margin: 30rpx 46rpx;

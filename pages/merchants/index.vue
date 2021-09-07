@@ -15,11 +15,11 @@
 		<view style="background: #fff">
 				<u-dropdown active-color="#CA0303" ref="uDropdown" height="60">
 					<!--  v-model="provinceCode"  :options="provinceCodeList"-->
-					<u-dropdown-item v-model="provinceCode"  :options="provinceCodeList" title="省份" @change="provinceChange">
+					<u-dropdown-item v-model="provinceCode"  :options="provinceCodeList" :title="provinceName ||'省份'" @change="provinceChange">
 					</u-dropdown-item>
 
-					<u-dropdown-item v-model="cityCode" title="城市" :options="cityCodeList" @change="cityChange"></u-dropdown-item>
-					<u-dropdown-item v-model="countyCode" title="区县" :options="countyCodeList" @change="countyChange"></u-dropdown-item>
+					<u-dropdown-item v-model="cityCode" :title="cityName || '城市'" :options="cityCodeList" @change="cityChange"></u-dropdown-item>
+					<u-dropdown-item v-model="countyCode" :title="countyName || '区县'" :options="countyCodeList" @change="countyChange"></u-dropdown-item>
 				</u-dropdown>
 			</view>
 		<u-gap height="20"></u-gap>
@@ -70,6 +70,9 @@
 		},
 		data() {
 			return {
+				provinceName: '', // 省名
+				cityName: '', // 市名
+				countyName: '', // 区名
 				scrollTop: 0, // 距离顶部多少时设置滚动条
 				informations: [], // 商家信息
 				type: 'text',
@@ -116,6 +119,13 @@
 				this.currentTab = val;
 				this.activeItem = 1;
 				this.id = this.currentTab === 0 ? this.activeId : this.activeId_2;
+				this.form.searchKey = '';
+				this.provinceName = '';
+				this.provinceCode = 0;
+				this.cityName = '';
+				this.cityCode = 0;
+				this.countyName = '';
+				this.countyCode = 0;
 			}
 			// 如果点击过 顶部导航tab或左侧导航tab会进入此判断 Start
 			const data = uni.getStorageSync("tabBarData");
@@ -147,6 +157,13 @@
 			 * @param
 			 **/
 			provinceChange(val) {
+				console.log('点击', val)
+				this.provinceCodeList.forEach((item) => {
+					if(item.value === val) {
+						this.provinceName = item.label;
+					}
+				})
+				console.log('省名', this.provinceName)
 				this.provinceCode = val;
 				this.getStoreList(val);
 				this.data = { province: val };
@@ -155,6 +172,11 @@
 			},
 			// 选中某个城市以后 获取某个区县数据
 			cityChange(val) {
+				this.cityCodeList.forEach((item) => {
+					if(item.value === val) {
+						this.cityName = item.label;
+					}
+				})
 				this.cityCode = val;
 				this.getStoreList(this.provinceCode,val);
 				this.data.city = val;
@@ -162,6 +184,11 @@
 			},
 			// 给区县数据赋值
 			countyChange(val) {
+				this.countyCodeList.forEach((item) => {
+					if(item.value === val) {
+						this.countyName = item.label;
+					}
+				})
 				this.countyCode = val;
 				this.getStoreList(this.provinceCode,this.cityCode,val);
 			},
@@ -213,8 +240,6 @@
 						 	 return false;
 						 }
 						 this.categoryList = res.data;
-						 // this.getStoreList();
-						 // console.log('获取分类1')
 					 }
 				 })
 			 },
@@ -279,6 +304,9 @@
 				console.log('切换顶部3')
 				uni.setStorageSync("tabBarIndex", index);
 				this.clearArea();
+				this.provinceName = '';
+				this.cityName = '';
+				this.countyName = '';
 			},
 			clearArea() {
 				this.provinceCodeList = [];
@@ -307,6 +335,9 @@
 				}
 				uni.setStorageSync("tabBarData", tabData);
 				this.clearArea();
+				this.provinceName = '';
+				this.cityName = '';
+				this.countyName = '';
 			},
 			/**
 			 * @desc 右侧列表滚动条触底事件

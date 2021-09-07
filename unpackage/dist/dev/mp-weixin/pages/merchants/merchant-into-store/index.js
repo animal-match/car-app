@@ -237,6 +237,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -295,6 +298,14 @@ var _default =
               * @param 
               **/
     collecting: function collecting() {
+      var user = uni.getStorageSync("token");
+      if (!user) {
+        uni.showToast({
+          icon: "none",
+          title: "请登录后操作" });
+
+        return;
+      }
       this.starStatus = !this.starStatus; // 切换收藏状态
       if (this.starStatus === true) {
         this.iconName = 'star-fill';

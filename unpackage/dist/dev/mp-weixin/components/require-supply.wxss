@@ -115,6 +115,7 @@
   margin-left: 10rpx;
 }
 .container .information-require .second-line-other.data-v-f1dade5c {
+  min-height: 70rpx;
   font-size: 24rpx;
   margin-bottom: 10rpx;
   color: #999;

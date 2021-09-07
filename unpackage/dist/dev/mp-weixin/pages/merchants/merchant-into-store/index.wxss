@@ -71,6 +71,7 @@
 }
 .merchant-into-store .top-container .informations.data-v-088d3d62 {
   padding: 23rpx 0;
+  min-height: 100rpx;
 }
 .merchant-into-store .top-container .informations .intro.data-v-088d3d62 {
   margin-right: 10rpx !important;
@@ -112,6 +113,12 @@
   font-size: 30rpx;
   font-weight: bolder;
   margin-bottom: 0 0 20rpx 20rpx;
+}
+.merchant-into-store .empty-block.data-v-088d3d62 {
+  height: 300rpx;
+  line-height: 300rpx;
+  color: #999;
+  text-align: center;
 }
 .merchant-into-store .bottom-container.data-v-088d3d62 {
   margin: 30rpx 46rpx;

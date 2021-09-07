@@ -233,6 +233,7 @@
 			}
 
 			.second-line-other {
+				min-height: 70rpx;
 				font-size: 24rpx;
 				margin-bottom: 10rpx;
 				color: $uni-text-color-grey;

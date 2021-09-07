@@ -251,6 +251,9 @@ __webpack_require__.r(__webpack_exports__);
 
   data: function data() {
     return {
+      provinceName: '', // 省名
+      cityName: '', // 市名
+      countyName: '', // 区名
       scrollTop: 0, // 距离顶部多少时设置滚动条
       informations: [], // 商家信息
       type: 'text',
@@ -297,6 +300,13 @@ __webpack_require__.r(__webpack_exports__);
       this.currentTab = val;
       this.activeItem = 1;
       this.id = this.currentTab === 0 ? this.activeId : this.activeId_2;
+      this.form.searchKey = '';
+      this.provinceName = '';
+      this.provinceCode = 0;
+      this.cityName = '';
+      this.cityCode = 0;
+      this.countyName = '';
+      this.countyCode = 0;
     }
     // 如果点击过 顶部导航tab或左侧导航tab会进入此判断 Start
     var data = uni.getStorageSync("tabBarData");
@@ -327,7 +337,14 @@ __webpack_require__.r(__webpack_exports__);
               * @desc 选中某个省份以后 获取城市数据
               * @param
               **/
-    provinceChange: function provinceChange(val) {
+    provinceChange: function provinceChange(val) {var _this = this;
+      console.log('点击', val);
+      this.provinceCodeList.forEach(function (item) {
+        if (item.value === val) {
+          _this.provinceName = item.label;
+        }
+      });
+      console.log('省名', this.provinceName);
       this.provinceCode = val;
       this.getStoreList(val);
       this.data = { province: val };
@@ -335,14 +352,24 @@ __webpack_require__.r(__webpack_exports__);
       this.countyCodeList = [];
     },
     // 选中某个城市以后 获取某个区县数据
-    cityChange: function cityChange(val) {
+    cityChange: function cityChange(val) {var _this2 = this;
+      this.cityCodeList.forEach(function (item) {
+        if (item.value === val) {
+          _this2.cityName = item.label;
+        }
+      });
       this.cityCode = val;
       this.getStoreList(this.provinceCode, val);
       this.data.city = val;
       if (val) this.getAreaData(this.data, 'city');
     },
     // 给区县数据赋值
-    countyChange: function countyChange(val) {
+    countyChange: function countyChange(val) {var _this3 = this;
+      this.countyCodeList.forEach(function (item) {
+        if (item.value === val) {
+          _this3.countyName = item.label;
+        }
+      });
       this.countyCode = val;
       this.getStoreList(this.provinceCode, this.cityCode, val);
     },
@@ -350,7 +377,7 @@ __webpack_require__.r(__webpack_exports__);
         * @desc 获取省数据
         * @param
         **/
-    getAreaData: function getAreaData(code, flag) {var _this = this;
+    getAreaData: function getAreaData(code, flag) {var _this4 = this;
       var req = {
         url: "/api/store/area",
         // data: {province:220},
@@ -363,11 +390,11 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }
           if (!code)
-          _this.provinceCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+          _this4.provinceCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
           if (code && flag !== 'city')
-          _this.cityCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+          _this4.cityCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
           if (code && flag === 'city')
-          _this.countyCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
+          _this4.countyCodeList = JSON.parse(JSON.stringify(res.data).replace(/name/g, "label"));
         } };
 
       if (code) req.data = code;
@@ -377,7 +404,7 @@ __webpack_require__.r(__webpack_exports__);
         * @desc 获取分类
         * @param
         **/
-    getCategory: function getCategory() {var _this2 = this;
+    getCategory: function getCategory() {var _this5 = this;
       this.$request({
         url: "/api/category/getList",
         method: "POST",
@@ -393,9 +420,7 @@ __webpack_require__.r(__webpack_exports__);
 
             return false;
           }
-          _this2.categoryList = res.data;
-          // this.getStoreList();
-          // console.log('获取分类1')
+          _this5.categoryList = res.data;
         } });
 
     },
@@ -403,7 +428,7 @@ __webpack_require__.r(__webpack_exports__);
         * @desc 获取商家列表
         * @param
         **/
-    getStoreList: function getStoreList(province, city, county) {var _this3 = this;
+    getStoreList: function getStoreList(province, city, county) {var _this6 = this;
       this.$request({
         url: "/api/category/index",
         method: "POST",
@@ -425,7 +450,7 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }
           console.log(res.data, '商家列表');
-          _this3.informations = res.data;
+          _this6.informations = res.data;
         } });
 
     },
@@ -460,6 +485,9 @@ __webpack_require__.r(__webpack_exports__);
       console.log('切换顶部3');
       uni.setStorageSync("tabBarIndex", index);
       this.clearArea();
+      this.provinceName = '';
+      this.cityName = '';
+      this.countyName = '';
     },
     clearArea: function clearArea() {
       this.provinceCodeList = [];
@@ -488,6 +516,9 @@ __webpack_require__.r(__webpack_exports__);
 
       uni.setStorageSync("tabBarData", tabData);
       this.clearArea();
+      this.provinceName = '';
+      this.cityName = '';
+      this.countyName = '';
     },
     /**
         * @desc 右侧列表滚动条触底事件
