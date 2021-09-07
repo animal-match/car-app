@@ -244,6 +244,13 @@
 			this.getArea();
 		},
 		onShow() {
+			let token = uni.getStorageSync("token");
+			if(!token) {
+				uni.showToast({
+					icon: "none",
+					title: "请登录后操作"
+				})
+			}
 		},
 		methods: {
 			// 省市区列表

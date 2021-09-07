@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "一条龙信息对接平台",
+  "navigationBarTitleText": "新能源信息对接平台",
   "usingComponents": {
     "u-gap": "/node-modules/uview-ui/components/u-gap/u-gap",
     "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",

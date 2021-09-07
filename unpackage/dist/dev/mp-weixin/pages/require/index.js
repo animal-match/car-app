@@ -382,14 +382,28 @@ var _default =
     }
   },
   onShow: function onShow() {
+    var user = uni.getStorageSync("token");
     this.fromPage = uni.getStorageSync('tabBarIndex');
     if (this.fromPage === "fromHomePage1") {
       this.currentTab = 1;
+      if (!user) {
+        uni.showToast({
+          icon: "none",
+          title: "请登录后操作" });
+
+      }
     } else if (this.fromPage === "fromHomePage2") {
       this.currentTab = 2;
+      if (!user) {
+        uni.showToast({
+          icon: "none",
+          title: "请登录后操作" });
+
+      }
     } else {
       this.currentTab = 0;
     }
+
   },
   onLoad: function onLoad() {
     if (this.currentTab == 0) {
@@ -491,6 +505,14 @@ var _default =
         this.type = 'supply';
         this.init();
         console.log('被调用2');
+      } else {
+        var user = uni.getStorageSync("token");
+        if (!user) {
+          uni.showToast({
+            icon: "none",
+            title: "请登录后操作" });
+
+        }
       }
       for (var key in this.form) {
         this.form[key] = '';

@@ -38,26 +38,32 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick(_item.id)" class="information-block" v-for="(_item,_index) in merchant_0">
-				<!-- 第一行 Logo 标题 按钮 -->
-				<view class="first-line" :key="_index">
-					<!-- 左侧 Logo和标题 -->
-					<view class="left-block">
-						<u-image :src="_item.log" width="80rpx" height="80rpx" shape="circle"></u-image>
-						<view class="title-and-text">
-							<view class="title ellipsis">{{_item.store_name}}</view>
-							<view class="text ellipsis">{{_item.information}}</view>
+
+			<view v-if="merchant_0.length>0">
+				<view @click="handleClick(_item.id)" class="information-block" v-for="(_item,_index) in merchant_0">
+					<!-- 第一行 Logo 标题 按钮 -->
+					<view class="first-line" :key="_index">
+						<!-- 左侧 Logo和标题 -->
+						<view class="left-block">
+							<u-image :src="_item.log" width="80rpx" height="80rpx" shape="circle"></u-image>
+							<view class="title-and-text">
+								<view class="title ellipsis">{{_item.store_name}}</view>
+								<view class="text ellipsis">{{_item.information}}</view>
+							</view>
+						</view>
+						<view class="right-block">
+							<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.id)">进店</u-button>
 						</view>
 					</view>
-					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(_item.id)">进店</u-button>
+					<!-- 第二行 图片组 -->
+					<view class="second-line">
+						<u-image v-for="($item,$index) in _item.goods" :key="$index" class="image-list" :src="$item.image" width="160rpx"
+						 height="110rpx"></u-image>
 					</view>
 				</view>
-				<!-- 第二行 图片组 -->
-				<view class="second-line">
-					<u-image v-for="($item,$index) in _item.goods" :key="$index" class="image-list" :src="$item.image" width="160rpx"
-					 height="110rpx"></u-image>
-				</view>
+			</view>
+			<view v-else class="empty-block">
+				<text>暂无厂家</text>
 			</view>
 			<!-- 最外层大盒子 End-->
 			<u-gap height="40"></u-gap>
@@ -68,26 +74,31 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子 Start-->
-			<view @click="handleClick(item2.id)" class="information-block" v-for="(item2,index2) in merchant_1">
-				<!-- 第一行 Logo 标题 按钮 -->
-				<view class="first-line" :key="index2">
-					<!-- 左侧 Logo和标题 -->
-					<view class="left-block">
-						<u-image :src="item2.log" width="80rpx" height="80rpx" shape="circle"></u-image>
-						<view class="title-and-text">
-							<view class="title ellipsis">{{item2.store_name}}</view>
-							<view class="text ellipsis">{{item2.information}}</view>
+			<view v-if="merchant_1.length>0">
+				<view @click="handleClick(item2.id)" class="information-block" v-for="(item2,index2) in merchant_1">
+					<!-- 第一行 Logo 标题 按钮 -->
+					<view class="first-line" :key="index2">
+						<!-- 左侧 Logo和标题 -->
+						<view class="left-block">
+							<u-image :src="item2.log" width="80rpx" height="80rpx" shape="circle"></u-image>
+							<view class="title-and-text">
+								<view class="title ellipsis">{{item2.store_name}}</view>
+								<view class="text ellipsis">{{item2.information}}</view>
+							</view>
+						</view>
+						<view class="right-block">
+							<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(item2.id)">进店</u-button>
 						</view>
 					</view>
-					<view class="right-block">
-						<u-button type="error" class="btn-style" size="mini" :plain="true" :ripple="true" ripple-bg-color="#dd524d" @click="handleClick(item2.id)">进店</u-button>
+					<!-- 第二行 图片组 -->
+					<view class="second-line">
+						<u-image v-for="(item3,index3) in item2.goods" :key="index3" class="image-list" :src="item3.image" width="160rpx"
+						 height="110rpx"></u-image>
 					</view>
 				</view>
-				<!-- 第二行 图片组 -->
-				<view class="second-line">
-					<u-image v-for="(item3,index3) in item2.goods" :key="index3" class="image-list" :src="item3.image" width="160rpx"
-					 height="110rpx"></u-image>
-				</view>
+			</view>
+			<view v-else class="empty-block">
+				<text>暂无经销商</text>
 			</view>
 			<!-- 最外层大盒子 End-->
 			<u-gap height="40"></u-gap>
@@ -99,36 +110,41 @@
 			</view>
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
-			<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" class="information-require">
-				<!-- 第一行 标签 标题 按城市-->
-				<view class="first-line-other" :key="index4">
-					<!-- 左侧 标签和标题 -->
-					<view class="left-block-other" >
-						<u-tag :text="item4.type=='supply'?'供应':'求购'" mode="dark" :type="item4.type=='supply'?'primary':'error'"/>
-						<view class="title-other ellipsis">
-							<view class="title ellipsis">{{item4.title || '-'}}</view>
+			<view v-if="totalinfo.length>0">
+				<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" class="information-require">
+					<!-- 第一行 标签 标题 按城市-->
+					<view class="first-line-other" :key="index4">
+						<!-- 左侧 标签和标题 -->
+						<view class="left-block-other" >
+							<u-tag :text="item4.type=='supply'?'供应':'求购'" mode="dark" :type="item4.type=='supply'?'primary':'error'"/>
+							<view class="title-other ellipsis">
+								<view class="title ellipsis">{{item4.title || '-'}}</view>
+							</view>
+						</view>
+						<view class="right-block">
+							{{item4.city || '-'}}
 						</view>
 					</view>
-					<view class="right-block">
-						{{item4.city || '-'}}
+					<!-- 第二行 描述 -->
+					<view class="second-line-other multi-ellipsis">
+						{{item4.content || '-'}}
 					</view>
-				</view>
-				<!-- 第二行 描述 -->
-				<view class="second-line-other multi-ellipsis">
-					{{item4.content || '-'}}
-				</view>
-				<!-- 第三行 头像 昵称 时间 -->
-				<view class="third-line-other">
-					<!-- 左侧 头像 昵称 -->
-					<view class="left-nickname">
-						<u-image :src="item4.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
-						<view class="nickname">
-							{{item4.user.nickname || '-'}}
+					<!-- 第三行 头像 昵称 时间 -->
+					<view class="third-line-other">
+						<!-- 左侧 头像 昵称 -->
+						<view class="left-nickname">
+							<u-image :src="item4.user.avatar" width="42rpx" height="42rpx" shape="circle"></u-image>
+							<view class="nickname">
+								{{item4.user.nickname || '-'}}
+							</view>
 						</view>
+						<!-- 右侧 时间 -->
+						<view class="date-other">{{item4.user.createtime | timeStampFilter}}</view>
 					</view>
-					<!-- 右侧 时间 -->
-					<view class="date-other">{{item4.user.createtime | timeStampFilter}}</view>
 				</view>
+			</view>
+			<view v-else class="empty-block">
+				<text>暂无供求信息</text>
 			</view>
 			<!-- 最外层大盒子End -->
 			<u-gap height="40"></u-gap>
@@ -186,7 +202,6 @@
 					 url: "/api/store/index",
 					 method: "GET",
 					 data: {type: 0}, // 厂家
-					 // hideLoading: true,
 					 success: res=> {
 						 if(res.code===0) {
 						 	 uni.showToast({
@@ -262,8 +277,7 @@
 							})
 							return false
 						}
-						this.totalinfo = res.data.data//.slice(0,2);
-						
+						this.totalinfo = res.data.data;
 					}
 				})
 			},
@@ -426,7 +440,14 @@
 				}
 			}
 		}
-
+		.empty-block {
+			color: $uni-text-color-grey;
+			height: 173rpx;
+			line-height: 173rpx;
+			border-radius: 20rpx;
+			background: $uni-bg-color;
+			text-align: center;
+		}
 		.manufacturers-title {
 			display: flex;
 			justify-content: space-between;

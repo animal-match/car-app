@@ -22,7 +22,7 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "一条龙信息对接平台",
+    "navigationBarTitleText": "新能源信息对接平台",
     "navigationBarBackgroundColor": "#CA0303",
     "backgroundColor": "#F8F8F8",
     "backgroundTextStyle": "light"
@@ -65,6 +65,5 @@
   },
   "usingComponents": {
     "require-supply": "/components/require-supply"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

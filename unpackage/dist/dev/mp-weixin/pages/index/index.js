@@ -134,16 +134,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.totalinfo.slice(0, 2), function(item4, index4) {
-    var $orig = _vm.__get_orig(item4)
+  var l0 =
+    _vm.totalinfo.length > 0
+      ? _vm.__map(_vm.totalinfo.slice(0, 2), function(item4, index4) {
+          var $orig = _vm.__get_orig(item4)
 
-    var f0 = _vm._f("timeStampFilter")(item4.user.createtime)
+          var f0 = _vm._f("timeStampFilter")(item4.user.createtime)
 
-    return {
-      $orig: $orig,
-      f0: f0
-    }
-  })
+          return {
+            $orig: $orig,
+            f0: f0
+          }
+        })
+      : null
 
   if (!_vm._isMounted) {
     _vm.e0 = function($event, item4) {
@@ -336,6 +339,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -386,7 +405,6 @@ var _default =
         url: "/api/store/index",
         method: "GET",
         data: { type: 0 }, // 厂家
-        // hideLoading: true,
         success: function success(res) {
           if (res.code === 0) {
             uni.showToast({
@@ -462,8 +480,7 @@ var _default =
 
             return false;
           }
-          _this5.totalinfo = res.data.data; //.slice(0,2);
-
+          _this5.totalinfo = res.data.data;
         } });
 
     },

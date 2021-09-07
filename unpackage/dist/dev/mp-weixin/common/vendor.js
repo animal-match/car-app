@@ -13726,7 +13726,7 @@ function timeStampFilter(timeStamp) {
       //设置默认的分享参数
       share: {
         title: "新能源信息对接平台",
-        path: "/pages/me/login",
+        path: "/pages/index/index",
         imageUrl: "",
         desc: "欢迎使用新能源信息对接平台",
         content: "分享内容：" } };
