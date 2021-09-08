@@ -364,7 +364,8 @@ var _default =
       banner: [], // // 轮播图
       merchant_0: [], // 厂家
       merchant_1: [], // 经销商
-      totalinfo: [] // 供求信息
+      totalinfo: [], // 供求信息
+      cloneTotalinfo: [] // 深拷贝的供求信息
     };
   },
 
@@ -481,6 +482,12 @@ var _default =
             return false;
           }
           _this5.totalinfo = res.data.data;
+          // 深拷贝数组
+          var arr = [];
+          for (var i = 0; i < _this5.totalinfo.length; i++) {
+            arr.push(_this5.totalinfo[i]);
+          }
+          _this5.cloneTotalinfo = arr;
         } });
 
     },
@@ -561,7 +568,8 @@ var _default =
         * @param {string}
         **/
     goDetails: function goDetails(id) {
-      var arr = this.totalinfo.sort(function () {return Math.random() - 0.5;});; // 只要传数组过去 就会有相关推荐列表
+      var arr = this.cloneTotalinfo; // 只要传数组过去 就会有相关推荐列表
+      console.log('传递数组', arr);
       uni.navigateTo({
         url: '/pages/require/details/index?id=' + id + '&arr=' + JSON.stringify(arr) });
 

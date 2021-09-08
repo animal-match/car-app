@@ -57,7 +57,7 @@
 				</view>
 				
 				<u-form-item label="请填写联系电话" :required="true" prop="phoneNo">
-					<u-input v-model="form.phoneNo" placeholder="请填写电话号码" @blur="blur"/>
+					<u-input v-model="form.phoneNo" placeholder="请填写电话号码" />
 					<text style="font-size: 24rpx; color: red;" :class="alert===true?'tipsShow':'tipsHide'">手机号码格式不正确</text>
 				</u-form-item>
 				
@@ -258,17 +258,6 @@
 			}
 		},
 		methods: {
-			// blur() {
-			// 	if(this.form.phoneNo.length == 11) {
-			// 		this.alert = false;
-			// 	}
-			// 	if(this.form.phoneNo.length > 11) {
-			// 		this.alert = false;
-			// 	}
-			// 	if(this.form.phoneNo.length < 11) {
-			// 		this.alert = true;
-			// 	}
-			// },
 			// 省市区列表
 			getArea() {
 				let req = {

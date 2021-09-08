@@ -111,7 +111,7 @@
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
 			<view v-if="totalinfo.length>0">
-				<view v-for="(item4,index4) in totalinfo.slice(0,2)" @click="goDetails(item4.id)" class="information-require">
+				<view v-for="(item4,index4) in totalinfo.slice(0, 2)" @click="goDetails(item4.id)" class="information-require">
 					<!-- 第一行 标签 标题 按城市-->
 					<view class="first-line-other" :key="index4">
 						<!-- 左侧 标签和标题 -->
@@ -161,7 +161,8 @@
 				banner: [], // // 轮播图
 				merchant_0: [], // 厂家
 				merchant_1: [], // 经销商
-				totalinfo: [] // 供求信息
+				totalinfo: [] ,// 供求信息
+				cloneTotalinfo: [], // 深拷贝的供求信息
 			}
 		},
 
@@ -278,6 +279,12 @@
 							return false
 						}
 						this.totalinfo = res.data.data;
+						// 深拷贝数组
+						let arr = [];
+						for(let i=0; i<this.totalinfo.length; i++) {
+							arr.push(this.totalinfo[i]);
+						}
+						this.cloneTotalinfo = arr;
 					}
 				})
 			},
@@ -358,7 +365,8 @@
 			 * @param {string}
 			 **/
 			goDetails(id) {
-				let arr = this.totalinfo.sort(()=>Math.random()-0.5);; // 只要传数组过去 就会有相关推荐列表
+				let arr = this.cloneTotalinfo; // 只要传数组过去 就会有相关推荐列表
+				console.log('传递数组',arr)
 				uni.navigateTo({
 					url: '/pages/require/details/index?id='+id + '&arr=' + JSON.stringify(arr)
 				})

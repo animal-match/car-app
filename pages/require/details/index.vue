@@ -79,7 +79,9 @@
 		},
 		onLoad(opt) {
 			console.log(opt,'详情页')
-			let arr = opt.arr?JSON.parse(opt.arr):[];
+			let arr = opt.arr ? JSON.parse(opt.arr) : []; // 打乱数组顺序
+			arr = arr.sort(()=>Math.random()-0.5).slice(0, 20);
+			console.log('接收数组',arr)
 			this.isShowComment = arr.length > 1;
 			console.log('展示推荐',this.isShowComment)
 			if(this.isShowComment===true) {

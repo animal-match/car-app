@@ -448,17 +448,6 @@ var _default =
     }
   },
   methods: {
-    // blur() {
-    // 	if(this.form.phoneNo.length == 11) {
-    // 		this.alert = false;
-    // 	}
-    // 	if(this.form.phoneNo.length > 11) {
-    // 		this.alert = false;
-    // 	}
-    // 	if(this.form.phoneNo.length < 11) {
-    // 		this.alert = true;
-    // 	}
-    // },
     // 省市区列表
     getArea: function getArea() {var _this2 = this;
       var req = {
