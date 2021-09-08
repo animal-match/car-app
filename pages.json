@@ -121,9 +121,9 @@
 		"backgroundTextStyle": "light"
 	},
 	"tabBar": {
-		"color": "#1A1A1A",
+		"color": "#999",
 		"selectedColor": "#b50e03",
-		"backgroundColor": "#EBEBEB",
+		"backgroundColor": "#FFF",
 		"list": [{
 				"text": "首页",
 				"pagePath": "pages/index/index",

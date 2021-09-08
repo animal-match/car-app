@@ -142,25 +142,72 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
     return {
-      addressPosition: '' };
+      addressPosition: '',
+      address: {
+        longitude: '',
+        latitude: '' },
+
+      myMap: 0,
+      markers: [] };
 
   },
+  onLoad: function onLoad() {
+    this.init();
+  },
   methods: {
+    init: function init() {
+      var that = this;
+      uni.getLocation({
+        type: 'wgs84',
+        success: function success(res) {
+          console.log('当前位置的经度：' + res.longitude);
+          console.log('当前位置的纬度：' + res.latitude);
+          that.address.latitude = res.latitude;
+          that.address.longitude = res.longitude;
+        } });
+
+    },
     position: function position() {var _this = this;
       uni.chooseLocation({
         success: function success(res) {
-          console.log('地点名：', res.name, '详细地址：', res.address, '经度：', res.longitude, '纬度', res.latitude);
+          console.log('地点名：', res.address);
           _this.addressPosition = res.address;
+          _this.address.longitude = res.longitude;
+          _this.address.latitude = res.latitude;
           var addressObj = {
             address: res.address,
             longitude: res.longitude,
             latitude: res.latitude };
 
           uni.$emit('addressInfo', addressObj);
+          var arr = [{
+            id: 1,
+            longitude: res.longitude,
+            latitude: res.latitude,
+            name: res.address }];
+
+          var markers = [];
+          for (var i = 0; i < arr.length; i++) {
+            markers = markers.concat({
+              id: arr[i].id,
+              latitude: arr[i].latitude,
+              longitude: arr[i].longitude,
+              callout: {
+                content: arr[i].name, //文本
+                color: '#ffffff', //文字颜色
+                fontSize: 10, //文本大小
+                borderRadius: 2, //边框圆角
+                bgColor: '#00c16f', //背景颜色
+                display: 'ALWAYS' //常显
+              } });
+
+          }
+          _this.markers = markers;
         } });
 
     } } };exports.default = _default;
