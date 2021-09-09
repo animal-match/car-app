@@ -22,7 +22,7 @@
 					<u-dropdown-item v-model="countyCode" :title="countyName || '区县'" :options="countyCodeList" @change="countyChange"></u-dropdown-item>
 				</u-dropdown>
 			</view>
-		<u-gap height="20"></u-gap>
+		<u-gap height="20" bg-color="#f8f8f8"></u-gap>
 		<view class="nav-and-list">
 			<!-- 左侧为导航 -->
 			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="left-nav-bar">
@@ -79,7 +79,21 @@
 				form: {
 					searchKey: ''
 				},
-				categoryList: [], // 分类列表
+				categoryList: [
+					{name: "四驱车1"},
+					{name: "四驱车2"},
+					{name: "四驱车3"},
+					{name: "四驱车4"},
+					{name: "四驱车5"},
+					{name: "四驱车6"},
+					{name: "四驱车7"},
+					{name: "四驱车8"},
+					{name: "四驱车9"},
+					{name: "四驱车10"},
+					{name: "四驱车11"},
+					{name: "四驱车12"},
+					{name: "四驱车13"},
+				], // 分类列表
 				activeItem: 1, // 当前激活的色块item.id
 				currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
 				id: 0, // 选择的分类数据 配件的id为1默认
@@ -239,7 +253,7 @@
 						 	 })
 						 	 return false;
 						 }
-						 this.categoryList = res.data;
+						 this.categoryList = res.data || [];
 					 }
 				 })
 			 },
@@ -361,7 +375,7 @@
 
 <style lang="scss">
 	.merchant {
-		background-color: $uni-bg-color-grey;
+		background-color: #FFF;
 		height: 100vh;
 	}
 	// 省市区选择器 滚动条显示
@@ -396,7 +410,7 @@
 		height: 100vh;
 		.left-nav-bar {
 			width: 30%;
-			overflow-y: auto;
+			overflow-y: scroll;
 			background-color: $uni-text-color-inverse;
 
 			ul {
@@ -411,6 +425,10 @@
 					border-bottom-right-radius: 20rpx;
 					border-top: 2rpx solid $uni-bg-color-grey;
 					border-right: 2rpx solid $uni-bg-color-grey;
+				}
+				.list:last-child,
+				.white-list:last-child {
+					margin-bottom: 300rpx;
 				}
 				.list:last-child, .white-list:last-child {
 					border-bottom: 2rpx solid $uni-bg-color-grey;
@@ -429,8 +447,10 @@
 		}
 
 		.right-list-bar {
+			background-color: $uni-bg-color-grey;
+			padding-bottom: 300rpx;
 			width: 70%;
-			overflow-y: auto;
+			overflow-y: visible;
 
 			.information-block {
 				border-radius: 20rpx;

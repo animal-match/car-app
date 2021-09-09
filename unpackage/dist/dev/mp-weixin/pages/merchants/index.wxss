@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .merchant {
-  background-color: #f8f8f8;
+  background-color: #FFF;
   height: 100vh;
 }
  .u-dropdown-item .u-dropdown-item__options {
@@ -83,7 +83,7 @@
 }
 .nav-and-list .left-nav-bar.data-v-bdd919f6 {
   width: 30%;
-  overflow-y: auto;
+  overflow-y: scroll;
   background-color: #fff;
 }
 .nav-and-list .left-nav-bar ._ul.data-v-bdd919f6 {
@@ -99,6 +99,10 @@
   border-top: 2rpx solid #f8f8f8;
   border-right: 2rpx solid #f8f8f8;
 }
+.nav-and-list .left-nav-bar ._ul .list.data-v-bdd919f6:last-child,
+.nav-and-list .left-nav-bar ._ul .white-list.data-v-bdd919f6:last-child {
+  margin-bottom: 300rpx;
+}
 .nav-and-list .left-nav-bar ._ul .list.data-v-bdd919f6:last-child, .nav-and-list .left-nav-bar ._ul .white-list.data-v-bdd919f6:last-child {
   border-bottom: 2rpx solid #f8f8f8;
 }
@@ -111,8 +115,10 @@
   color: #333;
 }
 .nav-and-list .right-list-bar.data-v-bdd919f6 {
+  background-color: #f8f8f8;
+  padding-bottom: 300rpx;
   width: 70%;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 .nav-and-list .right-list-bar .information-block.data-v-bdd919f6 {
   border-radius: 20rpx;

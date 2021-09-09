@@ -260,7 +260,21 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         searchKey: '' },
 
-      categoryList: [], // 分类列表
+      categoryList: [
+      { name: "四驱车1" },
+      { name: "四驱车2" },
+      { name: "四驱车3" },
+      { name: "四驱车4" },
+      { name: "四驱车5" },
+      { name: "四驱车6" },
+      { name: "四驱车7" },
+      { name: "四驱车8" },
+      { name: "四驱车9" },
+      { name: "四驱车10" },
+      { name: "四驱车11" },
+      { name: "四驱车12" },
+      { name: "四驱车13" }],
+      // 分类列表
       activeItem: 1, // 当前激活的色块item.id
       currentTab: 0, // 当前tab的索引 0 厂商，1 经销商
       id: 0, // 选择的分类数据 配件的id为1默认
@@ -420,7 +434,7 @@ __webpack_require__.r(__webpack_exports__);
 
             return false;
           }
-          _this5.categoryList = res.data;
+          _this5.categoryList = res.data || [];
         } });
 
     },
