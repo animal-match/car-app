@@ -363,13 +363,49 @@ var _default =
     this.getMoreList();
     this.static(); // 厂家和经销商数量
     this.getRequireSupply();
+    this.login();
   },
   methods: {
+    login: function login() {var _this = this;
+      uni.login({
+        provider: 'weixin',
+        success: function success(loginRes) {
+          console.log('是否登录', loginRes.code);
+          _this.$request({
+            url: "/api/user/getWxMiniProgramSessionKey",
+            data: {
+              code: loginRes.code },
+
+            success: function success(res) {
+              if (res.code != 1) {
+                uni.showToast({
+                  icon: "none",
+                  title: res.msg,
+                  duration: 3000 });
+
+                return false;
+              }
+              console.log('openid', res.data.openid);
+              var openid = res.data.openid;
+              var session_key = res.data.session_key;
+              // this.$request({
+              // 	url: "/api/user/wxMiniProgramOauth",
+              // 	method: "POST",
+              // 	data: {
+              // 		session_key: sessionKey,
+              // 		...data
+              // 	},
+              // })
+            } });
+
+        } });
+
+    },
     /**
-              * @desc 轮播图
-              * @param
-              **/
-    getBanner: function getBanner() {var _this = this;
+        * @desc 轮播图
+        * @param
+        **/
+    getBanner: function getBanner() {var _this2 = this;
       this.$request({
         url: "/api/decorate/banner",
         success: function success(res) {
@@ -381,7 +417,7 @@ var _default =
 
             return false;
           }
-          _this.banner = res.data;
+          _this2.banner = res.data;
         } });
 
     },
@@ -389,7 +425,7 @@ var _default =
         * @desc 请求页面数据（厂家列表）
         * @param
         **/
-    getList: function getList() {var _this2 = this;
+    getList: function getList() {var _this3 = this;
       this.$request({
         url: "/api/store/index",
         method: "GET",
@@ -403,7 +439,7 @@ var _default =
 
             return false;
           }
-          _this2.merchant_0 = res.data.slice(0, 4);
+          _this3.merchant_0 = res.data.slice(0, 4);
           console.log(res, "首页厂家");
         } });
 
@@ -412,7 +448,7 @@ var _default =
         * @desc 请求页面数据（经销商列表）
         * @param
         **/
-    getMoreList: function getMoreList() {var _this3 = this;
+    getMoreList: function getMoreList() {var _this4 = this;
       this.$request({
         url: "/api/store/index",
         method: "GET",
@@ -427,7 +463,7 @@ var _default =
 
             return false;
           }
-          _this3.merchant_1 = res.data.slice(0, 4);
+          _this4.merchant_1 = res.data.slice(0, 4);
           console.log(res, "首页经销商");
         } });
 
@@ -436,7 +472,7 @@ var _default =
         * @desc 获取厂家经销商数量
         * @param
         **/
-    static: function _static() {var _this4 = this;
+    static: function _static() {var _this5 = this;
       this.$request({
         url: "/api/store/statistics",
         success: function success(res) {
@@ -448,8 +484,8 @@ var _default =
 
             return false;
           }
-          _this4.manufactor = res.data.manufactor;
-          _this4.distributor = res.data.distributor;
+          _this5.manufactor = res.data.manufactor;
+          _this5.distributor = res.data.distributor;
         } });
 
     },
@@ -457,7 +493,7 @@ var _default =
         * @desc 获取供求信息
         * @param
         **/
-    getRequireSupply: function getRequireSupply() {var _this5 = this;
+    getRequireSupply: function getRequireSupply() {var _this6 = this;
       this.$request({
         url: "/api/supply/index",
         method: "POST",
@@ -470,13 +506,13 @@ var _default =
             return false;
           }
           console.log('供求', res.data.data);
-          _this5.totalinfo = res.data.data;
+          _this6.totalinfo = res.data.data;
           // 深拷贝数组
           var arr = [];
-          for (var i = 0; i < _this5.totalinfo.length; i++) {
-            arr.push(_this5.totalinfo[i]);
+          for (var i = 0; i < _this6.totalinfo.length; i++) {
+            arr.push(_this6.totalinfo[i]);
           }
-          _this5.cloneTotalinfo = arr;
+          _this6.cloneTotalinfo = arr;
         } });
 
     },

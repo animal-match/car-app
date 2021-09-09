@@ -165,15 +165,51 @@
 				cloneTotalinfo: [], // 深拷贝的供求信息
 			}
 		},
-
+ 
 		onShow() {
 			this.getBanner();
 			this.getList();
 			this.getMoreList();
 			this.static(); // 厂家和经销商数量
 			this.getRequireSupply();
+			this.login();
 		},
 		methods: {
+			login() {
+				uni.login({
+				  provider: 'weixin',
+				  success: (loginRes) => {
+				    console.log('是否登录',loginRes.code);
+						this.$request({
+							url: "/api/user/getWxMiniProgramSessionKey",
+							data: {
+								code: loginRes.code
+							},
+							success: res=> {
+								if(res.code != 1) {
+									 uni.showToast({
+										 icon: "none",
+										 title: res.msg,
+										 duration: 3000
+									 })
+									 return false;
+								}
+								console.log('openid',res.data.openid)
+								const openid = res.data.openid;
+								const session_key = res.data.session_key;
+								// this.$request({
+								// 	url: "/api/user/wxMiniProgramOauth",
+								// 	method: "POST",
+								// 	data: {
+								// 		session_key: sessionKey,
+								// 		...data
+								// 	},
+								// })
+							},
+						})
+				  }
+				});
+			},
 			/**
 			 * @desc 轮播图
 			 * @param
