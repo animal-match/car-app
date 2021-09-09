@@ -85,7 +85,7 @@
 			this.isShowComment = arr.length > 1;
 			console.log('展示推荐',this.isShowComment)
 			if(this.isShowComment===true) {
-				this.commentList = arr.slice(0,3);
+				this.commentList = arr.slice(0,3)
 			}	
 			console.log('推荐',this.commentList);
 			this.detailInfo(opt.id);

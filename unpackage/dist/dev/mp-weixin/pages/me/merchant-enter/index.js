@@ -109,11 +109,11 @@ try {
     uInput: function() {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-input/u-input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-input/u-input")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-input/u-input.vue */ 273))
     },
-    uButton: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
-    },
     uSelect: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-select/u-select */ "node-modules/uview-ui/components/u-select/u-select").then(__webpack_require__.bind(null, /*! uview-ui/components/u-select/u-select.vue */ 343))
+    },
+    uButton: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
     },
     uRadioGroup: function() {
       return Promise.all(/*! import() | node-modules/uview-ui/components/u-radio-group/u-radio-group */[__webpack_require__.e("common/vendor"), __webpack_require__.e("node-modules/uview-ui/components/u-radio-group/u-radio-group")]).then(__webpack_require__.bind(null, /*! uview-ui/components/u-radio-group/u-radio-group.vue */ 322))
@@ -189,6 +189,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
 //
 //
 //
@@ -422,17 +423,7 @@ var _default =
       fileList: [] // 显示预先设置的图片
     };
   },
-  computed: {
-    address: function address() {
-      if (this.form.address.length > 0) {
-        return this.form.address;
-      } else {
-        return '';
-      }
-    } },
-
   onLoad: function onLoad() {
-    uni.$on('addressInfo', this.addressInfos); // 接收地址
     uni.$on('proDatas', this.productDatas); // 接收图片
     uni.$on('proDatas2', this.productDatas2); // 接收视频
     this.getTags();
@@ -448,6 +439,12 @@ var _default =
     }
   },
   methods: {
+    // 接收地图页面传来的数据
+    upData: function upData(msg) {
+      this.form.address = msg.address;
+      this.form.selected.longitude = msg.longitude;
+      this.form.selected.latitude = msg.latitude;
+    },
     // 省市区列表
     getArea: function getArea() {var _this2 = this;
       var req = {
@@ -555,12 +552,12 @@ var _default =
       console.log(this.form.id, 'y');
     },
     // 接收从地图传来的数据
-    addressInfos: function addressInfos(e) {
-      console.log(e, '传来的地址对象');
-      this.form.address = e.address;
-      this.form.selected.longitude = e.longitude;
-      this.form.selected.latitude = e.latitude;
-    },
+    // addressInfos(e) {
+    // 	console.log(e,'传来的地址对象')
+    // 	this.form.address = e.address;
+    // 	this.form.selected.longitude = e.longitude;
+    // 	this.form.selected.latitude = e.latitude;
+    // },
     // 产品名称和图片
     productDatas: function productDatas(e) {
       this.imageTitle = this.imageTitle.concat(e);

@@ -13,18 +13,19 @@
 				<u-form-item label="商家介绍" :required="true" prop="merchantIntro">
 					<u-input v-model="form.merchantIntro" type="textarea" height="300" :border="border"/>
 				</u-form-item>
-				<!-- 地区选择按钮 -->
-				<view class="district">
-					<u-button @click="chooseAddress" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
-					<u-form-item label="请选择地址" :required="true" prop="address">
-						<text>{{ address }}</text>	
-					</u-form-item>
-				</view>
+				<!-- 地址选择按钮 -->
 				<view class="district">
 					<u-select v-model="showAreaList" mode="mutil-column-auto" :list="areaList" @confirm="areaConfirm"></u-select>
 					<u-button @click="chooseArea" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
 					<u-form-item label="请选择地区" :required="true" prop="area">
 						<text>{{ form.area }}</text>
+					</u-form-item>
+				</view>
+				<!-- 地区选择按钮 -->
+				<view class="district">
+					<u-button @click="chooseAddress" size="mini" class="choose" :ripple="true" ripple-bg-color="#CA0303">选择</u-button>
+					<u-form-item label="请选择地址" :required="true" prop="address">
+						<text>{{ form.address }}</text>	
 					</u-form-item>
 				</view>
 
@@ -232,17 +233,7 @@
 				fileList: [], // 显示预先设置的图片
 			}
 		},
-		computed: {
-			address() {
-				if(this.form.address.length > 0) {
-					return this.form.address;
-				}else{
-					return '';
-				}
-			}
-		},
 		onLoad() {
-			uni.$on('addressInfo',this.addressInfos) // 接收地址
 			uni.$on('proDatas',this.productDatas) // 接收图片
 			uni.$on('proDatas2', this.productDatas2); // 接收视频
 			this.getTags();
@@ -258,6 +249,12 @@
 			}
 		},
 		methods: {
+			// 接收地图页面传来的数据
+			upData(msg) {
+				this.form.address = msg.address;
+				this.form.selected.longitude = msg.longitude;
+				this.form.selected.latitude = msg.latitude;
+			},
 			// 省市区列表
 			getArea() {
 				let req = {
@@ -365,12 +362,12 @@
 				console.log(this.form.id,'y')
 			},
 			// 接收从地图传来的数据
-			addressInfos(e) {
-				console.log(e,'传来的地址对象')
-				this.form.address = e.address;
-				this.form.selected.longitude = e.longitude;
-				this.form.selected.latitude = e.latitude;
-			},
+			// addressInfos(e) {
+			// 	console.log(e,'传来的地址对象')
+			// 	this.form.address = e.address;
+			// 	this.form.selected.longitude = e.longitude;
+			// 	this.form.selected.latitude = e.latitude;
+			// },
 			// 产品名称和图片
 			productDatas(e) {
 				this.imageTitle = this.imageTitle.concat(e);

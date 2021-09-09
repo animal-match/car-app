@@ -111,7 +111,7 @@
 			<u-gap height="40"></u-gap>
 			<!-- 最外层大盒子Start -->
 			<view v-if="totalinfo.length>0">
-				<view v-for="(item4,index4) in totalinfo.slice(0, 2)" @click="goDetails(item4.id)" class="information-require">
+				<view v-for="(item4,index4) in totalinfo.slice(0, 6)" @click="goDetails(item4.id)" class="information-require">
 					<!-- 第一行 标签 标题 按城市-->
 					<view class="first-line-other" :key="index4">
 						<!-- 左侧 标签和标题 -->
@@ -139,7 +139,7 @@
 							</view>
 						</view>
 						<!-- 右侧 时间 -->
-						<view class="date-other">{{item4.user.createtime | timeStampFilter}}</view>
+						<view class="date-other">{{ item4.createtime || '-' }}</view>
 					</view>
 				</view>
 			</view>
@@ -212,7 +212,7 @@
 						 	 })
 						 	 return false;
 						 }
-						 this.merchant_0 = res.data.slice(0,2);
+						 this.merchant_0 = res.data.slice(0,4);
 						 console.log(res,"首页厂家");
 					 }
 				 })
@@ -236,7 +236,7 @@
 						 	 })
 						 	 return false;
 						 }
-						 this.merchant_1 = res.data.slice(0,2);
+						 this.merchant_1 = res.data.slice(0,4);
 						 console.log(res,"首页经销商");
 				 }
 				})
@@ -278,6 +278,7 @@
 							})
 							return false
 						}
+						console.log('供求',res.data.data)
 						this.totalinfo = res.data.data;
 						// 深拷贝数组
 						let arr = [];

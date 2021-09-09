@@ -184,7 +184,14 @@ var _default =
             longitude: res.longitude,
             latitude: res.latitude };
 
-          uni.$emit('addressInfo', addressObj);
+          var pages = getCurrentPages();
+          var nowPage = pages[pages.length - 1]; //当前页页面实例
+          var prevPage = pages[pages.length - 2]; //上一页页面实例
+          prevPage.$vm.upData(addressObj);
+          uni.navigateBack({
+            delta: 1 // 可以不傳delta值，默認為1
+          });
+          // 这里是显示定位的气泡，暂时业务不需要，需要时可解开
           var arr = [{
             id: 1,
             longitude: res.longitude,

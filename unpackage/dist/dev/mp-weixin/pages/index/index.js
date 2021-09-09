@@ -134,19 +134,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 =
-    _vm.totalinfo.length > 0
-      ? _vm.__map(_vm.totalinfo.slice(0, 2), function(item4, index4) {
-          var $orig = _vm.__get_orig(item4)
-
-          var f0 = _vm._f("timeStampFilter")(item4.user.createtime)
-
-          return {
-            $orig: $orig,
-            f0: f0
-          }
-        })
-      : null
+  var l0 = _vm.totalinfo.length > 0 ? _vm.totalinfo.slice(0, 6) : null
 
   if (!_vm._isMounted) {
     _vm.e0 = function($event, item4) {
@@ -415,7 +403,7 @@ var _default =
 
             return false;
           }
-          _this2.merchant_0 = res.data.slice(0, 2);
+          _this2.merchant_0 = res.data.slice(0, 4);
           console.log(res, "首页厂家");
         } });
 
@@ -439,7 +427,7 @@ var _default =
 
             return false;
           }
-          _this3.merchant_1 = res.data.slice(0, 2);
+          _this3.merchant_1 = res.data.slice(0, 4);
           console.log(res, "首页经销商");
         } });
 
@@ -481,6 +469,7 @@ var _default =
 
             return false;
           }
+          console.log('供求', res.data.data);
           _this5.totalinfo = res.data.data;
           // 深拷贝数组
           var arr = [];

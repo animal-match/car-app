@@ -22,15 +22,15 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "一条龙信息对接平台",
+    "navigationBarTitleText": "新能源信息对接平台",
     "navigationBarBackgroundColor": "#CA0303",
     "backgroundColor": "#F8F8F8",
     "backgroundTextStyle": "light"
   },
   "tabBar": {
-    "color": "#1A1A1A",
+    "color": "#999",
     "selectedColor": "#b50e03",
-    "backgroundColor": "#EBEBEB",
+    "backgroundColor": "#FFF",
     "list": [
       {
         "text": "首页",
