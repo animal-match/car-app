@@ -12,7 +12,8 @@
 			￥{{money}}
 		</view>
 		<u-gap height="300"></u-gap>
-		<u-button :custom-style="customStyle" shape="circle" @click="turnHome">返回首页</u-button>
+		<u-button v-if="isSinglePay===false" :custom-style="customStyle" shape="circle" @click="turnHome">返回首页</u-button>
+		<u-button v-else :custom-style="customStyle" shape="circle" @click="turnStore">返回商家</u-button>
 	</view>
 </template>
 
@@ -20,6 +21,8 @@
 	export default {
 		data() {
 			return {
+				isSinglePay: false, // 是否为厂家单次查看经销商支付费用的方式
+				storeId: null, // 支付成功后要返回的商家id
 				money: 0,
 				customStyle: {
 					color: '#CA0303',
@@ -31,6 +34,8 @@
 		},
 		onLoad(opt) {
 			this.money = Number(opt.money) || 0;
+			this.isSinglePay = opt.isSinglePay || false
+			this.storeId = opt.storeId || null
 		},
 		methods: {
 			/**
@@ -41,7 +46,13 @@
 				uni.switchTab({
 					url: '/pages/index/index'
 				})
-			}
+			},
+			// 返回商家页
+			turnStore() {
+				uni.navigateTo({
+					url: "../merchant-into-store/index?id="+this.storeId
+				})
+			},
 		}
 	}
 </script>

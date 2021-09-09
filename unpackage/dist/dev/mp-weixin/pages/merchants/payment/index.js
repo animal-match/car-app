@@ -158,7 +158,8 @@ var _default =
       type: '', // 商家类型
       payment: null, // 支付金额
       storeId: '', // 厂家要查看的商家ID
-      sortType: 1 // 要支付的类型 1 开通会员 2查看经销商
+      sortType: 1, // 要支付的类型 1 开通会员 2查看经销商
+      isSinglePay: false // 是否为单次查看支付费用
     };
   },
   onLoad: function onLoad(options) {
@@ -168,6 +169,7 @@ var _default =
     if (Object.keys(options).length > 0) {
       this.payment = options.money;
       if (!!options.storeId) {
+        this.isSinglePay = true; // 是单次查看支付
         this.storeId = options.storeId;
         this.sortType = 2; // 要查看经销商
       }
@@ -243,7 +245,7 @@ var _default =
                   uni.hideLoading();
                   var money = _this.payment;
                   uni.navigateTo({
-                    url: "./pay-success?money=" + money });
+                    url: "./pay-success?money=" + money + "&storeId=" + _this.storeId + "&isSinglePay=" + _this.isSinglePay });
 
                 },
                 fail: function fail(err) {

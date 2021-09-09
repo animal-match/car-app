@@ -177,10 +177,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
     return {
+      isSinglePay: false, // 是否为厂家单次查看经销商支付费用的方式
+      storeId: null, // 支付成功后要返回的商家id
       money: 0,
       customStyle: {
         color: '#CA0303',
@@ -192,6 +195,8 @@ var _default =
   },
   onLoad: function onLoad(opt) {
     this.money = Number(opt.money) || 0;
+    this.isSinglePay = opt.isSinglePay || false;
+    this.storeId = opt.storeId || null;
   },
   methods: {
     /**
@@ -201,6 +206,12 @@ var _default =
     turnHome: function turnHome() {
       uni.switchTab({
         url: '/pages/index/index' });
+
+    },
+    // 返回商家页
+    turnStore: function turnStore() {
+      uni.navigateTo({
+        url: "../merchant-into-store/index?id=" + this.storeId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

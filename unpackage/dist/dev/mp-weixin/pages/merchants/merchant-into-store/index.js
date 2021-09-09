@@ -268,7 +268,7 @@ var _default =
     };
   },
   onLoad: function onLoad(opt) {
-    this.idValue = opt.id;
+    this.idValue = opt.id; // 就是store_id
     this.storeInfo(opt.id);
   },
   onShow: function onShow() {
