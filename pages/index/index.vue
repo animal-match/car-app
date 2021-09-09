@@ -4,7 +4,7 @@
 		<view class="container">
 			<u-gap height="20"></u-gap>
 			<!-- 轮播图 -->
-			<u-swiper :list="banner"></u-swiper>
+			<u-swiper :list="banner" height="356"></u-swiper>
 			<u-gap height="45"></u-gap>
 			<view class="nav-district">
 				<u-image @click="goDetailsPage('supply')" src="/static/nav-images/supply_publish.png" width="120rpx" height="120rpx"></u-image>
@@ -19,7 +19,7 @@
 			</view>
 			<!-- 今日入驻 -->
 			<view class="today-come">
-				<view class="today-come-text">今日入驻</view>
+				<view class="today-come-text">入驻商家</view>
 				<view class="today-come-desc">
 					<view class="manufacturers">
 						<text class="title">厂家</text>
