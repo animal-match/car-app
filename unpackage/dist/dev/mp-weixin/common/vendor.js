@@ -12555,6 +12555,7 @@ var store = new _vuex.default.Store({
       // s_vip_money: 经销商会员价格
       //s_vip_time: 经销商会员时间
       //title 导航标题
+      //is_free 是否免费
     },
     // 提现并减少账户金额的数量
     decreaseMoney: function decreaseMoney(state, payLoad) {

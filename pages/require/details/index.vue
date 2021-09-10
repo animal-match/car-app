@@ -18,13 +18,14 @@
 				</view>
 				<view class="city">{{detail.city || '-'}}</view>
 			</view>
+			<view class="article">
+				{{detail.content || "-"}}
+			</view>
 			<view class="image">
 				<u-image v-if="detail.image" :src="detail.image" width="300" height="200" @click="preview">
 				</u-image>
 			</view>
-			<view class="article">
-				{{detail.content}}
-			</view>
+
 		</view>
 		<u-gap height="46"></u-gap>
 		<view class="recommend" v-if="isShowComment">相关推荐</view>

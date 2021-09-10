@@ -96,6 +96,7 @@
 					address: '',
 				},
 				myStoreType: null, // 登录人的商家类型
+				isNeedPayment: 1, // 厂家查看经销商是否需要付款 1需要 0不需要
 			}
 		},
 		onLoad(opt) {
@@ -103,6 +104,8 @@
 			this.storeInfo(opt.id);	
 		},
 		onShow() {
+			 this.isNeedPayment = this.$store.state.config.is_free// 判断厂家查看经销商是否收费
+			 console.log('是否收费:1为收费', this.isNeedPayment)
 			 this.showMessageBtn = this.$store.state.config.message == 1?true:false;
 			 console.log('按钮显示',this.$store.state.config.message)
 			 this.userLoginId = this.$store.state.user.userId; // 用户登录id
@@ -323,7 +326,8 @@
 				}
 
 				// 如果是拿到了地址信息，就可以显示导航功能 (商家自己也能看到自己的定位)
-				if(!!longitude || !!latitude || !!address || this.userLoginId==this.idValue) {
+				// 新增判断条件：如果isNeedPayment==0(免费)时 也能直接查看
+				if(this.isNeedPayment===0 || !!longitude || !!latitude || !!address || this.userLoginId==this.idValue) {
 					// 获取定位信息
 					uni.getLocation({
 						type: 'wgs84', //返回可以用于uni.openLocation的经纬度
