@@ -121,7 +121,7 @@
   text-align: center;
 }
 .merchant-into-store .bottom-container.data-v-088d3d62 {
-  margin: 30rpx 46rpx;
+  margin: 30rpx 30rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -145,7 +145,8 @@
   color: #999;
 }
 .merchant-into-store .bottom-container .image-box .video.data-v-088d3d62 {
-  width: 300rpx;
-  height: 200rpx;
+  max-width: 600rpx;
+  height: 300rpx;
+  margin: 0 20rpx 10rpx 0;
 }
 

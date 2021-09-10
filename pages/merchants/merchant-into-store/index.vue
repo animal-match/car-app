@@ -47,7 +47,7 @@
 		<view v-if="productions.length>0" class="bottom-container">
 			<view v-for="(_item,_index) in productions" class="image-box">
 				<view style="display: flex; flex-direction: column;" :key="_index">
-					<u-image v-if="_item.image.length>0" class="production-iamges" :src="_item.image" width="210" height="190"></u-image>
+					<u-image v-if="_item.image.length>0" class="production-iamges" :src="_item.image" width="210" height="190" @click="previewImage(_index)"></u-image>
 					<video v-else :src="_item.video" class="video"></video>
 					<text class="production-text ellipsis">{{_item.title}}</text>
 				</view>
@@ -60,7 +60,7 @@
 			</view> -->
 			<u-gap height="40"></u-gap>
 		</view>
-		<view class="empty-block">
+		<view v-else class="empty-block">
 			<text>暂无产品</text>
 		</view>
 		
@@ -74,6 +74,7 @@
 	export default {
 		data() {
 			return {
+				images: [], // 图片预览列表
 				storeType: 0, // 商家类型：0 厂家 1经销商
 				isCollection: 0, // 0未收藏 1已收藏
 				iconName: 'star', // star为空心 star-fill为实心
@@ -226,6 +227,13 @@
 						}
 						this.goodsTags = res.data.category; // array 商品标签
 						this.productions = res.data.goods; // array 产品
+						// 取出图片 用于预览
+						let imageArr = []; // 图片数组
+						this.productions.map(item => {
+							imageArr.push(item.image)  
+						})
+						this.images = imageArr.filter(v => v !== '')
+						console.log('图片',this.images)
 						this.storeInformation = res.data; // Object 详情数据
 						this.storeType = res.data.type; // 商家类型：0 厂家 1经销商
 						this.isCollection = res.data.is_likes; // 是否收藏该店
@@ -399,6 +407,13 @@
 				  	url: 'sendMessage?id='+this.idValue+'&type='+this.storeType
 				  })
 			 },
+			 // 预览图片
+			 previewImage(e) {
+				 uni.previewImage({
+				 	current: this.images[e],
+				 	urls: this.images,
+				 });
+			 },
 		}
 	}
 </script>
@@ -489,7 +504,7 @@
 			text-align: center;
 		}
 		.bottom-container {
-			margin: 30rpx 46rpx;
+			margin: 30rpx 30rpx;
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
@@ -508,8 +523,9 @@
 					color: $uni-text-color-grey;
 				}
 				.video {
-					width: 300rpx;
-					height: 200rpx;
+					max-width: 600rpx;
+					height: 300rpx;
+					margin: 0 20rpx 10rpx 0;
 				}
 			}
 		}

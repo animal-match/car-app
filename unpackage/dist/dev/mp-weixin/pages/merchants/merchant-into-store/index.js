@@ -244,6 +244,7 @@ var _default =
 {
   data: function data() {
     return {
+      images: [], // 图片预览列表
       storeType: 0, // 商家类型：0 厂家 1经销商
       isCollection: 0, // 0未收藏 1已收藏
       iconName: 'star', // star为空心 star-fill为实心
@@ -396,6 +397,13 @@ var _default =
           }
           _this3.goodsTags = res.data.category; // array 商品标签
           _this3.productions = res.data.goods; // array 产品
+          // 取出图片 用于预览
+          var imageArr = []; // 图片数组
+          _this3.productions.map(function (item) {
+            imageArr.push(item.image);
+          });
+          _this3.images = imageArr.filter(function (v) {return v !== '';});
+          console.log('图片', _this3.images);
           _this3.storeInformation = res.data; // Object 详情数据
           _this3.storeType = res.data.type; // 商家类型：0 厂家 1经销商
           _this3.isCollection = res.data.is_likes; // 是否收藏该店
@@ -567,6 +575,13 @@ var _default =
       // idValue 店铺id, storeType 商家类型
       uni.navigateTo({
         url: 'sendMessage?id=' + this.idValue + '&type=' + this.storeType });
+
+    },
+    // 预览图片
+    previewImage: function previewImage(e) {
+      uni.previewImage({
+        current: this.images[e],
+        urls: this.images });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
