@@ -29,8 +29,8 @@
 					</u-form-item>
 				</view>
 
-				<view>
-					<u-form-item label="请选择商家类型" :required="true">
+				<view class="chooseBox">
+					<u-form-item class="chooseTools" label="请选择商家类型" :required="true">
 						<u-radio-group v-model="form.storeType" @change="radioChange">
 									<u-radio
 									  active-color="red"
@@ -42,8 +42,8 @@
 								</u-radio-group>
 					</u-form-item>
 					
-					<u-form-item label="请选择标签" :required="true" prop="id" :border-bottom="false">
-						 <u-checkbox-group @change="checkboxGroupChange">
+					<u-form-item class="chooseTools" label="请选择标签" :required="true" prop="id" :border-bottom="false">
+						 <u-checkbox-group @change="checkboxGroupChange" class="chooseTags">
 							 <u-checkbox 
 									v-model="item.checked" 
 									v-for="(item, index) in tagList" :key="index" 
@@ -543,11 +543,6 @@
 	}
 </style>
 <style lang="scss" scoped>
-	// .switch-table {
-	// 	position: sticky;
-	// 	top: 0;
-	// 	z-index: 999;
-	// }
 	.tipsHide {
 		display: none;
 	}
@@ -567,6 +562,11 @@
 				top: 32rpx;
 				right: -30rpx;
 				padding: 5rpx 40rpx;
+			}
+		}
+		.chooseBox {
+			.chooseTools {
+				margin: 5rpx 0;
 			}
 		}
 	}

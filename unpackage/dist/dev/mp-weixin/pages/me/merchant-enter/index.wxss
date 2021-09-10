@@ -80,6 +80,9 @@
   right: -30rpx;
   padding: 5rpx 40rpx;
 }
+.container .chooseBox .chooseTools.data-v-221edcf8 {
+  margin: 5rpx 0;
+}
 .upLoad-container.data-v-221edcf8 {
   margin: 30rpx;
   background-color: #fff;

@@ -89,18 +89,29 @@
 			}
 		},
 		onLoad() {
+			// 从登录页面登录可拿到setUser的值
 			uni.$on('setUser', res => {
 				console.log('我的信息页面用户信息',res)
 				this.userName = res.nickName;
 				this.avatar = res.avatar;
 			})
+			// 从首页自动登录可拿到
+			const userInfo = this.$store.state.user;
+			console.log('自动登录信息',userInfo)
+			this.userName = userInfo.nickName;
+			this.avatar = userInfo.avatarUrl;
 		},
 		onShow() {
-			console.log('检查登录状态',this.$store.state.isLogin);
-			this.isLogin = this.$store.state.isLogin;
+			console.log('检查登录状态vuex',this.$store.state.isLogin);
+			// this.isLogin = this.$store.state.isLogin;
+			const haveToken = uni.getStorageSync("token");
+			this.isLogin = haveToken ? true : false
+			console.log('检查登录状态Storage', this.isLogin);
 			uni.$on('vipStatus', val => {
 				this.isVip = val
+				console.log('手动登录会员',val)
 			})
+			this.isVip = uni.getStorageSync("isVip") || 0
 		},
 		methods: {
 			/** 

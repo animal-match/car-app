@@ -167,17 +167,19 @@
 				cloneTotalinfo: [], // 深拷贝的供求信息
 			}
 		},
- 
+		onLoad() {
+			// 如果得到token，自动登录
+			this.autologin();
+		},
 		onShow() {
 			this.getBanner();
 			this.getList();
 			this.getMoreList();
 			this.static(); // 厂家和经销商数量
 			this.getRequireSupply();
-			this.login();
 		},
 		methods: {
-			login() {
+			autologin() {
 				uni.login({
 				  provider: 'weixin',
 				  success: (loginRes) => {
@@ -185,28 +187,45 @@
 						this.$request({
 							url: "/api/user/getWxMiniProgramSessionKey",
 							data: {
-								code: loginRes.code
+								code: loginRes.code,
+								autoLogin: 1
 							},
 							success: res=> {
 								if(res.code != 1) {
-									 uni.showToast({
-										 icon: "none",
-										 title: res.msg,
-										 duration: 3000
-									 })
+									 console.log("不是你本人的token")
 									 return false;
 								}
-								console.log('openid',res.data.openid)
 								const openid = res.data.openid;
 								const session_key = res.data.session_key;
-								// this.$request({
-								// 	url: "/api/user/wxMiniProgramOauth",
-								// 	method: "POST",
-								// 	data: {
-								// 		session_key: sessionKey,
-								// 		...data
-								// 	},
-								// })
+								const token = "bb46aa2a-c8e0-4b74-b238-0d8456a8e055"; // res.data.token
+								if(token) {
+									uni.setStorageSync("token", token); // 保存token到缓存中
+									this.$store.commit('changeLoginState', true); // 登录状态为true
+									this.$request({
+										url: "/api/user/index",
+										data: { token: token },
+										success: res => {
+											console.log('用户中心',res);
+											let user = {
+												id: res.data.user.id, // 用户id
+												nickName: res.data.user.nickname, // 昵称
+												avatar: res.data.user.avatar, // 头像
+												money: res.data.user.money ,// 帐户金额
+												pid: res.data.user.pid, // 下线Id
+												type: res.data.user.type, // 商家类型
+											};
+											this.$store.commit('setUserInfo',user);
+											let isVip = res.data.user.is_vip; // 0 非会员 1会员
+											uni.$emit("vipStatus",isVip);
+											uni.setStorage({
+												key: 'isVip',
+												data: isVip,
+											})
+										}
+									})
+								} else {
+									console.log("你还没有授权，无法自动登录！")
+								}
 							},
 						})
 				  }

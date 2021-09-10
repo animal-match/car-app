@@ -252,18 +252,29 @@ var _default =
     } },
 
   onLoad: function onLoad() {var _this = this;
+    // 从登录页面登录可拿到setUser的值
     uni.$on('setUser', function (res) {
       console.log('我的信息页面用户信息', res);
       _this.userName = res.nickName;
       _this.avatar = res.avatar;
     });
+    // 从首页自动登录可拿到
+    var userInfo = this.$store.state.user;
+    console.log('自动登录信息', userInfo);
+    this.userName = userInfo.nickName;
+    this.avatar = userInfo.avatarUrl;
   },
   onShow: function onShow() {var _this2 = this;
-    console.log('检查登录状态', this.$store.state.isLogin);
-    this.isLogin = this.$store.state.isLogin;
+    console.log('检查登录状态vuex', this.$store.state.isLogin);
+    // this.isLogin = this.$store.state.isLogin;
+    var haveToken = uni.getStorageSync("token");
+    this.isLogin = haveToken ? true : false;
+    console.log('检查登录状态Storage', this.isLogin);
     uni.$on('vipStatus', function (val) {
       _this2.isVip = val;
+      console.log('手动登录会员', val);
     });
+    this.isVip = uni.getStorageSync("isVip") || 0;
   },
   methods: {
     /** 
