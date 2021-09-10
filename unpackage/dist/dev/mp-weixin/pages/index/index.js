@@ -97,11 +97,11 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
-    uGap: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
-    },
     uSwiper: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 220))
+    },
+    uGap: function() {
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
     },
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 227))
@@ -190,6 +190,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
 //
 //
 //

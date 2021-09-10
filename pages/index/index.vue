@@ -1,10 +1,12 @@
 <template>
 	<view class="home">
 		<!-- 首页 -->
+		<!-- 轮播图 -->
+		<view class="banner">
+			<u-swiper class="swiper" :list="banner" height="356" border-radius="12"></u-swiper>
+		</view>
 		<view class="container">
 			<u-gap height="20"></u-gap>
-			<!-- 轮播图 -->
-			<u-swiper :list="banner" height="356"></u-swiper>
 			<u-gap height="45"></u-gap>
 			<view class="nav-district">
 				<u-image @click="goDetailsPage('supply')" src="/static/nav-images/supply_publish.png" width="120rpx" height="120rpx"></u-image>
@@ -415,12 +417,23 @@
 	.home {
 		background-color: $uni-bg-color-grey !important;
 		min-height: 100vh;
+		.banner {
+			height: 280rpx;
+			border-bottom-left-radius: 5%;
+			border-bottom-right-radius: 5%;
+			background-color: $uni-baseColor;
+			padding: 0 20rpx;
+			.swiper {
+				position: relative;
+				top: 20rpx;
+			}
+		}
 	}
 </style>
 <style lang="scss" scoped>
 	.container {
 		margin: 0 30rpx;
-
+		margin-top:100rpx;
 		.nav-district {
 			display: flex;
 			justify-content: space-around;

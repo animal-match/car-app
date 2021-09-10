@@ -25,12 +25,12 @@
 		<u-gap height="20" bg-color="#f8f8f8"></u-gap>
 		<view class="nav-and-list">
 			<!-- 左侧为导航 -->
-			<scroll-view :scroll-top="scrollTop" scroll-y="true" class="left-nav-bar">
+			<view class="left-nav-bar">
 				<ul>
 					<li v-for="(item,index) in categoryList" :class="activeItem===index+1?'list':'white-list'" class="ellipsis"
 						@click="switchTab(index,item.id)" :key="item.id">{{item.name}}</li>
 				</ul>
-			</scroll-view>
+			</view>
 			<!-- 右侧为列表 -->
 			<scroll-view v-if="informations&&informations.length>0" :scroll-top="scrollTop" scroll-y="true" @scrolltolower="scrolltolower" class="right-list-bar">
 				<!-- 最外层大盒子 Start-->

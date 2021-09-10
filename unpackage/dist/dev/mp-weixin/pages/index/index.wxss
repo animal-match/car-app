@@ -28,6 +28,17 @@
   background-color: #f8f8f8 !important;
   min-height: 100vh;
 }
+.home .banner {
+  height: 280rpx;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  background-color: #CA0303;
+  padding: 0 20rpx;
+}
+.home .banner .swiper {
+  position: relative;
+  top: 20rpx;
+}
 
 @charset "UTF-8";
 /**
@@ -57,6 +68,7 @@
 /* 文章场景相关 */
 .container.data-v-57280228 {
   margin: 0 30rpx;
+  margin-top: 100rpx;
 }
 .container .nav-district.data-v-57280228 {
   display: -webkit-box;
