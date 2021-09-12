@@ -277,6 +277,7 @@ var _default =
     this.storeInfo(opt.id);
   },
   onShow: function onShow() {
+    // 所有查看条件变为 经销商查看厂家需付费或成为会员 new!!!
     this.isNeedPayment = this.$store.state.config.is_free; // 判断厂家查看经销商是否收费
     console.log('是否收费:1为收费', this.isNeedPayment);
     this.showMessageBtn = this.$store.state.config.message == 1 ? true : false;
@@ -291,10 +292,10 @@ var _default =
   computed: {
     // 查看手机号显示的弹窗
     phoneContent: function phoneContent() {
-      if (this.myStoreType === 0 && this.storeType === 1) {
-        return "\u5382\u5BB6\u67E5\u770B\u7ECF\u9500\u5546\u7535\u8BDD\u6216\u5730\u5740\u9700\u652F\u4ED8".concat(this.adressTips, "\u5143\u8D39\u7528");
-      }
       if (this.myStoreType === 1 && this.storeType === 0) {
+        return "\u7ECF\u9500\u5546\u67E5\u770B\u5382\u5BB6\u7535\u8BDD\u6216\u5730\u5740\u9700\u652F\u4ED8".concat(this.adressTips, "\u5143\u8D39\u7528");
+      }
+      if (this.myStoreType === 0 && this.storeType === 1) {
         return "\u975E\u4F1A\u5458\u67E5\u770B\u7535\u8BDD\u6216\u5730\u5740\u9700\u6210\u4E3A\u4F1A\u5458";
       }
     } },
@@ -463,10 +464,6 @@ var _default =
         // 否则打开去升级弹窗
         this.phoneNoShow = true;
         this.getPhoneAddr();
-        // const canLook = this.getPhoneAddr();
-        // if(canLook = false) {
-        // 	this.phoneNoShow = true;
-        // }
       }
     },
     /**
@@ -555,7 +552,7 @@ var _default =
     payment: function payment() {
       var cash;
       // 厂家查看经销商需支付单次费用
-      if (this.myStoreType === 0 && this.storeType === 1) {
+      if (this.myStoreType === 1 && this.storeType === 0) {
         cash = this.adressTips; // 支付10元
       } else {
         // 经销商查看厂家需成为会员

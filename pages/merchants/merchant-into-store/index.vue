@@ -32,7 +32,7 @@
 			<text v-if="!!isvip || userLoginId==idValue || store.address.length>0" class="address ellipsis">地址：{{store.address || '*************'}}</text>
 			<text v-else class="address ellipsis">地址：*************</text>
 			<!-- 留言按钮 -->
-			<u-button v-if="showMessageBtn&&storeType==1" type="error" size="mini" @click="sendMessage">留言</u-button>
+			<u-button v-if="showMessageBtn&&storeType==0" type="error" size="mini" @click="sendMessage">留言</u-button>
 			<!-- 导航按钮 -->
 			<u-button class="btn-position" type="error" size="mini" @click="showAddress(store.longitude,store.latitude,store.address)">
 				<!-- <u-image src="/static/user-center-images/navigator.png"></u-image> -->
@@ -68,7 +68,7 @@
 		</view>
 		
 		<!-- 弹出框 查看电话去升级-->
-		<u-modal v-model="phoneNoShow" width="70%" :content="phoneContent" show-confirm-button show-cancel-button :confirm-text="myStoreType===0 && storeType===1?'去支付':'去升级'" title="重要提示" confirm-color="#CA0303" @confirm="payment"></u-modal>
+		<u-modal v-model="phoneNoShow" width="70%" :content="phoneContent" show-confirm-button show-cancel-button :confirm-text="myStoreType===1 && storeType===0?'去支付':'去升级'" title="重要提示" confirm-color="#CA0303" @confirm="payment"></u-modal>
 
 	</view>
 </template>
@@ -107,6 +107,7 @@
 			this.storeInfo(opt.id);	
 		},
 		onShow() {
+			// 所有查看条件变为 经销商查看厂家需付费或成为会员 new!!!
 			 this.isNeedPayment = this.$store.state.config.is_free// 判断厂家查看经销商是否收费
 			 console.log('是否收费:1为收费', this.isNeedPayment)
 			 this.showMessageBtn = this.$store.state.config.message == 1?true:false;
@@ -121,10 +122,10 @@
 		computed: {
 			// 查看手机号显示的弹窗
 			phoneContent() {
-				if(this.myStoreType === 0 && this.storeType ===1) {
-					return `厂家查看经销商电话或地址需支付${this.adressTips}元费用`
+				if(this.myStoreType === 1 && this.storeType ===0) {
+					return `经销商查看厂家电话或地址需支付${this.adressTips}元费用`
 				}
-				if(this.myStoreType ===1 && this.storeType === 0) {
+				if(this.myStoreType === 0 && this.storeType === 1) {
 					return `非会员查看电话或地址需成为会员`
 				}
 			},
@@ -293,10 +294,6 @@
 					// 否则打开去升级弹窗
 					this.phoneNoShow = true;
 					this.getPhoneAddr();
-					// const canLook = this.getPhoneAddr();
-					// if(canLook = false) {
-					// 	this.phoneNoShow = true;
-					// }
 				}
 			},
 			/**
@@ -385,7 +382,7 @@
 			 payment() {
 				 let cash;
 				   // 厂家查看经销商需支付单次费用
-				 if(this.myStoreType===0&&this.storeType===1) {
+				 if(this.myStoreType===1&&this.storeType===0) {
 					 cash = this.adressTips; // 支付10元
 				 } else {
 					 // 经销商查看厂家需成为会员
