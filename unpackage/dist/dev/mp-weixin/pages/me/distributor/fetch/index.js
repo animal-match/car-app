@@ -104,7 +104,7 @@ try {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-button/u-button */ "node-modules/uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! uview-ui/components/u-button/u-button.vue */ 234))
     },
     uGap: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 220))
     },
     uKeyboard: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-keyboard/u-keyboard */ "node-modules/uview-ui/components/u-keyboard/u-keyboard").then(__webpack_require__.bind(null, /*! uview-ui/components/u-keyboard/u-keyboard.vue */ 364))

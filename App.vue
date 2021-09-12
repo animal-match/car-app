@@ -14,7 +14,7 @@
 						return false;
 					}
 					let data = res.data;
-					data.is_free = 0; // 查看经销商免费 后期删除 后端暂时没提供
+					//data.is_free = 0; // 查看经销商免费 后期删除 后端暂时没提供
 					this.$store.commit('saveConfigs', data) // 存储配置信息
 					console.log('vuex', this.$store.state.config)
 				}

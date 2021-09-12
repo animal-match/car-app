@@ -197,7 +197,20 @@
 								}
 								const openid = res.data.openid;
 								const session_key = res.data.session_key;
-								const token = "bb46aa2a-c8e0-4b74-b238-0d8456a8e055"; // res.data.token
+								const token = res.data.token;
+								// 检查登录是否过期
+								uni.checkSession({
+									success: res => {
+										console.log("处于登录状态")
+									},
+									fail: err => {
+										uni.showToast({
+											icon: "none",
+											title: "登录已过期，请重新登录"
+										})
+										return
+									}
+								})
 								if(token) {
 									uni.setStorageSync("token", token); // 保存token到缓存中
 									this.$store.commit('changeLoginState', true); // 登录状态为true

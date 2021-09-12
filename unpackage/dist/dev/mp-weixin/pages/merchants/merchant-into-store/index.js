@@ -108,7 +108,7 @@ try {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-tag/u-tag */ "node-modules/uview-ui/components/u-tag/u-tag").then(__webpack_require__.bind(null, /*! uview-ui/components/u-tag/u-tag.vue */ 241))
     },
     uGap: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 220))
     },
     uModal: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-modal/u-modal */ "node-modules/uview-ui/components/u-modal/u-modal").then(__webpack_require__.bind(null, /*! uview-ui/components/u-modal/u-modal.vue */ 315))
@@ -497,7 +497,7 @@ var _default =
 
       // 如果是拿到了地址信息，就可以显示导航功能 (商家自己也能看到自己的定位)
       // 新增判断条件：如果isNeedPayment==0(免费)时 也能直接查看
-      if (this.isNeedPayment === 0 || !!longitude || !!latitude || !!address || this.userLoginId == this.idValue) {
+      if (this.isNeedPayment == 0 || !!longitude || !!latitude || !!address || this.userLoginId == this.idValue) {
         // 获取定位信息
         uni.getLocation({
           type: 'wgs84', //返回可以用于uni.openLocation的经纬度

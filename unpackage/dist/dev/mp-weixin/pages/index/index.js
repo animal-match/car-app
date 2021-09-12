@@ -98,10 +98,10 @@ var components
 try {
   components = {
     uSwiper: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 220))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-swiper/u-swiper */ "node-modules/uview-ui/components/u-swiper/u-swiper").then(__webpack_require__.bind(null, /*! uview-ui/components/u-swiper/u-swiper.vue */ 213))
     },
     uGap: function() {
-      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 213))
+      return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-gap/u-gap */ "node-modules/uview-ui/components/u-gap/u-gap").then(__webpack_require__.bind(null, /*! uview-ui/components/u-gap/u-gap.vue */ 220))
     },
     uImage: function() {
       return __webpack_require__.e(/*! import() | node-modules/uview-ui/components/u-image/u-image */ "node-modules/uview-ui/components/u-image/u-image").then(__webpack_require__.bind(null, /*! uview-ui/components/u-image/u-image.vue */ 227))
@@ -388,7 +388,20 @@ var _default =
               }
               var openid = res.data.openid;
               var session_key = res.data.session_key;
-              var token = "bb46aa2a-c8e0-4b74-b238-0d8456a8e055"; // res.data.token
+              var token = res.data.token;
+              // 检查登录是否过期
+              uni.checkSession({
+                success: function success(res) {
+                  console.log("处于登录状态");
+                },
+                fail: function fail(err) {
+                  uni.showToast({
+                    icon: "none",
+                    title: "登录已过期，请重新登录" });
+
+                  return;
+                } });
+
               if (token) {
                 uni.setStorageSync("token", token); // 保存token到缓存中
                 _this.$store.commit('changeLoginState', true); // 登录状态为true

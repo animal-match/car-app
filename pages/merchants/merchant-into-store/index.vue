@@ -327,7 +327,7 @@
 
 				// 如果是拿到了地址信息，就可以显示导航功能 (商家自己也能看到自己的定位)
 				// 新增判断条件：如果isNeedPayment==0(免费)时 也能直接查看
-				if(this.isNeedPayment===0 || !!longitude || !!latitude || !!address || this.userLoginId==this.idValue) {
+				if(this.isNeedPayment == 0 || !!longitude || !!latitude || !!address || this.userLoginId==this.idValue) {
 					// 获取定位信息
 					uni.getLocation({
 						type: 'wgs84', //返回可以用于uni.openLocation的经纬度

@@ -119,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
           return false;
         }
         var data = res.data;
-        data.is_free = 0; // 查看经销商免费 后期删除 后端暂时没提供
+        //data.is_free = 0; // 查看经销商免费 后期删除 后端暂时没提供
         _this.$store.commit('saveConfigs', data); // 存储配置信息
         console.log('vuex', _this.$store.state.config);
       } });
