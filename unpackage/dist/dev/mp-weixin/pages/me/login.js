@@ -193,9 +193,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -215,6 +212,7 @@ var _default =
     this.pid = option.pid || '';
   },
   methods: {
+
     radioChange: function radioChange(e) {
       if (e.value === true) {
         this.isChecked = true;
@@ -340,7 +338,9 @@ var _default =
           // 会员中心接口 获取用户头像，手机号码, vip状态
           _this4.$request({
             url: "/api/user/index",
-            data: { token: _this4.token },
+            data: {
+              token: _this4.token },
+
             success: function success(res) {
               if (res.code === 0) {
                 uni.showToast({

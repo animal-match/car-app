@@ -39,7 +39,10 @@
 				<u-icon color="#FFF" size="30" name="map-fill"></u-icon>导航
 			</u-button>
 			<!-- 电话按钮 -->
-			<u-image src="/static/user-center-images/call.png" width="21" height="25" @click="showPhone(store.phoneNo)"></u-image>
+			<view class="phone-call" @click="showPhone(store.phoneNo)">
+							<u-image src="/static/user-center-images/call.png" width="21" height="25" class="phone-img"></u-image>
+			</view>
+
 		</view>
 		<u-gap height="20" bg-color="#F8F8F8"></u-gap>
 		<!-- 底部部分 产品图 -->
@@ -449,11 +452,13 @@
 					.tags {
 						margin-top: 20rpx;
 						.tag-name {
+							display: inline-block;
 							padding: 5rpx 14rpx;
 							font-size: 24rpx;
 							color: $uni-baseColor;
 							background-color: #f4f4f5;
 							margin-right: 10rpx;
+							margin-bottom: 10rpx;
 							border-radius: 7rpx;
 						}
 					}
@@ -491,6 +496,15 @@
 			}
 			.u-btn {
 				margin-right: 20rpx;
+			}
+			.phone-call {
+				width: 100rpx;
+				height: 80rpx;
+				line-height: 80rpx;
+				.phone-img {
+					position: relative;
+					left: 30rpx;
+				}
 			}
 		}
 		// 底部部分

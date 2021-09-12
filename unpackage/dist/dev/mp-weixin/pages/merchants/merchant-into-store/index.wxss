@@ -62,11 +62,13 @@
   margin-top: 20rpx;
 }
 .merchant-into-store .top-container .name-tags-button .name-and-tags .tags .tag-name.data-v-088d3d62 {
+  display: inline-block;
   padding: 5rpx 14rpx;
   font-size: 24rpx;
   color: #CA0303;
   background-color: #f4f4f5;
   margin-right: 10rpx;
+  margin-bottom: 10rpx;
   border-radius: 7rpx;
 }
 .merchant-into-store .top-container .informations.data-v-088d3d62 {
@@ -106,6 +108,15 @@
 }
 .merchant-into-store .center-container .u-btn.data-v-088d3d62 {
   margin-right: 20rpx;
+}
+.merchant-into-store .center-container .phone-call.data-v-088d3d62 {
+  width: 100rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.merchant-into-store .center-container .phone-call .phone-img.data-v-088d3d62 {
+  position: relative;
+  left: 30rpx;
 }
 .merchant-into-store .production.data-v-088d3d62 {
   padding: 25rpx 0rpx 25rpx 30rpx;
