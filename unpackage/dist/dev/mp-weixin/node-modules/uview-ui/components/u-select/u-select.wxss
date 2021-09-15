@@ -80,8 +80,7 @@
 }
 .u-select__body__picker-view.data-v-7b211ee7 {
   height: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 .u-select__body__picker-view__item.data-v-7b211ee7 {
 

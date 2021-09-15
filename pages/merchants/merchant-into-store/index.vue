@@ -40,7 +40,7 @@
 			</u-button>
 			<!-- 电话按钮 -->
 			<view class="phone-call" @click="showPhone(store.phoneNo)">
-							<u-image src="/static/user-center-images/call.png" width="21" height="25" class="phone-img"></u-image>
+							<u-image src="/static/user-center-images/call.png" width="30" height="40" class="phone-img"></u-image>
 			</view>
 
 		</view>
@@ -501,6 +501,7 @@
 				.phone-img {
 					position: relative;
 					left: 30rpx;
+					top: 10rpx;
 				}
 			}
 		}
